@@ -1,55 +1,141 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Field Register - Site Location Entry</title>
+  <title>Field Register</title>
   <meta charset="UTF-8" />
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places"></script>
-  <script>
-    function initAutocomplete() {
-      const input = document.getElementById("autocomplete");
-      const autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["geocode"],
-        componentRestrictions: { country: "au" } // Adjust if needed
-      });
-
-      autocomplete.addListener("place_changed", function () {
-        const place = autocomplete.getPlace();
-        if (!place.formatted_address) return;
-
-        const address = encodeURIComponent(place.formatted_address);
-        const formUrl = `https://tally.so/r/3qp1OO?first-site-location=${address}`;
-        window.location.href = formUrl;
-      });
-    }
-    window.onload = initAutocomplete;
-  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 2rem;
-      background: #f4f4f4;
-      text-align: center;
+      max-width: 400px;
+      margin: 2rem auto;
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    h1 {
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
       color: #112b4e;
     }
-    input {
-      width: 300px;
+    input, button {
+      width: 100%;
       padding: 10px;
-      font-size: 16px;
-      border: 2px solid #8895a6;
-      border-radius: 5px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1.5px solid #8895a6;
     }
-    p {
-      margin-top: 1rem;
-      color: #555;
+    button {
+      background-color: #ec7723;
+      color: white;
+      border: none;
+      margin-top: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    #success-message {
+      color: green;
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #error-message {
+      color: red;
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <h1>Field Register</h1>
-  <h2>Enter First Site Location</h2>
-  <input id="autocomplete" type="text" placeholder="Start typing address..." autocomplete="off" />
-  <p>Powered by Google Places</p>
+  <form id="fieldRegisterForm">
+    <label for="siteLocation">First Site Location</label>
+    <input type="text" id="siteLocation" name="First Site Location" placeholder="Start typing address..." autocomplete="off" required />
+
+    <!-- Add more fields here as needed -->
+    <!-- Example: -->
+    <!-- <label for="contactName">Contact Name</label> -->
+    <!-- <input type="text" id="contactName" name="Contact Name" required /> -->
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="success-message" style="display:none;">Thank you! Your submission has been received.</div>
+  <div id="error-message" style="display:none;">Oops! Something went wrong. Please try again.</div>
+
+  <script>
+    // Initialize Google Autocomplete
+    function initAutocomplete() {
+      const input = document.getElementById('siteLocation');
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ['geocode'],  // you can change to ['address'] if needed
+        componentRestrictions: { country: 'au' }  // limit to Australia; remove or change as needed
+      });
+    }
+
+    window.onload = initAutocomplete;
+
+    // Airtable API details
+    const airtableApiKey = 'patHwUeS1KtSAEshe.49bfa44a2a0b9965c2e3733e2ffa3c998346d487f275bc237a366cac62abbd7f';
+    const airtableBaseId = 'appegmSLEvbJSkRvd';
+    const airtableTableName = 'Table 1';
+
+    const form = document.getElementById('fieldRegisterForm');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      submitButton.disabled = true;
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+
+      const siteLocation = document.getElementById('siteLocation').value.trim();
+
+      // Build the Airtable record
+      const data = {
+        records: [
+          {
+            fields: {
+              "First Site Location": siteLocation
+              // Add more fields here as needed
+            }
+          }
+        ]
+      };
+
+      fetch(`https://api.airtable.com/v0/${airtableBaseId}/${encodeURIComponent(airtableTableName)}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + airtableApiKey,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          successMessage.style.display = 'block';
+          form.reset();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        errorMessage.style.display = 'block';
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+      });
+    });
+  </script>
 </body>
 </html>
