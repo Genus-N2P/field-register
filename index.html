@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Field Register - Site Location Entry</title>
+  <meta charset="UTF-8" />
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places"></script>
+  <script>
+    function initAutocomplete() {
+      const input = document.getElementById("autocomplete");
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["geocode"],
+        componentRestrictions: { country: "au" } // Adjust if needed
+      });
+
+      autocomplete.addListener("place_changed", function () {
+        const place = autocomplete.getPlace();
+        if (!place.formatted_address) return;
+
+        const address = encodeURIComponent(place.formatted_address);
+        const formUrl = `https://tally.so/r/3qp1OO?first-site-location=${address}`;
+        window.location.href = formUrl;
+      });
+    }
+    window.onload = initAutocomplete;
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f4f4f4;
+      text-align: center;
+    }
+    h1 {
+      color: #112b4e;
+    }
+    input {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #8895a6;
+      border-radius: 5px;
+    }
+    p {
+      margin-top: 1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Field Register</h1>
+  <h2>Enter First Site Location</h2>
+  <input id="autocomplete" type="text" placeholder="Start typing address..." autocomplete="off" />
+  <p>Powered by Google Places</p>
+</body>
+</html>
