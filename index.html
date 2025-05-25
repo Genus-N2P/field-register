@@ -569,7 +569,7 @@
 }
   <script>
     // Set default date to today in Western Standard Time (Australia/Perth)
-    function setDefaultDate() {
+    function setDefaultDate2() {
       const now = new Date();
       const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
       const year = perthTime.getFullYear();
@@ -584,7 +584,7 @@
 }
   <script>
     // Set default date to today in Western Standard Time (Australia/Perth)
-    function setDefaultDate() {
+    function setDefaultDate3() {
       const now = new Date();
       const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
       const year = perthTime.getFullYear();
@@ -614,6 +614,15 @@
       // Set default date when showing the BOG form
       if (formId === 'bog') {
         setDefaultDate();
+      
+      // Set default date when showing the BOG form
+      if (formId === 'reinstatement') {
+        setDefaultDate2();
+      
+      // Set default date when showing the BOG form
+      if (formId === 'pitlinkin') {
+        setDefaultDate3();
+
       }
       
       // Hide all buttons except the selected one
