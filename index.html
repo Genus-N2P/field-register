@@ -463,17 +463,121 @@
         <label for="reinstatement-date">Date</label>
         <input type="date" id="reinstatement-date" name="reinstatement-date" required />
 
-        <label for="reinstatement-address">Address</label>
+        <label for="reinstatement-address">Address of Reinstatement</label>
         <input type="text" id="reinstatement-address" name="reinstatement-address" class="address-autocomplete" required />
 
-        <label for="reinstatement-type">Reinstatement Type</label>
-        <select id="reinstatement-type" name="reinstatement-type" required>
+        <label for="reinstatement-SAM">SAM ID</label>
+        <select id="reinstatement-SAM" name="reinstatement-SAM" required>
           <option value="">Select one</option>
-          <option value="Asphalt">Asphalt</option>
-          <option value="Concrete">Concrete</option>
-          <option value="Grass">Grass</option>
+          <option value="K-6ALN-05">K-6ALN-05</option>
+          <option value="K-6ALN-20">K-6ALN-20</option>
+          <option value="K-6ALN-21">K-6ALN-21</option>
+          <option value="K-6ALN-22">K-6ALN-22</option>
+          <option value="K-6ALN-23">K-6ALN-23</option>
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+          <option value="L-6ALN-05">L-6ALN-05</option>
+          <option value="L-6ALN-20">L-6ALN-20</option>
+          <option value="L-6ALN-21">L-6ALN-21</option>
+          <option value="L-6ALN-23">L-6ALN-23</option>
+          <option value="M-6ALN-21">M-6ALN-21</option>
+          <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="X-6BGT-20">X-6BGT-20</option>
+          <option value="X-6COI-01">X-6COI-01</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="Z-6NRG-20">Z-6NRG-20</option>
         </select>
 
+        <label for="reinstatement-ADA">ADA ID</label>
+        <select id="reinstatement-ADA" name="reinstatement-ADA" required>
+          <option value="">Select one</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+
+        <label for="reinstatement-note-id">Note ID</label>
+        <input type="text" id="reinstatement-note-id" name="reinstatement-note-id" required />
+
+        <label for="reinstatement-asset-type">Asset Type</label>
+        <select id="reinstatement-asset-type" name="reinstatement-asset-type" required>
+          <option value="">Select one</option>
+          <option value="Duct P50">Duct P50</option>
+          <option value="Pits - P5">Pits - P5</option>
+          <option value="Pits - P6">Pits - P6</option>
+          <option value="Pits - P8">Pits - P8</option>
+        </select>
+
+        <label for="reinstatement-surface-type">Surface Type</label>
+        <select id="reinstatement-surface-type" name="reinstatement-surface-type" onchange="toggleSurfaceTypeField()" required>
+          <option value="">Select one</option>
+          <option value="Aggregate">Aggregate</option>
+          <option value="Bitument">Bitument</option>
+          <option value="Concrete">Concrete</option>
+          <option value="Cracker Dust">Cracker Dust</option>
+          <option value="Gravel">Gravel</option>
+          <option value="Limestone">Limestone</option>
+          <option value="Paved">Paved</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <!-- Conditional Field -->
+<div id="reinstatement-surface-type-notification-field" style="display: none; margin-top: 10px;">
+  <label for="reinstatement-surface-type-other">Surface Type - Other</label>
+<input type="text" id="reinstatement-surface-type-other" name="reinstatement-surface-type-other" required />
+</div>
+                
         <label for="reinstatement-length">Length (m)</label>
         <input type="number" id="reinstatement-length" name="reinstatement-length" step="0.1" />
 
@@ -613,6 +717,21 @@
         acmField.style.display = "none";
         acmInput.required = false;
         acmInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleSurfaceTypeField() {
+      const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
+      const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
+      const surfacetypeInput = document.getElementById("reinstatement-surface-type-other");
+
+      if (surfacetypeSelect.value === "Yes") {
+        surfacetypeField.style.display = "block";
+        surfacetypeInput.required = true;
+      } else {
+        surfacetypeField.style.display = "none";
+        surfacetypeInput.required = false;
+        surfacetypeInput.value = ""; // clear the input if hidden
       }
     }
 
