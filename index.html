@@ -563,10 +563,14 @@
       const todayString = `${year}-${month}-${day}`;
       
       const bogDateField = document.getElementById('bog-date');
-      if (bogDateField) {
-        bogDateField.value = todayString;
-      }
-}
+    const pitlinkinDateField = document.getElementById('pitlinkin-date');
+    const reinstatementDateField = document.getElementById('reinstatement-date');
+
+    if (bogDateField) bogDateField.value = todayString;
+    if (pitlinkinDateField) pitlinkinDateField.value = todayString;
+    if (reinstatementDateField) reinstatementDateField.value = todayString;
+  }
+
 
     function showForm(formId) {
       // Hide thank you message
@@ -581,10 +585,10 @@
       // Show selected form
       document.getElementById(`form-${formId}`).classList.remove('hidden');
       
-      // Set default date when showing the BOG form
-      if (formId === 'bog') {
-        setDefaultDate();
-      }
+     // Call it directly or on form load
+  document.addEventListener('DOMContentLoaded', function () {
+    setDefaultDate();
+  });
       
       // Hide all buttons except the selected one
       const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
