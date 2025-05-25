@@ -566,7 +566,15 @@
       if (bogDateField) {
         bogDateField.value = todayString;
       }
+      const reinstatementDateField = document.getElementById('reinstatement-date');
+      if (reinstatementDateField) {
+        reinstatementDateField.value = todayString;
     }
+      const pitlinkinDateField = document.getElementById('pitlinkin-date');
+      if (pitlinkinDateField) {
+        pitlinkinDateField.value = todayString;
+    }
+}
 
     function showForm(formId) {
       // Hide thank you message
