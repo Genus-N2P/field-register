@@ -460,7 +460,7 @@
       <h3>Reinstatement Register: Genus N2P project</h3>
       <p>Please complete for any temporary reinstatement works.</p>
       <form>
-        <label for="reinstatement-date">Date</label>
+        <label for="reinstatement-date">Temp Reinstatement Date</label>
         <input type="date" id="reinstatement-date" name="reinstatement-date" required />
 
         <label for="reinstatement-address">Address of Reinstatement</label>
@@ -553,7 +553,7 @@
         <label for="reinstatement-asset-type">Asset Type</label>
         <select id="reinstatement-asset-type" name="reinstatement-asset-type" required>
           <option value="">Select one</option>
-          <option value="Duct P50">Duct P50</option>
+          <option value="Duct - P50">Duct - P50</option>
           <option value="Pits - P5">Pits - P5</option>
           <option value="Pits - P6">Pits - P6</option>
           <option value="Pits - P8">Pits - P8</option>
@@ -577,15 +577,71 @@
   <label for="reinstatement-surface-type-other">Surface Type - Other</label>
 <input type="text" id="reinstatement-surface-type-other" name="reinstatement-surface-type-other" required />
 </div>
-                
-        <label for="reinstatement-length">Length (m)</label>
-        <input type="number" id="reinstatement-length" name="reinstatement-length" step="0.1" />
 
-        <label for="reinstatement-width">Width (m)</label>
-        <input type="number" id="reinstatement-width" name="reinstatement-width" step="0.1" />
+        <label for="reinstatement-location-type">Location Type</label>
+        <select id="reinstatement-location-type" name="reinstatement-location-type" onchange="toggleLocationTypeField()" required>
+          <option value="">Select one</option>
+          <option value="Driveway">Driveway</option>
+          <option value="Footpath">Footpath</option>
+          <option value="Roadway">Roadway</option>
+          <option value="Other">Other</option>
+        </select>
 
-        <label for="reinstatement-notes">Notes</label>
-        <textarea id="reinstatement-notes" name="reinstatement-notes"></textarea>
+        <!-- Conditional Field -->
+<div id="reinstatement-location-type-notification-field" style="display: none; margin-top: 10px;">
+  <label for="reinstatement-location-type-other">Location Type - Other</label>
+<input type="text" id="reinstatement-location-type-other" name="reinstatement-location-type-other" required />
+</div>
+
+        <label for="reinstatement-material-type">Temp Material Used</label>
+        <select id="reinstatement-material-type" name="reinstatement-material-type" onchange="toggleMaterialTypeField()" required>
+          <option value="">Select one</option>
+          <option value="Cold Mix">Cold Mix</option>
+          <option value="Cracker Dust">Cracker Dust</option>
+          <option value="Gravel / Sand">Gravel / Sand</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <!-- Conditional Field -->
+<div id="reinstatement-material-type-notification-field" style="display: none; margin-top: 10px;">
+  <label for="reinstatement-material-type-other">Temp Material Used - Other</label>
+<input type="text" id="reinstatement-material-type-other" name="reinstatement-material-type-other" required />
+</div>
+
+        <label for="reinstatement-company-name">Temp Contractor Company Name</label>
+        <select id="reinstatement-company-name" name="reinstatement-company-name" required>
+          <option value="">Select one</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communicatins">Dizza Communicatins</option>
+          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
+
+        <label for="reinstatement-perm-date">Proposed Permanent Reinstatement Date</label>
+        <input type="date" id="reinstatement-perm-date" name="reinstatement-perm-date" required />
+
+        <label for="reinstatement-area">Permanent Reinstatement Area (m2)</label>
+        <select id="reinstatement-area" name="reinstatement-area" required>
+          <option value="">Select one</option>
+          <option value="Less than or equal to 3m2">Less than or equal to 3m2</option>
+          <option value="Greater than 3m2">Greater than 3m2</option>
+        </select>
+
+        <label for="reinstatement-panel">Full Panel Required?</label>
+        <select id="reinstatement-panel" name="reinstatement-panel" required>
+          <option value="">Select one</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
 
         <div class="form-footer">
           <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
@@ -597,20 +653,174 @@
       <h3>Pit Link-in Register: Genus N2P project</h3>
       <p>Please complete for any pit link-in's required to be done by another contractor.</p>
       <form>
-        <label for="pitlinkin-date">Date</label>
+        <label for="pitlinkin-date">Date Reported</label>
         <input type="date" id="pitlinkin-date" name="pitlinkin-date" required />
 
         <label for="pitlinkin-location">Pit Location</label>
         <input type="text" id="pitlinkin-location" name="pitlinkin-location" class="address-autocomplete" required />
 
-        <label for="pitlinkin-contractor">Assigned Contractor</label>
-        <input type="text" id="pitlinkin-contractor" name="pitlinkin-contractor" />
+        <label for="pitlinkin-SAM">SAM ID</label>
+        <select id="pitlinkin-SAM" name="pitlinkin-SAM" required>
+          <option value="">Select one</option>
+          <option value="K-6ALN-05">K-6ALN-05</option>
+          <option value="K-6ALN-20">K-6ALN-20</option>
+          <option value="K-6ALN-21">K-6ALN-21</option>
+          <option value="K-6ALN-22">K-6ALN-22</option>
+          <option value="K-6ALN-23">K-6ALN-23</option>
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+          <option value="L-6ALN-05">L-6ALN-05</option>
+          <option value="L-6ALN-20">L-6ALN-20</option>
+          <option value="L-6ALN-21">L-6ALN-21</option>
+          <option value="L-6ALN-23">L-6ALN-23</option>
+          <option value="M-6ALN-21">M-6ALN-21</option>
+          <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="X-6BGT-20">X-6BGT-20</option>
+          <option value="X-6COI-01">X-6COI-01</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="Z-6NRG-20">Z-6NRG-20</option>
+        </select>
 
-        <label for="pitlinkin-reason">Reason for Link-In</label>
-        <textarea id="pitlinkin-reason" name="pitlinkin-reason"></textarea>
+        <label for="pitlinkin-ADA">ADA ID</label>
+        <select id="pitlinkin-ADA" name="pitlinkin-ADA" required>
+          <option value="">Select one</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
 
-        <label for="pitlinkin-scheduled-date">Scheduled Link-In Date</label>
-        <input type="date" id="pitlinkin-scheduled-date" name="pitlinkin-scheduled-date" />
+        <label for="pitlinkin-duct-fir">Duct FIR number</label>
+        <input type="text" id="pitlinkin-duct-fir" name="pitlinkin-duct-fir" required />
+
+        <label for="pitlinkin-pit-fir">Pit FIR number</label>
+        <input type="text" id="pitlinkin-pit-fir" name="pitlinkin-pit-fir" required />
+
+        <label for="pitlinkin-pit-material">Pit Material</label>
+        <select id="pitlinkin-pit-material" name="pitlinkin-pit-material" required>
+          <option value="">Select one</option>
+          <option value="ACM">ACM</option>
+          <option value="Concrete / Brick">Concrete / Brick</option>
+          <option value="Plastic">Plastic</option>
+        </select>
+
+<label for="pitlinkin-pit-type">Pit Type</label>
+        <select id="pitlinkin-pit-type" name="pitlinkin-pit-type" onchange="togglePitTypeField()" required>
+          <option value="">Select one</option>
+          <option value="B Pit">B Pit</option>
+          <option value="C Pit">C Pit</option>
+          <option value="D Pit">D Pit</option>
+          <option value="P2">P2</option>
+          <option value="P3">P3</option>
+          <option value="P5">P5</option>
+          <option value="P6">P6</option>
+          <option value="P8">P8</option>
+          <option value="P9">P9</option>
+          <option value="Manhole">Manhole</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <!-- Conditional Field -->
+<div id="pitlinkin-pit-type-notification-field" style="display: none; margin-top: 10px;">
+  <label for="pitlinkin-pit-type-other">Pit Type - Other</label>
+<input type="text" id="pitlinkin-pit-type-other" name="pitlinkin-pit-type-other" required />
+</div>
+
+        <label for="pitlinkin-ffp">Pit Fit for Purpose</label>
+        <select id="pitlinkin-ffp" name="pitlinkin-ffp" required>
+          <option value="">Select one</option>
+          <option value="Yes">Yes</option>
+          <option value="No - Contact FCM">No - Contact FCM</option>
+        </select>
+
+        <label for="pitlinkin-duct-state">Current Duct State</label>
+        <select id="pitlinkin-duct-state" name="pitlinkin-duct-state" required>
+          <option value="">Select one</option>
+          <option value="Buried">Buried</option>
+          <option value="Exposed">Exposed</option>
+        </select>
+
+        <label for="pitlinkin-rrp">RRP Completed?</label>
+        <select id="pitlinkin-rrp" name="pitlinkin-rrp" required>
+          <option value="">Select one</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label for="pitlinkin-reinstatement-req">Reinstatement Required?</label>
+        <select id="pitlinkin-reinstatement-req" name="pitlinkin-reinstatement-req" required>
+          <option value="">Select one</option>
+          <option value="Yes - Added to Reinstatement Register">Yes - Added to Reinstatement Register</option>
+          <option value="No">No</option>
+        </select>
+
+        <label for="pitlinkin-company-name">Reported By</label>
+        <select id="pitlinkin-company-name" name="pitlinkin-company-name" required>
+          <option value="">Select one</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communicatins">Dizza Communicatins</option>
+          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
 
         <div class="form-footer">
           <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
@@ -732,6 +942,51 @@
         surfacetypeField.style.display = "none";
         surfacetypeInput.required = false;
         surfacetypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleLocationTypeField() {
+      const locationtypeSelect = document.getElementById("reinstatement-location-type");
+      const locationtypeField = document.getElementById("reinstatement-location-type-notification-field");
+      const locationtypeInput = document.getElementById("reinstatement-location-type-other");
+
+      if (locationtypeSelect.value === "Other") {
+        locationtypeField.style.display = "block";
+        locationtypeInput.required = true;
+      } else {
+       locationtypeField.style.display = "none";
+        locationtypeInput.required = false;
+        locationtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleMaterialTypeField() {
+      const materialtypeSelect = document.getElementById("reinstatement-material-type");
+      const materialtypeField = document.getElementById("reinstatement-material-type-notification-field");
+      const materialtypeInput = document.getElementById("reinstatement-material-type-other");
+
+      if (materialtypeSelect.value === "Other") {
+        materialtypeField.style.display = "block";
+        materialtypeInput.required = true;
+      } else {
+       materialtypeField.style.display = "none";
+        materialtypeInput.required = false;
+        materialtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function togglePitTypeField() {
+      const pittypeSelect = document.getElementById("pitlinkin-pit-type");
+      const pittypeField = document.getElementById("pitlinkin-pit-type-notification-field");
+      const pittypeInput = document.getElementById("pitlinkin-pit-type-other");
+
+      if (pittypeSelect.value === "Other") {
+        pittypeField.style.display = "block";
+        pittypeInput.required = true;
+      } else {
+       pittypeField.style.display = "none";
+        pittypeInput.required = false;
+        pittypeInput.value = ""; // clear the input if hidden
       }
     }
 
