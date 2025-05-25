@@ -423,26 +423,6 @@
   <p id="swms-error" style="color: red; display: none;">Please select at least one SWMS discipline.</p>
 </form>
 
-<script>
-  function validateSWMS() {
-    const checkboxes = document.querySelectorAll('input[name="bog-SWMS[]"]');
-    const errorMsg = document.getElementById("swms-error");
-    let isChecked = false;
-
-    checkboxes.forEach((cb) => {
-      if (cb.checked) isChecked = true;
-    });
-
-    if (!isChecked) {
-      errorMsg.style.display = "block";
-      return false;
-    } else {
-      errorMsg.style.display = "none";
-      return true;
-    }
-  }
-</script>
-
         <label for="bog-ACM">Will you be disturbing/modifying any possible ACM while onsite?</label>
         <select id="bog-ACM" name="bog-ACM" onchange="toggleACMField()" required>
           <option value="">Select one</option>
@@ -460,23 +440,6 @@
           <option value="No">No, stop work and contact your Genus FCM</option>
         </select>
 </div>
-
-<script>
-  function toggleACMField() {
-    const acmSelect = document.getElementById("bog-ACM");
-    const acmField = document.getElementById("bog-acm-notification-field");
-    const acmInput = document.getElementById("bog-acm-yes");
-
-    if (acmSelect.value === "Yes") {
-      acmField.style.display = "block";
-      acmInput.required = true;
-    } else {
-      acmField.style.display = "none";
-      acmInput.required = false;
-      acmInput.value = ""; // clear the input if hidden
-    }
-  }
-</script>
                 
         <label for="bog-guards">Ensure Telstra guards are fully locked around all open manholes. Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.</label>
           <input type="checkbox" id="bog-guards" name="bog-guards" required> Refer to HSE Guidance Note - Spot Sampling (Manhole) Gas Action Chart.
@@ -562,15 +525,15 @@
       const day = String(perthTime.getDate()).padStart(2, '0');
       const todayString = `${year}-${month}-${day}`;
       
+      // Set default date for all forms
       const bogDateField = document.getElementById('bog-date');
-    const pitlinkinDateField = document.getElementById('pitlinkin-date');
-    const reinstatementDateField = document.getElementById('reinstatement-date');
+      const pitlinkinDateField = document.getElementById('pitlinkin-date');
+      const reinstatementDateField = document.getElementById('reinstatement-date');
 
-    if (bogDateField) bogDateField.value = todayString;
-    if (pitlinkinDateField) pitlinkinDateField.value = todayString;
-    if (reinstatementDateField) reinstatementDateField.value = todayString;
-  }
-
+      if (bogDateField) bogDateField.value = todayString;
+      if (pitlinkinDateField) pitlinkinDateField.value = todayString;
+      if (reinstatementDateField) reinstatementDateField.value = todayString;
+    }
 
     function showForm(formId) {
       // Hide thank you message
@@ -585,10 +548,8 @@
       // Show selected form
       document.getElementById(`form-${formId}`).classList.remove('hidden');
       
-     // Call it directly or on form load
-  document.addEventListener('DOMContentLoaded', function () {
-    setDefaultDate();
-  });
+      // Set default date for the current form
+      setDefaultDate();
       
       // Hide all buttons except the selected one
       const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
@@ -621,19 +582,57 @@
         btn.classList.remove('active');
       });
     }
+
+    function validateSWMS() {
+      const checkboxes = document.querySelectorAll('input[name="bog-SWMS[]"]');
+      const errorMsg = document.getElementById("swms-error");
+      let isChecked = false;
+
+      checkboxes.forEach((cb) => {
+        if (cb.checked) isChecked = true;
+      });
+
+      if (!isChecked) {
+        errorMsg.style.display = "block";
+        return false;
+      } else {
+        errorMsg.style.display = "none";
+        return true;
+      }
+    }
+
+    function toggleACMField() {
+      const acmSelect = document.getElementById("bog-ACM");
+      const acmField = document.getElementById("bog-acm-notification-field");
+      const acmInput = document.getElementById("bog-acm-yes");
+
+      if (acmSelect.value === "Yes") {
+        acmField.style.display = "block";
+        acmInput.required = true;
+      } else {
+        acmField.style.display = "none";
+        acmInput.required = false;
+        acmInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    // Initialize default dates when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setDefaultDate();
+    });
   </script>
 
   <script>
-  function initAutocomplete() {
-    const inputs = document.querySelectorAll(".address-autocomplete");
-    inputs.forEach(input => {
-      new google.maps.places.Autocomplete(input, {
-        types: ['geocode'],
-        componentRestrictions: { country: 'au' }
+    function initAutocomplete() {
+      const inputs = document.querySelectorAll(".address-autocomplete");
+      inputs.forEach(input => {
+        new google.maps.places.Autocomplete(input, {
+          types: ['geocode'],
+          componentRestrictions: { country: 'au' }
+        });
       });
-    });
-  }
-</script>
+    }
+  </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
