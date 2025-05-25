@@ -45,10 +45,10 @@
     }
 
     .header-logo {
-      height: 300px;
+      height: 250px;
       width: auto;
       object-fit: contain;
-      max-width: 500px;
+      max-width: 300px;
     }
 
     .header-title {
@@ -63,17 +63,17 @@
     }
 
     .header-spacer {
-      width: 300px; /* Same as logo width to center the title */
+      width: 250px; /* Same as logo width to center the title */
     }
 
     /* Responsive media queries for header logo */
     @media screen and (max-width: 1200px) {
       .header-logo {
-        height: 300px;
-        max-width: 500px;
+        height: 200px;
+        max-width: 250px;
       }
       .header-spacer {
-        width: 300px;
+        width: 200px;
       }
       .header-title h1 {
         font-size: 2.5rem;
@@ -86,11 +86,11 @@
         padding: 0 1rem;
       }
       .header-logo {
-        height: 200px;
-        max-width: 315px;
+        height: 150px;
+        max-width: 180px;
       }
       .header-spacer {
-        width: 200px;
+        width: 150px;
       }
       .header-title h1 {
         font-size: 2rem;
@@ -103,11 +103,11 @@
         padding: 0 0.5rem;
       }
       .header-logo {
-        height: 175px;
-        max-width: 196px;
+        height: 120px;
+        max-width: 140px;
       }
       .header-spacer {
-        width: 175px;
+        width: 120px;
       }
       .header-title h1 {
         font-size: 1.5rem;
@@ -119,11 +119,11 @@
         height: 180px;
       }
       .header-logo {
-        height: 140px;
-        max-width: 131px;
+        height: 100px;
+        max-width: 120px;
       }
       .header-spacer {
-        width: 140px;
+        width: 100px;
       }
       .header-title h1 {
         font-size: 1.3rem;
@@ -553,6 +553,21 @@
   </main>
 
   <script>
+    // Set default date to today in Western Standard Time (Australia/Perth)
+    function setDefaultDate() {
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      const todayString = `${year}-${month}-${day}`;
+      
+      const bogDateField = document.getElementById('bog-date');
+      if (bogDateField) {
+        bogDateField.value = todayString;
+      }
+    }
+
     function showForm(formId) {
       // Hide thank you message
       document.getElementById('thank-you-message').style.display = 'none';
@@ -565,6 +580,11 @@
       
       // Show selected form
       document.getElementById(`form-${formId}`).classList.remove('hidden');
+      
+      // Set default date when showing the BOG form
+      if (formId === 'bog') {
+        setDefaultDate();
+      }
       
       // Hide all buttons except the selected one
       const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
