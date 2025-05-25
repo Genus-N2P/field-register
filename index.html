@@ -566,14 +566,36 @@
       if (bogDateField) {
         bogDateField.value = todayString;
       }
+}
+  <script>
+    // Set default date to today in Western Standard Time (Australia/Perth)
+    function setDefaultDate() {
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      const todayString = `${year}-${month}-${day}`;
+      
       const reinstatementDateField = document.getElementById('reinstatement-date');
       if (reinstatementDateField) {
-        reinstatementDateField.value = todayString;
-    }
+        reinstatementDateField.value = todayString
+      }
+}
+  <script>
+    // Set default date to today in Western Standard Time (Australia/Perth)
+    function setDefaultDate() {
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      const todayString = `${year}-${month}-${day}`;
+      
       const pitlinkinDateField = document.getElementById('pitlinkin-date');
       if (pitlinkinDateField) {
         pitlinkinDateField.value = todayString;
-    }
+      }
 }
 
     function showForm(formId) {
