@@ -62,7 +62,7 @@
     }
 
     .header-spacer {
-      width: 200px; /* Same as logo width to center the title */
+      width: 300px; /* Same as logo width to center the title */
     }
 
     .container {
@@ -97,6 +97,23 @@
 
     .form-switcher button:hover {
       background-color: var(--accent-60);
+    }
+
+    .form-switcher button.active {
+      background-color: var(--primary-accent);
+    }
+
+    .thank-you-message {
+      background-color: var(--accent-10);
+      border: 2px solid var(--primary-accent);
+      color: var(--primary-dark);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      display: none;
     }
 
     .hidden {
@@ -163,11 +180,15 @@
   </header>
 
   <main class="container">
+    <div id="thank-you-message" class="thank-you-message">
+      Thank you for your submission
+    </div>
+    
     <section class="form-switcher">
       <h2>Please select which form you require:</h2>
-      <button onclick="showForm('bog')">Boots on Ground</button>
-      <button onclick="showForm('reinstatement')">Reinstatement Register</button>
-      <button onclick="showForm('pitlinkin')">Pit Link-in Register</button>
+      <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
+      <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
+      <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
 
     <div id="form-bog" class="form-section hidden">
@@ -402,7 +423,7 @@
         <textarea id="bog-comments" name="bog-comments" placeholder="Track required actions in MyOsh with SHEQ support"></textarea>
 
         <div class="form-footer">
-          <button type="submit">Submit</button>
+          <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
         </div>
       </form>
     </div>
@@ -435,7 +456,7 @@
         <textarea id="reinstatement-notes" name="reinstatement-notes"></textarea>
 
         <div class="form-footer">
-          <button type="submit">Submit</button>
+          <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
         </div>
       </form>
     </div>
@@ -460,7 +481,7 @@
         <input type="date" id="pitlinkin-scheduled-date" name="pitlinkin-scheduled-date" />
 
         <div class="form-footer">
-          <button type="submit">Submit</button>
+          <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
         </div>
       </form>
     </div>
@@ -468,11 +489,48 @@
 
   <script>
     function showForm(formId) {
+      // Hide thank you message
+      document.getElementById('thank-you-message').style.display = 'none';
+      
+      // Hide all forms
       const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
       forms.forEach(id => {
         document.getElementById(id).classList.add('hidden');
       });
+      
+      // Show selected form
       document.getElementById(`form-${formId}`).classList.remove('hidden');
+      
+      // Hide all buttons except the selected one
+      const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+      buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btnId === `btn-${formId}`) {
+          btn.classList.add('active');
+          btn.style.display = 'inline-block';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+    }
+
+    function resetToFormSwitcher() {
+      // Show thank you message
+      document.getElementById('thank-you-message').style.display = 'block';
+      
+      // Hide all forms
+      const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+      forms.forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      
+      // Show all buttons and remove active state
+      const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+      buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        btn.style.display = 'inline-block';
+        btn.classList.remove('active');
+      });
     }
   </script>
 
