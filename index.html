@@ -278,7 +278,7 @@
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
       <p>Please complete prior to starting work.<br>This does not replace the JHA (JHA to be uploaded to IBISS - one required per site).</p>
-      <form onsubmit="return validateSWMS()">
+      <form onsubmit="return validateForm()">
         <label for="bog-date">Date</label>
         <input type="date" id="bog-date" name="bog-date" required />
 
@@ -466,6 +466,8 @@
         
         <label for="bog-comments">Additional Comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
         <textarea id="bog-comments" name="bog-comments" placeholder="Track required actions in MyOsh with SHEQ support"></textarea>
+
+<p id="form-error-message" style="color: red; display: none;">Please review your form for errors.</p>
 
         <div class="form-footer">
           <button type="button" class="btn-back" onclick="confirmReset('bog')">Back</button>
@@ -1112,6 +1114,23 @@ function confirmReset(formType) {
                 return true; // Allow form submission
             }
         }
+
+function validateForm() {
+  const form = document.querySelector('#form-bog form');
+  const isValid = form.checkValidity();
+  const swmsValid = validateSWMS();
+  const errorMsg = document.getElementById('form-error-message');
+
+  if (!isValid || !swmsValid) {
+    errorMsg.style.display = 'block';
+    // Trigger browser-native validation tooltips
+    form.reportValidity(); 
+    return false;
+  }
+
+  errorMsg.style.display = 'none';
+  return true;
+}
 
     function toggleACMField() {
   const select = document.getElementById("bog-ACM");
