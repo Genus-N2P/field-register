@@ -900,20 +900,26 @@ function confirmReset(formType) {
       if (reinstatementDateField) reinstatementDateField.value = todayString;
     }
 
+    function showForm(formType) {
+      console.log('showForm called with:', formType);
+
     function showForm(formId) {
       // Hide thank you message
       document.getElementById('thank-you-message').style.display = 'none';
           
-       // Hide all forms
-  const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
-  forms.forEach(id => {
-    document.getElementById(id).classList.add('hidden');
-    document.getElementById(`btn-${id.replace('form-', '')}`).classList.remove('active');
-  });
+     const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+            forms.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.add('hidden');
+                }
+            });
   
-  // Show selected form and activate button
-  document.getElementById(`form-${formId}`).classList.remove('hidden');
-  document.getElementById(`btn-${formId}`).classList.add('active');
+  // Show selected form
+            const targetForm = document.getElementById(`form-${formType}`);
+            if (targetForm) {
+                targetForm.classList.remove('hidden');
+            }
         }
       
            function submitToAirtable(formType, formData) {
@@ -938,16 +944,19 @@ function confirmReset(formType) {
       setDefaultDate();
       
       // Hide all buttons except the selected one
-      const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
-      buttons.forEach(btnId => {
-        const btn = document.getElementById(btnId);
-        if (btnId === `btn-${formId}`) {
-          btn.classList.add('active');
-          btn.style.display = 'inline-block';
-        } else {
-          btn.style.display = 'none';
-        }
-      });
+            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (btnId === `btn-${formType}`) {
+                        btn.classList.add('active');
+                        btn.style.display = 'inline-block';
+                    } else {
+                        btn.classList.remove('active');
+                        btn.style.display = 'none';
+                    }
+                }
+            });
 
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
