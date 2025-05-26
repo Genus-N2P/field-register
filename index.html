@@ -903,7 +903,6 @@ function confirmReset(formType) {
     function showForm(formType) {
       console.log('showForm called with:', formType);
 
-    function showForm(formId) {
       // Hide thank you message
       document.getElementById('thank-you-message').style.display = 'none';
           
@@ -920,7 +919,6 @@ function confirmReset(formType) {
             if (targetForm) {
                 targetForm.classList.remove('hidden');
             }
-        }
       
            function submitToAirtable(formType, formData) {
             const config = AIRTABLE_CONFIG[formType];
@@ -940,9 +938,6 @@ function confirmReset(formType) {
             });
         }
       
-      // Set default date for the current form
-      setDefaultDate();
-      
       // Hide all buttons except the selected one
             const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
             buttons.forEach(btnId => {
@@ -957,6 +952,8 @@ function confirmReset(formType) {
                     }
                 }
             });
+
+        }
 
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
@@ -1066,6 +1063,7 @@ function confirmReset(formType) {
     function resetToFormSwitcher() {
       // Show thank you message
       document.getElementById('thank-you-message').style.display = 'block';
+        }
 
         function returnToFormSwitcher() {
             // Hide all forms
