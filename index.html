@@ -955,6 +955,15 @@ function confirmReset(formType) {
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // Validate SWMS checkboxes first
+            if (!validateSWMS()) {
+                return; // Stop submission if validation fails
+            }
+            
+            // Collect checkbox values for SWMS
+            const checkedSWMS = Array.from(document.querySelectorAll('input[name="bog-SWMS[]"]:checked'))
+                                     .map(checkbox => checkbox.value);
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
@@ -1078,23 +1087,20 @@ function confirmReset(formType) {
       });
     }
 
-    function validateSWMS() {
-      const checkboxes = document.querySelectorAll('input[name="bog-SWMS[]"]');
-      const errorMsg = document.getElementById("swms-error");
-      let isChecked = false;
-
-      checkboxes.forEach((cb) => {
-        if (cb.checked) isChecked = true;
-      });
-
-      if (!isChecked) {
-        errorMsg.style.display = "block";
-        return false;
-      } else {
-        errorMsg.style.display = "none";
-        return true;
-      }
-    }
+        function validateSWMS() {
+            const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
+            const errorElement = document.getElementById('swms-error');
+            
+            if (checkedSWMS.length === 0) {
+                // Show error message
+                errorElement.style.display = 'block';
+                return false; // Prevent form submission
+            } else {
+                // Hide error message
+                errorElement.style.display = 'none';
+                return true; // Allow form submission
+            }
+        }
 
     function toggleACMField() {
       const acmSelect = document.getElementById("bog-ACM");
