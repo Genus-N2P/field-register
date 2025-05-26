@@ -259,10 +259,10 @@
     </div>
     
     <section class="form-switcher">
-        <h2>Please select which form you require:</h2>
-        <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
-        <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
-        <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
+      <h2>Please select which form you require:</h2>
+      <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
+      <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
+      <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
 
     <div id="form-bog" class="form-section hidden">
@@ -1057,12 +1057,6 @@ function confirmReset(formType) {
     function resetToFormSwitcher() {
       // Show thank you message
       document.getElementById('thank-you-message').style.display = 'block';
-      
-      // Hide all forms
-      const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
-      forms.forEach(id => {
-        document.getElementById(id).classList.add('hidden');
-      });
       
       // Show all buttons and remove active state
       const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
