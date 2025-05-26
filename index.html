@@ -927,19 +927,31 @@ function confirmReset(formType) {
       if (reinstatementDateField) reinstatementDateField.value = todayString;
     }
 
-    function showForm(formType) {
-      console.log('showForm called with:', formType);
+function showForm(formType) {
+    console.log('showForm called with:', formType);
 
-      // Hide thank you message
-      document.getElementById('thank-you-message').style.display = 'none';
-          
-     const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
-            forms.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.classList.add('hidden');
-                }
-            });
+    // Hide thank you message
+    document.getElementById('thank-you-message').style.display = 'none';
+        
+    // Hide all forms using both methods
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    forms.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.add('hidden');
+            element.style.display = 'none';
+        }
+    });
+
+    // Show selected form using both methods
+    const targetForm = document.getElementById(`form-${formType}`);
+    if (targetForm) {
+        targetForm.classList.remove('hidden');
+        targetForm.style.display = 'block';
+        console.log(`Showing form: form-${formType}`);
+    } else {
+        console.error(`Form not found: form-${formType}`);
+    }
 
       // Set default date for the current form
       setDefaultDate();
@@ -1198,12 +1210,13 @@ function returnToFormSwitcher() {
     // Hide thank you message
     document.getElementById('thank-you-message').style.display = 'none';
     
-    // Hide all forms
+    // Hide all forms using both methods
     const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
             element.classList.add('hidden');
+            element.style.display = 'none';
             // Reset the form
             element.reset();
             // Remove any error styling
@@ -1216,7 +1229,6 @@ function returnToFormSwitcher() {
     const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
-        // Safety check
         if (btn) {
             btn.style.display = 'inline-block';
             btn.classList.remove('active');
