@@ -1066,6 +1066,13 @@ function confirmReset(formType) {
     function resetToFormSwitcher() {
       // Show thank you message
       document.getElementById('thank-you-message').style.display = 'block';
+
+        function returnToFormSwitcher() {
+            // Hide all forms
+            const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+            forms.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
       
       // Show all buttons and remove active state
       const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
