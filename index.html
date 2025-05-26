@@ -266,6 +266,7 @@
   <div id="thank-you-message" class="thank-you-message" style="display: none;">
     <h3 id="message-title">Thank you!</h3>
     <p id="message-body">Your form has been submitted successfully.</p>
+    <button type="button" class="btn-back" onclick="returnToFormSwitcher()">Submit Another Form</button>
   </div>
 </main>
     
@@ -470,7 +471,7 @@
 
         <div class="form-footer">
           <button type="button" class="btn-back" onclick="confirmReset('bog')">Back</button>
-          <button type="submit" onclick="resetToFormSwitcher()">Submit BOG</button>
+          <button type="submit">Submit BOG</button>
         </div>
       </form>
     </div>
@@ -668,7 +669,7 @@
 
         <div class="form-footer">
           <button type="button" class="btn-back" onclick="confirmReset('reinstatement')">Back</button>
-          <button type="submit" onclick="resetToFormSwitcher()">Submit Reinstatement</button>
+          <button type="submit">Submit Reinstatement</button>
         </div>
       </form>
     </div>
@@ -852,7 +853,7 @@
 
         <div class="form-footer">
           <button type="button" class="btn-back" onclick="confirmReset('pitlinkin')">Back</button>
-          <button type="submit" onclick="resetToFormSwitcher()">Submit Pit Link-in</button>
+          <button type="submit">Submit Pit Link-in</button>
         </div>
       </form>
     </div>
@@ -887,6 +888,26 @@ function confirmReset(formType) {
             }
         };
 
+	   // Global submitToAirtable function
+           function submitToAirtable(formType, formData) {
+            const config = AIRTABLE_CONFIG[formType];
+            const url = `https://api.airtable.com/v0/${config.baseId}/${config.tableId}`;
+            
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${config.apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    records: [{
+                        fields: formData
+                    }]
+                })
+            });
+        }
+
+
     // Set default date to today in Western Standard Time (Australia/Perth)
     function setDefaultDate() {
       const now = new Date();
@@ -919,35 +940,11 @@ function confirmReset(formType) {
                     element.classList.add('hidden');
                 }
             });
-  
-  // Show selected form
-            const targetForm = document.getElementById(`form-${formType}`);
-            if (targetForm) {
-                targetForm.classList.remove('hidden');
-            }
-      
-           function submitToAirtable(formType, formData) {
-            const config = AIRTABLE_CONFIG[formType];
-            const url = `https://api.airtable.com/v0/${config.baseId}/${config.tableId}`;
-            
-            return fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${config.apiKey}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    records: [{
-                        fields: formData
-                    }]
-                })
-            });
-        }
-      
+
       // Set default date for the current form
       setDefaultDate();
 
-      // Hide all buttons except the selected one
+       // Hide all buttons except the selected one
             const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
@@ -961,9 +958,118 @@ function confirmReset(formType) {
                     }
                 }
             });
-
         }
 
+function validateSWMS() {
+    const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
+    const errorElement = document.getElementById('swms-error');
+    
+    if (checkedSWMS.length === 0) {
+        // Show error message if it exists
+        if (errorElement) {
+            errorElement.style.display = 'block';
+        }
+        return false; // Prevent form submission
+    } else {
+        // Hide error message if it exists
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
+        return true; // Allow form submission
+    }
+}
+
+function validateBogForm() {
+    const form = document.querySelector('#bog-form'); // Updated selector
+    const isValid = form.checkValidity();
+    
+    if (!isValid || !swmsValid) {
+        showErrorMessage();
+        // Add red styling to invalid fields
+	addFieldErrorStyling(form);
+        form.reportValidity(); 
+        return false;
+    }
+    
+    return true;
+}
+
+function validateGenericForm(formId) {
+    const form = document.getElementById(formId); // Updated selector
+    const isValid = form.checkValidity();
+    const swmsValid = validateSWMS();
+    
+    if (!isValid || !swmsValid) {
+        showErrorMessage();
+        // Add red styling to invalid fields
+	addFieldErrorStyling(form);
+        form.reportValidity(); 
+        return false;
+    }
+    
+    return true;
+}
+
+  function addFieldErrorStyling(form) {
+    // Remove existing error classes
+    const existingErrors = form.querySelectorAll('.field-error');
+    existingErrors.forEach(el => el.classList.remove('field-error'));
+    
+    // Add error class to invalid fields
+    const invalidFields = form.querySelectorAll(':invalid');
+    invalidFields.forEach(field => {
+        field.classList.add('field-error');
+        // Also add to parent if it's a field container
+        if (field.parentElement) {
+            field.parentElement.classList.add('field-error');
+        }
+    });
+}
+
+function showErrorMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    const messageTitle = document.getElementById('message-title');
+    const messageBody = document.getElementById('message-body');
+    
+    // Show error message
+    messageTitle.textContent = '';
+    messageBody.textContent = 'Please review your submission and ensure all fields are completed.';
+    messageBody.style.color = 'red';
+    messageBox.style.display = 'block';
+}
+
+function showSuccessMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    const messageTitle = document.getElementById('message-title');
+    const messageBody = document.getElementById('message-body');
+    
+    // Show success message
+    messageTitle.textContent = 'Thank you!';
+    // Added button and auto-redirect message
+    messageBody.innerHTML = 'Your form has been submitted successfully.<br><br><button type="button" class="btn-back" onclick="returnToFormSwitcher()">Submit Another Form</button><br><small>You will be redirected to form selection in 5 seconds...</small>';
+    messageBody.style.color = ''; // Reset color to default
+    messageBox.style.display = 'block';
+    
+    // Auto-redirect after 5 seconds
+    setTimeout(() => {
+        returnToFormSwitcher();
+        document.getElementById('thank-you-message').style.display = 'none';
+    }, 5000);
+}
+
+// Optional: Function to reset/hide the message
+function hideMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    messageBox.style.display = 'none';
+  // Hide message if validation passes (you may replace this with success logic)
+  messageBox.style.display = 'none';
+  return true;
+}
+
+    // Initialize default dates when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setDefaultDate();
+      
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1003,7 +1109,7 @@ function confirmReset(formType) {
             
             try {
                 await submitToAirtable('bog', formData);
-                resetToFormSwitcher();
+                showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting BOG form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1012,6 +1118,11 @@ function confirmReset(formType) {
 
         document.getElementById('reinstatement-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+       // Validate the form
+        if (!validateGenericForm('reinstatement-form')) {
+            return;
+        }
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
@@ -1038,7 +1149,7 @@ function confirmReset(formType) {
             
             try {
                 await submitToAirtable('reinstatement', formData);
-                resetToFormSwitcher();
+                showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Reinstatement form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1047,6 +1158,11 @@ function confirmReset(formType) {
 
         document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+       // Validate the form
+        if (!validateGenericForm('pitlinkin-form')) {
+            return;
+        }
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
@@ -1071,100 +1187,49 @@ function confirmReset(formType) {
             
             try {
                 await submitToAirtable('pitlinkin', formData);
-                resetToFormSwitcher();
+                showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Pit Link-in form:', error);
                 alert('Error submitting form. Please try again.');
             }
         });
 
-    function resetToFormSwitcher() {
-      // Show thank you message
-      document.getElementById('thank-you-message').style.display = 'block';
+function returnToFormSwitcher() {
+    // Hide thank you message
+    document.getElementById('thank-you-message').style.display = 'none';
+    
+    // Hide all forms
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    forms.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.add('hidden');
+            // Reset the form
+            element.reset();
+            // Remove any error styling
+            const errorFields = element.querySelectorAll('.field-error');
+            errorFields.forEach(field => field.classList.remove('field-error'));
         }
+    });
 
-        function returnToFormSwitcher() {
-            // Hide all forms
-            const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
-            forms.forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-      
-      // Show all buttons and remove active state
-      const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
-      buttons.forEach(btnId => {
+    // Show all buttons and remove active state
+    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
-        btn.style.display = 'inline-block';
-        btn.classList.remove('active');
-      });
-    }
-
-function validateSWMS() {
-    const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
-    const errorElement = document.getElementById('swms-error');
-    
-    if (checkedSWMS.length === 0) {
-        // Show error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'block';
+        // Safety check
+        if (btn) {
+            btn.style.display = 'inline-block';
+            btn.classList.remove('active');
         }
-        return false; // Prevent form submission
-    } else {
-        // Hide error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'none';
-        }
-        return true; // Allow form submission
-    }
+    });
 }
 
-function validateForm() {
-    const form = document.querySelector('#bog-form'); // Updated selector
-    const isValid = form.checkValidity();
-    const swmsValid = validateSWMS();
-    
-    if (!isValid || !swmsValid) {
-        showErrorMessage();
-        // Native HTML validation tooltips
-        form.reportValidity(); 
-        return false;
-    }
-    
-    return true;
-}
+  // Show selected form
+            const targetForm = document.getElementById(`form-${formType}`);
+            if (targetForm) {
+                targetForm.classList.remove('hidden');
+            }
 
-function showErrorMessage() {
-    const messageBox = document.getElementById('thank-you-message');
-    const messageTitle = document.getElementById('message-title');
-    const messageBody = document.getElementById('message-body');
-    
-    // Show error message
-    messageTitle.textContent = '';
-    messageBody.textContent = 'Please review your form for errors.';
-    messageBody.style.color = 'red';
-    messageBox.style.display = 'block';
-}
-
-function showSuccessMessage() {
-    const messageBox = document.getElementById('thank-you-message');
-    const messageTitle = document.getElementById('message-title');
-    const messageBody = document.getElementById('message-body');
-    
-    // Show success message
-    messageTitle.textContent = 'Thank you!';
-    messageBody.textContent = 'Your form has been submitted successfully.';
-    messageBody.style.color = ''; // Reset color to default
-    messageBox.style.display = 'block';
-}
-
-// Optional: Function to reset/hide the message
-function hideMessage() {
-    const messageBox = document.getElementById('thank-you-message');
-    messageBox.style.display = 'none';
-  // Hide message if validation passes (you may replace this with success logic)
-  messageBox.style.display = 'none';
-  return true;
-}
     function toggleACMField() {
   const select = document.getElementById("bog-ACM");
   const acmField = document.getElementById("bog-acm-notification-field");
@@ -1239,9 +1304,7 @@ function hideMessage() {
       }
     }
 
-    // Initialize default dates when the page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      setDefaultDate();
+
     });
   </script>
 
