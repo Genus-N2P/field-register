@@ -968,11 +968,11 @@ function confirmReset(formType) {
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Validate SWMS checkboxes first
-            if (!validateSWMS()) {
-                return; // Stop submission if validation fails
+            // Validate the entire form
+    if (!validateForm()) {
+        return; // Stop submission if validation fails
             }
-            
+
             // Collect checkbox values for SWMS
             const checkedSWMS = Array.from(document.querySelectorAll('input[name="bog-SWMS[]"]:checked'))
                                      .map(checkbox => checkbox.value);
@@ -1099,41 +1099,68 @@ function confirmReset(formType) {
       });
     }
 
-        function validateSWMS() {
-            const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
-            const errorElement = document.getElementById('swms-error');
-            
-            if (checkedSWMS.length === 0) {
-                // Show error message
-                errorElement.style.display = 'block';
-                return false; // Prevent form submission
-            } else {
-                // Hide error message
-                errorElement.style.display = 'none';
-                return true; // Allow form submission
-            }
+function validateSWMS() {
+    const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
+    const errorElement = document.getElementById('swms-error');
+    
+    if (checkedSWMS.length === 0) {
+        // Show error message if it exists
+        if (errorElement) {
+            errorElement.style.display = 'block';
         }
+        return false; // Prevent form submission
+    } else {
+        // Hide error message if it exists
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
+        return true; // Allow form submission
+    }
+}
 
 function validateForm() {
-  const form = document.querySelector('#form-bog form');
-  const isValid = form.checkValidity();
-  const swmsValid = validateSWMS();
-  const messageBox = document.getElementById('thank-you-message');
-  const messageTitle = document.getElementById('message-title');
-  const messageBody = document.getElementById('message-body');
+    const form = document.querySelector('#bog-form'); // Updated selector
+    const isValid = form.checkValidity();
+    const swmsValid = validateSWMS();
+    
+    if (!isValid || !swmsValid) {
+        showErrorMessage();
+        // Native HTML validation tooltips
+        form.reportValidity(); 
+        return false;
+    }
+    
+    return true;
+}
 
-  if (!isValid || !swmsValid) {
+function showErrorMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    const messageTitle = document.getElementById('message-title');
+    const messageBody = document.getElementById('message-body');
+    
     // Show error message
     messageTitle.textContent = '';
     messageBody.textContent = 'Please review your form for errors.';
     messageBody.style.color = 'red';
     messageBox.style.display = 'block';
+}
 
-    // Native HTML validation tooltips
-    form.reportValidity(); 
-    return false;
-  }
+function showSuccessMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    const messageTitle = document.getElementById('message-title');
+    const messageBody = document.getElementById('message-body');
+    
+    // Show success message
+    messageTitle.textContent = 'Thank you!';
+    messageBody.textContent = 'Your form has been submitted successfully.';
+    messageBody.style.color = ''; // Reset color to default
+    messageBox.style.display = 'block';
+}
 
+// Optional: Function to reset/hide the message
+function hideMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    messageBox.style.display = 'none';
   // Hide message if validation passes (you may replace this with success logic)
   messageBox.style.display = 'none';
   return true;
