@@ -241,6 +241,16 @@
       border-radius: 0.5rem;
       cursor: pointer;
     }
+
+.field-error input {
+  border: 2px solid #dc3545;
+  background-color: #fff5f5;
+}
+
+.field-error label {
+  color: #dc3545;
+  font-weight: bold;
+}
   </style>
 </head>
 <body>
@@ -268,7 +278,7 @@
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
       <p>Please complete prior to starting work.<br>This does not replace the JHA (JHA to be uploaded to IBISS - one required per site).</p>
-      <form>
+      <form onsubmit="return validateSWMS()">
         <label for="bog-date">Date</label>
         <input type="date" id="bog-date" name="bog-date" required />
 
@@ -279,7 +289,7 @@
         <input type="text" id="bog-site-contact" name="bog-site-contact" required />
 
         <label for="bog-onsite-crew-lead-mobile">Onsite Crew Lead Mobile</label>
-        <input type="tel" id="bog-onsite-crew-lead-mobile" name="bog-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" required placeholder="Enter 10-digit number" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
+        <input type="tel" id="bog-onsite-crew-lead-mobile" name="bog-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" placeholder="Enter 10-digit number" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
 
         <label for="bog-company-name">Your Company Name</label>
         <select id="bog-company-name" name="bog-company-name" required>
@@ -288,7 +298,7 @@
           <option value="Connectit Communications">Connectit Communications</option>
           <option value="Dawn Techcomms">Dawn Techcomms</option>
           <option value="DDS Underground">DDS Underground</option>
-          <option value="Dizza Communicatins">Dizza Communicatins</option>
+          <option value="Dizza Communications">Dizza Communications</option>
           <option value="Engytech Engineering Services">Engytech Engineering Services</option>
           <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
           <option value="Genus Services">Genus Services</option>
@@ -411,8 +421,7 @@
         <label for="bog-jha">I confirm all workers have been inducted and have signed onto the JHA.</label>
           <input type="checkbox" id="bog-jha-uploaded" name="bog-jha-uploaded" required> Please induct all visitors to JHA and complete prior to starting at each site.
 
-        <form onsubmit="return validateSWMS()">
-  <label for="bog-SWMS">
+    <label for="bog-SWMS">
     Discipline with task Specific SWMS
     <br />
     (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)
@@ -430,7 +439,6 @@
   <input type="checkbox" name="bog-SWMS[]" value="Reinstatement" /> Reinstatement (0012 Excavation & Trenching)<br />
 
   <p id="swms-error" style="color: red; display: none;">Please select at least one SWMS discipline.</p>
-</form>
 
         <label for="bog-ACM">Will you be disturbing/modifying any possible ACM while onsite?</label>
         <select id="bog-ACM" name="bog-ACM" onchange="toggleACMField()" required>
@@ -443,7 +451,7 @@
 <div id="bog-acm-notification-field" style="display: none; margin-top: 10px;">
   <label for="bog-acm-yes">If yes, have you received your Genus ACM Removal Notification Code and placed on your Construction</label>
   Required for all ACM Pit replacement work, with Company Class B, worker to have remove Non-Friable accreditation with ACM supervisor in the vicinity.<br />
-  <select id="bog-acm-yes" name="bog-acm-yes" required>
+  <select id="bog-acm-yes" name="bog-acm-yes">
           <option value="">Select one</option>
           <option value="Yes">Yes, continue</option>
           <option value="No">No, stop work and contact your Genus FCM</option>
@@ -629,7 +637,7 @@
           <option value="Connectit Communications">Connectit Communications</option>
           <option value="Dawn Techcomms">Dawn Techcomms</option>
           <option value="DDS Underground">DDS Underground</option>
-          <option value="Dizza Communicatins">Dizza Communicatins</option>
+          <option value="Dizza Communications">Dizza Communications</option>
           <option value="Engytech Engineering Services">Engytech Engineering Services</option>
           <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
           <option value="Genus Services">Genus Services</option>
@@ -830,7 +838,7 @@
           <option value="Connectit Communications">Connectit Communications</option>
           <option value="Dawn Techcomms">Dawn Techcomms</option>
           <option value="DDS Underground">DDS Underground</option>
-          <option value="Dizza Communicatins">Dizza Communicatins</option>
+          <option value="Dizza Communications">Dizza Communications</option>
           <option value="Engytech Engineering Services">Engytech Engineering Services</option>
           <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
           <option value="Genus Services">Genus Services</option>
@@ -1106,19 +1114,18 @@ function confirmReset(formType) {
         }
 
     function toggleACMField() {
-      const acmSelect = document.getElementById("bog-ACM");
-      const acmField = document.getElementById("bog-acm-notification-field");
-      const acmInput = document.getElementById("bog-acm-yes");
+  const select = document.getElementById("bog-ACM");
+  const acmField = document.getElementById("bog-acm-notification-field");
+  const acmYes = document.getElementById("bog-acm-yes");
 
-      if (acmSelect.value === "Yes") {
-        acmField.style.display = "block";
-        acmInput.required = true;
-      } else {
-        acmField.style.display = "none";
-        acmInput.required = false;
-        acmInput.value = ""; // clear the input if hidden
-      }
-    }
+  if (select.value === "Yes") {
+    acmField.style.display = "block";
+    acmYes.setAttribute("required", "required");
+  } else {
+    acmField.style.display = "none";
+    acmYes.removeAttribute("required");
+  }
+}
 
     function toggleSurfaceTypeField() {
       const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
