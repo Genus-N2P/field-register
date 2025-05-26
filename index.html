@@ -855,7 +855,7 @@ function confirmReset(formType) {
             
             if (isConfirmed) {
                 // Reset the specific form
-                document.getElementById(`${formType}-form`).reset();
+                document.getElementById(`form-${formType}`).reset();
                 
                 // Return to form switcher
                 returnToFormSwitcher();
