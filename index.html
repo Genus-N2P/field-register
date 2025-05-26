@@ -263,12 +263,11 @@
   </header>
 
   <main class="container">
-    <div id="thank-you-message" class="thank-you-message">
-      <h3>Thank you!</h3>
-        <p>Your form has been submitted successfully.</p>
-    </div>
-
-<p id="form-error-message" style="color: red; display: none;">Please review your form for errors.</p>
+  <div id="thank-you-message" class="thank-you-message" style="display: none;">
+    <h3 id="message-title">Thank you!</h3>
+    <p id="message-body">Your form has been submitted successfully.</p>
+  </div>
+</main>
     
     <section class="form-switcher">
       <h2>Please select which form you require:</h2>
@@ -1119,19 +1118,26 @@ function validateForm() {
   const form = document.querySelector('#form-bog form');
   const isValid = form.checkValidity();
   const swmsValid = validateSWMS();
-  const errorMsg = document.getElementById('form-error-message');
+  const messageBox = document.getElementById('thank-you-message');
+  const messageTitle = document.getElementById('message-title');
+  const messageBody = document.getElementById('message-body');
 
   if (!isValid || !swmsValid) {
-    errorMsg.style.display = 'block';
-    // Trigger browser-native validation tooltips
+    // Show error message
+    messageTitle.textContent = '';
+    messageBody.textContent = 'Please review your form for errors.';
+    messageBody.style.color = 'red';
+    messageBox.style.display = 'block';
+
+    // Native HTML validation tooltips
     form.reportValidity(); 
     return false;
   }
 
-  errorMsg.style.display = 'none';
+  // Hide message if validation passes (you may replace this with success logic)
+  messageBox.style.display = 'none';
   return true;
 }
-
     function toggleACMField() {
   const select = document.getElementById("bog-ACM");
   const acmField = document.getElementById("bog-acm-notification-field");
