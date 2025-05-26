@@ -935,6 +935,9 @@ function confirmReset(formType) {
             });
         }
       
+      // Set default date for the current form
+      setDefaultDate();
+
       // Hide all buttons except the selected one
             const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
             buttons.forEach(btnId => {
