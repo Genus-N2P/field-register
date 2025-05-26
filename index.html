@@ -168,6 +168,14 @@
       background-color: var(--primary-accent);
     }
 
+    .btn-back {
+      background-color: #6c757d !important;
+    } 
+      
+    .btn-back:hover {
+      background-color: #5a6268 !important;
+    }       
+
     .thank-you-message {
       background-color: var(--accent-10);
       border: 2px solid var(--primary-accent);
@@ -246,14 +254,15 @@
 
   <main class="container">
     <div id="thank-you-message" class="thank-you-message">
-      Thank you for your submission
+      <h3>Thank you!</h3>
+        <p>Your form has been submitted successfully.</p>
     </div>
     
     <section class="form-switcher">
-      <h2>Please select which form you require:</h2>
-      <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
-      <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
-      <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
+        <h2>Please select which form you require:</h2>
+        <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
+        <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
+        <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
 
     <div id="form-bog" class="form-section hidden">
@@ -451,7 +460,8 @@
         <textarea id="bog-comments" name="bog-comments" placeholder="Track required actions in MyOsh with SHEQ support"></textarea>
 
         <div class="form-footer">
-          <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
+          <button type="button" class="btn-back" onclick="confirmReset('bog')">Back</button>
+          <button type="submit" onclick="resetToFormSwitcher()">Submit BOG</button>
         </div>
       </form>
     </div>
@@ -460,6 +470,10 @@
       <h3>Reinstatement Register: Genus N2P project</h3>
       <p>Please complete for any temporary reinstatement works.</p>
       <form>
+
+        <label for="reinstatement-site-contact">Your Name</label>
+        <input type="text" id="reinstatement-site-contact" name="reinstatement-site-contact" required />
+
         <label for="reinstatement-date">Temp Reinstatement Date</label>
         <input type="date" id="reinstatement-date" name="reinstatement-date" required />
 
@@ -644,7 +658,8 @@
         </select>
 
         <div class="form-footer">
-          <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
+          <button type="button" class="btn-back" onclick="confirmReset('reinstatement')">Back</button>
+          <button type="submit" onclick="resetToFormSwitcher()">Submit Reinstatement</button>
         </div>
       </form>
     </div>
@@ -653,6 +668,10 @@
       <h3>Pit Link-in Register: Genus N2P project</h3>
       <p>Please complete for any pit link-in's required to be done by another contractor.</p>
       <form>
+
+        <label for="pitlinkin-site-contact">Your Name</label>
+        <input type="text" id="pitlinkin-site-contact" name="pitlinkin-site-contact" required />
+
         <label for="pitlinkin-date">Date Reported</label>
         <input type="date" id="pitlinkin-date" name="pitlinkin-date" required />
 
@@ -823,13 +842,45 @@
         </select>
 
         <div class="form-footer">
-          <button type="submit" onclick="resetToFormSwitcher()">Submit</button>
+          <button type="button" class="btn-back" onclick="confirmReset('pitlinkin')">Back</button>
+          <button type="submit" onclick="resetToFormSwitcher()">Submit Pit Link-in</button>
         </div>
       </form>
     </div>
   </main>
 
   <script>
+function confirmReset(formType) {
+            const isConfirmed = confirm("Are you sure you want to reset this form and return to the form selection screen?");
+            
+            if (isConfirmed) {
+                // Reset the specific form
+                document.getElementById(`${formType}-form`).reset();
+                
+                // Return to form switcher
+                returnToFormSwitcher();
+            }
+        }
+
+// Airtable configuration - Replace with your actual values
+        const AIRTABLE_CONFIG = {
+            bog: {
+                baseId: ‘appegmSLEvbJSkRvd’,
+                tableId: 'Table 1',
+                apiKey: ‘patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0’
+            },
+            reinstatement: {
+                baseId: ‘appI6d8aW2GqotwlL’,
+                tableId: ‘Table 1',
+                apiKey: ‘patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0’
+            },
+            pitlinkin: {
+                baseId: ‘appI6d8aW2GqotwlL’,
+                tableId: ‘Table 1',
+                apiKey: ‘patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0’
+            }
+        };
+
     // Set default date to today in Western Standard Time (Australia/Perth)
     function setDefaultDate() {
       const now = new Date();
@@ -859,8 +910,28 @@
         document.getElementById(id).classList.add('hidden');
       });
       
-      // Show selected form
-      document.getElementById(`form-${formId}`).classList.remove('hidden');
+      // Show selected form and activate button
+            document.getElementById(`form-${formType}`).classList.remove('hidden');
+            document.getElementById(`btn-${formType}`).classList.add('active');
+        }
+      
+           function submitToAirtable(formType, formData) {
+            const config = AIRTABLE_CONFIG[formType];
+            const url = `https://api.airtable.com/v0/${config.baseId}/${config.tableId}`;
+            
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${config.apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    records: [{
+                        fields: formData
+                    }]
+                })
+            });
+        }
       
       // Set default date for the current form
       setDefaultDate();
@@ -877,6 +948,111 @@
         }
       });
     }
+
+       // Add event listeners for each form
+        document.getElementById('bog-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+                'date': document.getElementById('bog-date').value,
+                ‘First Site Location?’: document.getElementById(‘bog-site-location’).value,
+                ‘Onsite Crew Lead': document.getElementById(‘bog-site-contact’).value,
+                ‘Onsite Crew Lead Mobile’: document.getElementById(‘bog-onsite-crew-lead-mobile’).value,
+                'Your Company Name': document.getElementById(‘bog-company-name’).value,
+                'Discipline': document.getElementById(‘bog-discipline’).value,
+                'Number of People at Location?': document.getElementById(‘bog-Number-of-People-at-Location’).value,
+                'List Names of Workers in field.': document.getElementById(‘bog-crews-names’).value,
+                'SAM ID': document.getElementById(‘bog-SAM’).value,
+                'ADA': document.getElementById(‘bog-ADA’).value,
+                'Your Genus FCM': document.getElementById(‘bog-Genus-FCM’).value,
+                'I confirm all workers have been inducted and have signed onto the JHA.': document.getElementById(‘bog-jha-uploaded’).value,
+                'Discipline with task Specific SWMS (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)': document.getElementById(‘bog-SWMS[]’).value,
+                'Will you be disturbing/modifying any possible ACM while onsite?': document.getElementById(‘bog-ACM’).value,
+                'Genus ACM Removal Notification Code and placed on your Construction JHA.': document.getElementById(‘bog-acm-yes’).value,
+                'Ensure Telstra guards are fully locked around all open manholes.  Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.': document.getElementById(‘bog-guards’).value,
+                'Excavation work- have you follow the 5Ps  with a competent locator onsite?': document.getElementById('bog-excavation').value,
+                'Additional Comments': document.getElementById('bog-comments').value,
+                'Submission Date': new Date().toISOString(),
+                'Form Type': 'Boots on Ground'
+            };
+            
+            try {
+                await submitToAirtable('bog', formData);
+                resetToFormSwitcher();
+            } catch (error) {
+                console.error('Error submitting BOG form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+        document.getElementById('reinstatement-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+               'Your Name': document.getElementById(‘reinstatement-site-contact’).value,
+               'Date': document.getElementById('reinstatement-date').value,
+                'Address': document.getElementById('reinstatement-address').value,
+                'SAM': document.getElementById('reinstatement-SAM').value,
+                'ADA ID': document.getElementById('reinstatement-ADA').value,
+                'Note ID': document.getElementById('reinstatement-note-id').value,
+                'Asset Type': document.getElementById('reinstatement-asset-type').value,
+                'Surface Type': document.getElementById('reinstatement-surface-type').value,
+                'Surface Type - Other': document.getElementById('reinstatement-surface-type-other').value,
+                'Location Type': document.getElementById('reinstatement-location-type').value,
+                'Location Type - Other': document.getElementById('reinstatement-location-type-other').value,
+                'Temp Material Used': document.getElementById('reinstatement-material-type').value,
+                'Temp Material Used - Other': document.getElementById('reinstatement-material-type-other').value,
+                'Temp Contractor Company Name': document.getElementById('reinstatement-company-name').value,
+                'Proposed Permanent Reinstatement Date': document.getElementById('reinstatement-perm-date').value,
+                'Permanent Reinstatement Area (m2)': document.getElementById('reinstatement-area').value,
+                'Full Panel Required?': document.getElementById('reinstatement-panel').value,
+                'Submission Date': new Date().toISOString(),
+                'Form Type': 'Reinstatement',
+            };
+            
+            try {
+                await submitToAirtable('reinstatement', formData);
+                resetToFormSwitcher();
+            } catch (error) {
+                console.error('Error submitting Reinstatement form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+        document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+               'Your Name': document.getElementById(‘pitlinkin-site-contact’).value,
+                'Date': document.getElementById('pitlinkin-date').value,
+                'Address': document.getElementById('pitlinkin-location').value,
+                ‘SAM‘: document.getElementById(‘pitlinkin-SAM‘).value,
+                ‘ADA ID‘: document.getElementById(‘pitlinkin-ADA‘).value,
+                ‘Duct FIR number‘: document.getElementById(‘pitlinkin-duct-fir‘).value,
+                ‘Pit FIR number‘: document.getElementById(‘pitlinkin-pit-fir‘).value,
+                ‘Pit Material‘: document.getElementById(‘pitlinkin-pit-material‘).value,
+                ‘Pit Type‘: document.getElementById(‘pitlinkin-pit-type‘).value,
+                ‘Pit Type - Other‘: document.getElementById(‘pitlinkin-pit-type-other‘).value,
+                ‘Pit Fit for Purpose‘: document.getElementById(‘pitlinkin-ffp‘).value,
+                ‘Current Duct State‘: document.getElementById(‘pitlinkin-duct-state‘).value,
+                ‘RRP Completed?‘: document.getElementById(‘pitlinkin-rrp‘).value,
+                ‘Reinstatement Required?‘: document.getElementById(‘pitlinkin-reinstatement-req‘).value,
+                ‘Reported By‘: document.getElementById(‘pitlinkin-company-name‘).value,
+                'Submission Date': new Date().toISOString(),
+                'Form Type': 'Pit Link-in',
+            };
+            
+            try {
+                await submitToAirtable('pitlinkin', formData);
+                resetToFormSwitcher();
+            } catch (error) {
+                console.error('Error submitting Pit Link-in form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
 
     function resetToFormSwitcher() {
       // Show thank you message
