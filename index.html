@@ -896,10 +896,6 @@ function confirmReset(formType) {
             }
         }
 
-function returnToFormSwitcher() {
-    // Hide thank you message
-    location.reload();
-
     function toggleSurfaceTypeField() {
       const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
       const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
@@ -1169,6 +1165,10 @@ function hideMessage() {
   messageBox.style.display = 'none';
   return true;
 }
+
+function returnToFormSwitcher() {
+    // Hide thank you message
+    location.reload();
 
     // Initialize default dates when the page loads
     document.addEventListener('DOMContentLoaded', function() {
