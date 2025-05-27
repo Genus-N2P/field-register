@@ -1166,10 +1166,6 @@ function hideMessage() {
   return true;
 }
 
-function returnToFormSwitcher() {
-    // Hide thank you message
-    location.reload();
-
     // Initialize default dates when the page loads
     document.addEventListener('DOMContentLoaded', function() {
       setDefaultDate();
@@ -1368,6 +1364,12 @@ function returnToFormSwitcher() {
 }
     });
   </script>
+
+<script>
+  function returnToFormSwitcher() {
+    location.reload();
+  }
+</script>
 
   <script>
     function initAutocomplete() {
