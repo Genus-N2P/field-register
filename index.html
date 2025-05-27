@@ -891,22 +891,82 @@ function confirmReset(formType) {
             }
         }
 
+    function toggleSurfaceTypeField() {
+      const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
+      const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
+      const surfacetypeInput = document.getElementById("reinstatement-surface-type-other");
+
+      if (surfacetypeSelect.value === "Other") {
+        surfacetypeField.style.display = "block";
+        surfacetypeInput.required = true;
+      } else {
+        surfacetypeField.style.display = "none";
+        surfacetypeInput.required = false;
+        surfacetypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleLocationTypeField() {
+      const locationtypeSelect = document.getElementById("reinstatement-location-type");
+      const locationtypeField = document.getElementById("reinstatement-location-type-notification-field");
+      const locationtypeInput = document.getElementById("reinstatement-location-type-other");
+
+      if (locationtypeSelect.value === "Other") {
+        locationtypeField.style.display = "block";
+        locationtypeInput.required = true;
+      } else {
+       locationtypeField.style.display = "none";
+        locationtypeInput.required = false;
+        locationtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleMaterialTypeField() {
+      const materialtypeSelect = document.getElementById("reinstatement-material-type");
+      const materialtypeField = document.getElementById("reinstatement-material-type-notification-field");
+      const materialtypeInput = document.getElementById("reinstatement-material-type-other");
+
+      if (materialtypeSelect.value === "Other") {
+        materialtypeField.style.display = "block";
+        materialtypeInput.required = true;
+      } else {
+       materialtypeField.style.display = "none";
+        materialtypeInput.required = false;
+        materialtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function togglePitTypeField() {
+      const pittypeSelect = document.getElementById("pitlinkin-pit-type");
+      const pittypeField = document.getElementById("pitlinkin-pit-type-notification-field");
+      const pittypeInput = document.getElementById("pitlinkin-pit-type-other");
+
+      if (pittypeSelect.value === "Other") {
+        pittypeField.style.display = "block";
+        pittypeInput.required = true;
+      } else {
+       pittypeField.style.display = "none";
+        pittypeInput.required = false;
+        pittypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
 // Airtable configuration - Replace with your actual values
         const AIRTABLE_CONFIG = {
             bog: {
                 baseId: 'appegmSLEvbJSkRvd',
                 tableId: 'Table 1',
-                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             reinstatement: {
                 baseId: 'appI6d8aW2GqotwlL',
                 tableId: 'Table 1',
-                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             pitlinkin: {
                 baseId: 'appI6d8aW2GqotwlL',
                 tableId: 'Table 1',
-                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             }
         };
 
@@ -1276,66 +1336,6 @@ function returnToFormSwitcher() {
     acmYes.removeAttribute("required");
   }
 }
-
-    function toggleSurfaceTypeField() {
-      const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
-      const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
-      const surfacetypeInput = document.getElementById("reinstatement-surface-type-other");
-
-      if (surfacetypeSelect.value === "Other") {
-        surfacetypeField.style.display = "block";
-        surfacetypeInput.required = true;
-      } else {
-        surfacetypeField.style.display = "none";
-        surfacetypeInput.required = false;
-        surfacetypeInput.value = ""; // clear the input if hidden
-      }
-    }
-
-    function toggleLocationTypeField() {
-      const locationtypeSelect = document.getElementById("reinstatement-location-type");
-      const locationtypeField = document.getElementById("reinstatement-location-type-notification-field");
-      const locationtypeInput = document.getElementById("reinstatement-location-type-other");
-
-      if (locationtypeSelect.value === "Other") {
-        locationtypeField.style.display = "block";
-        locationtypeInput.required = true;
-      } else {
-       locationtypeField.style.display = "none";
-        locationtypeInput.required = false;
-        locationtypeInput.value = ""; // clear the input if hidden
-      }
-    }
-
-    function toggleMaterialTypeField() {
-      const materialtypeSelect = document.getElementById("reinstatement-material-type");
-      const materialtypeField = document.getElementById("reinstatement-material-type-notification-field");
-      const materialtypeInput = document.getElementById("reinstatement-material-type-other");
-
-      if (materialtypeSelect.value === "Other") {
-        materialtypeField.style.display = "block";
-        materialtypeInput.required = true;
-      } else {
-       materialtypeField.style.display = "none";
-        materialtypeInput.required = false;
-        materialtypeInput.value = ""; // clear the input if hidden
-      }
-    }
-
-    function togglePitTypeField() {
-      const pittypeSelect = document.getElementById("pitlinkin-pit-type");
-      const pittypeField = document.getElementById("pitlinkin-pit-type-notification-field");
-      const pittypeInput = document.getElementById("pitlinkin-pit-type-other");
-
-      if (pittypeSelect.value === "Other") {
-        pittypeField.style.display = "block";
-        pittypeInput.required = true;
-      } else {
-       pittypeField.style.display = "none";
-        pittypeInput.required = false;
-        pittypeInput.value = ""; // clear the input if hidden
-      }
-    }
     });
   </script>
 
