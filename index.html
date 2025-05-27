@@ -594,7 +594,7 @@ textarea {
         </select>
 
         <label for="reinstatement-note-id">Note ID</label>
-        <input type="text" id="reinstatement-note-id" name="reinstatement-note-id" required />
+        <input type="number" id="reinstatement-note-id" name="reinstatement-note-id" placeholder="Enter Note ID number only, eg. 12345" oninvalid="this.setCustomValidity('Enter number as 12345')" oninput="this.setCustomValidity('')" required />
 
         <label for="reinstatement-asset-type">Asset Type</label>
         <select id="reinstatement-asset-type" name="reinstatement-asset-type" required>
@@ -1159,11 +1159,11 @@ function hideMessage() {
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
-               'Your Name': document.getElementById('reinstatement-site-contact').value,
-               'Date': document.getElementById('reinstatement-date').value,
+                'Your Name': document.getElementById('reinstatement-site-contact').value,
+                'Temp Reinstatement Date': document.getElementById('reinstatement-date').value,
                 'Address': document.getElementById('reinstatement-address').value,
                 'SAM': document.getElementById('reinstatement-SAM').value,
-                'ADA ID': document.getElementById('reinstatement-ADA').value,
+                'ADA': document.getElementById('reinstatement-ADA').value,
                 'Note ID': document.getElementById('reinstatement-note-id').value,
                 'Asset Type': document.getElementById('reinstatement-asset-type').value,
                 'Surface Type': document.getElementById('reinstatement-surface-type').value,
@@ -1200,10 +1200,10 @@ function hideMessage() {
             // Collect form data - modify this based on your actual form fields
             const formData = {
                'Your Name': document.getElementById('pitlinkin-site-contact').value,
-                'Date': document.getElementById('pitlinkin-date').value,
+                'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
                 'Address': document.getElementById('pitlinkin-location').value,
                 'SAM': document.getElementById('pitlinkin-SAM').value,
-                'ADA ID': document.getElementById('pitlinkin-ADA').value,
+                'ADA': document.getElementById('pitlinkin-ADA').value,
                 'Duct FIR number': document.getElementById('pitlinkin-duct-fir').value,
                 'Pit FIR number': document.getElementById('pitlinkin-pit-fir').value,
                 'Pit Material': document.getElementById('pitlinkin-pit-material').value,
