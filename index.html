@@ -896,6 +896,10 @@ function confirmReset(formType) {
             }
         }
 
+function returnToFormSwitcher() {
+    // Hide thank you message
+    location.reload();
+
     function toggleSurfaceTypeField() {
       const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
       const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
