@@ -905,6 +905,20 @@ function confirmReset(formType) {
             }
         }
 
+    function toggleACMField() {
+  const select = document.getElementById("bog-ACM");
+  const acmField = document.getElementById("bog-acm-notification-field");
+  const acmYes = document.getElementById("bog-acm-yes");
+
+  if (select.value === "Yes") {
+    acmField.style.display = "block";
+    acmYes.setAttribute("required", "required");
+  } else {
+    acmField.style.display = "none";
+    acmYes.removeAttribute("required");
+  }
+}
+
     function toggleSurfaceTypeField() {
       const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
       const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
@@ -1359,20 +1373,6 @@ function returnToFormSwitcher() {
             if (targetForm) {
                 targetForm.classList.remove('hidden');
             }
-
-    function toggleACMField() {
-  const select = document.getElementById("bog-ACM");
-  const acmField = document.getElementById("bog-acm-notification-field");
-  const acmYes = document.getElementById("bog-acm-yes");
-
-  if (select.value === "Yes") {
-    acmField.style.display = "block";
-    acmYes.setAttribute("required", "required");
-  } else {
-    acmField.style.display = "none";
-    acmYes.removeAttribute("required");
-  }
-}
     });
   </script>
 
