@@ -502,6 +502,9 @@ textarea {
       <p>Please complete for any temporary reinstatement works.</p>
       <form id="reinstatement-form" onsubmit="return validateGenericForm('reinstatement-form')">
 
+	<!-- Hidden input hardcoded to 'Reinstatement' -->
+	<input type="hidden" id="reinstatement-type" name="reinstatement-type" value="Reinstatement">
+
         <label for="reinstatement-site-contact">Your Name</label>
         <input type="text" id="reinstatement-site-contact" name="reinstatement-site-contact" required />
 
@@ -699,6 +702,9 @@ textarea {
       <h3>Pit Link-in Register: Genus N2P project</h3>
       <p>Please complete for any pit link-in's required to be done by another contractor.</p>
       <form id="pitlinkin-form" onsubmit="return validateGenericForm('pitlinkin-form')">
+
+	<!-- Hidden input hardcoded to 'Pit Link-in' -->
+	<input type="hidden" id="pitlinkin-type" name="pitlinkin-type" value="Pit Link-in">
 
         <label for="pitlinkin-site-contact">Your Name</label>
         <input type="text" id="pitlinkin-site-contact" name="pitlinkin-site-contact" required />
