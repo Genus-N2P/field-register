@@ -251,7 +251,28 @@
   color: #dc3545;
   font-weight: bold;
 }
+
+.form-wrapper {
+  border: 1px solid var(--dark-20); /* Subtle border */
+  padding: 1.5rem;
+  border-radius: 1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto; /* Ensure horizontal scrolling if content overflows */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+input,
+select,
+textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
   </style>
+
 </head>
 <body>
   <header>
@@ -263,12 +284,12 @@
   </header>
 
   <main class="container">
+  <div class="form-wrapper">
   <div id="thank-you-message" class="thank-you-message" style="display: none;">
     <h3 id="message-title">Thank you!</h3>
     <p id="message-body">Your form has been submitted successfully.</p>
     <button type="button" class="btn-back" onclick="returnToFormSwitcher()">Submit Another Form</button>
   </div>
-</main>
     
     <section class="form-switcher">
       <h2>Please select which form you require:</h2>
