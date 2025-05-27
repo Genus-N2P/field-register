@@ -983,8 +983,9 @@ function confirmReset(formType) {
                 body: JSON.stringify({
                     records: [{
                         fields: formData
-                    }]
-                })
+  		}],
+ 		typecast: true
+	       })
             });
         }
 
@@ -1075,6 +1076,7 @@ function validateSWMS() {
 function validateBogForm() {
     const form = document.querySelector('#bog-form'); // Updated selector
     const isValid = form.checkValidity();
+    const swmsValid = validateSWMS();
     
     if (!isValid || !swmsValid) {
         showErrorMessage();
@@ -1172,31 +1174,39 @@ function hideMessage() {
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
-                'date': document.getElementById('bog-date').value,
-                'First Site Location?': document.getElementById('bog-site-location').value,
+                'Date': document.getElementById('bog-date').value,
+                'First Site Location2': document.getElementById('bog-site-location').value,
                 'Onsite Crew Lead': document.getElementById('bog-site-contact').value,
-                'Onsite Crew Lead Mobile': document.getElementById('bog-onsite-crew-lead-mobile').value,
+                'Onsite Crew Lead Mobile_original': document.getElementById('bog-onsite-crew-lead-mobile').value,
                 'Your Company Name': document.getElementById('bog-company-name').value,
                 'Discipline': document.getElementById('bog-discipline').value,
                 'Number of People at Location?': document.getElementById('bog-Number-of-People-at-Location').value,
                 'List Names of Workers in field.': document.getElementById('bog-crews-names').value,
-                'SAM ID': document.getElementById('bog-SAM').value,
-                'ADA': document.getElementById('bog-ADA').value,
+                'SAM ID (WA)': document.getElementById('bog-SAM').value,
+                'ADA ID': document.getElementById('bog-ADA').value,
                 'Your Genus FCM': document.getElementById('bog-Genus-FCM').value,
                 'I confirm all workers have been inducted and have signed onto the JHA.': document.getElementById('bog-jha-uploaded').checked,
                 'Discipline with task Specific SWMS (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)': checkedSWMS,
                 'Will you be disturbing/modifying any possible ACM while onsite?': document.getElementById('bog-ACM').value,
                 'Genus ACM Removal Notification Code and placed on your Construction JHA.': document.getElementById('bog-acm-yes').value,
-                'Ensure Telstra guards are fully locked around all open manholes.  Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.': document.getElementById('bog-guards').checked,
-                'Excavation work- have you follow the 5Ps  with a competent locator onsite?': document.getElementById('bog-excavation').checked,
+                'Ensure Telstra guards are fully locked around all open manholes. Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.': document.getElementById('bog-guards').checked,
+                'Excavation work- have you follow the 5Ps with a competent locator onsite?': document.getElementById('bog-excavation').checked,
                 'Additional Comments': document.getElementById('bog-comments').value,
                 'Submission Date': new Date().toISOString(),
                 'Form Type': 'Boots on Ground'
             };
             
             try {
-                await submitToAirtable('bog', formData);
-                showSuccessMessage();
+                const response = await submitToAirtable('bog', formData);
+const result = await response.json();
+
+if (!response.ok) {
+  console.error('Airtable error:', result);
+  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+  return;
+}
+
+showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting BOG form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1235,8 +1245,18 @@ function hideMessage() {
             };
             
             try {
-                await submitToAirtable('reinstatement', formData);
-                showSuccessMessage();
+                // await submitToAirtable('reinstatement', formData);
+                // showSuccessMessage();
+const response = await submitToAirtable('reinstatement', formData);
+const result = await response.json();
+
+if (!response.ok) {
+  console.error('Airtable error:', result);
+  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+  return;
+}
+
+showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Reinstatement form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1255,7 +1275,7 @@ function hideMessage() {
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
-               'Your Name': document.getElementById('pitlinkin-site-contact').value,
+                'Your Name': document.getElementById('pitlinkin-site-contact').value,
                 'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
                 'Address': document.getElementById('pitlinkin-location').value,
                 'SAM': document.getElementById('pitlinkin-SAM').value,
@@ -1275,8 +1295,18 @@ function hideMessage() {
             };
             
             try {
-                await submitToAirtable('pitlinkin', formData);
-                showSuccessMessage();
+                // await submitToAirtable('pitlinkin', formData);
+                // showSuccessMessage();
+const response = await submitToAirtable('pitlinkin', formData);
+const result = await response.json();
+
+if (!response.ok) {
+  console.error('Airtable error:', result);
+  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+  return;
+}
+
+showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Pit Link-in form:', error);
                 alert('Error submitting form. Please try again.');
