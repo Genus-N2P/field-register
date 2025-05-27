@@ -273,477 +273,6 @@ textarea {
 }
   </style>
 
-<script>
-function confirmReset(formType) {
-            const isConfirmed = confirm("Are you sure you want to reset this form and return to the form selection screen?");
-            
-            if (isConfirmed) {
-                // Reset the specific form
-                location.reload();
-            }
-        }
-
-// Airtable configuration - Replace with your actual values
-        const AIRTABLE_CONFIG = {
-            bog: {
-                baseId: 'appegmSLEvbJSkRvd',
-                tableId: 'Table 1',
-                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
-            },
-            reinstatement: {
-                baseId: 'appI6d8aW2GqotwlL',
-                tableId: 'Table 1',
-                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
-            },
-            pitlinkin: {
-                baseId: 'appI6d8aW2GqotwlL',
-                tableId: 'Table 1',
-                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
-            }
-        };
-
-	   // Global submitToAirtable function
-           function submitToAirtable(formType, formData) {
-            const config = AIRTABLE_CONFIG[formType];
-            const url = `https://api.airtable.com/v0/${config.baseId}/${config.tableId}`;
-            
-            return fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${config.apiKey}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    records: [{
-                        fields: formData
-                    }]
-                })
-            });
-        }
-
-
-    // Set default date to today in Western Standard Time (Australia/Perth)
-    function setDefaultDate() {
-      const now = new Date();
-      const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
-      const year = perthTime.getFullYear();
-      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
-      const day = String(perthTime.getDate()).padStart(2, '0');
-      const todayString = `${year}-${month}-${day}`;
-      
-      // Set default date for all forms
-      const bogDateField = document.getElementById('bog-date');
-      const pitlinkinDateField = document.getElementById('pitlinkin-date');
-      const reinstatementDateField = document.getElementById('reinstatement-date');
-
-      if (bogDateField) bogDateField.value = todayString;
-      if (pitlinkinDateField) pitlinkinDateField.value = todayString;
-      if (reinstatementDateField) reinstatementDateField.value = todayString;
-    }
-
-function showForm(formType) {
-    console.log('showForm called with:', formType);
-
-    // Hide thank you message
-    document.getElementById('thank-you-message').style.display = 'none';
-        
-    // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
-    forms.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.classList.add('hidden');
-            element.style.display = 'none';
-        }
-    });
-
-    // Show selected form using both methods
-    const targetForm = document.getElementById(`form-${formType}`);
-    if (targetForm) {
-        targetForm.classList.remove('hidden');
-        targetForm.style.display = 'block';
-        console.log(`Showing form: form-${formType}`);
-    } else {
-        console.error(`Form not found: form-${formType}`);
-    }
-
-      // Set default date for the current form
-      setDefaultDate();
-
-       // Hide all buttons except the selected one
-            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    if (btnId === `btn-${formType}`) {
-                        btn.classList.add('active');
-                        btn.style.display = 'inline-block';
-                    } else {
-                        btn.classList.remove('active');
-                        btn.style.display = 'none';
-                    }
-                }
-            });
-        }
-
-function validateSWMS() {
-    const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
-    const errorElement = document.getElementById('swms-error');
-    
-    if (checkedSWMS.length === 0) {
-        // Show error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'block';
-        }
-        return false; // Prevent form submission
-    } else {
-        // Hide error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'none';
-        }
-        return true; // Allow form submission
-    }
-}
-
-function validateBogForm() {
-    const form = document.querySelector('#bog-form'); // Updated selector
-    const isValid = form.checkValidity();
-    
-    if (!isValid || !swmsValid) {
-        showErrorMessage();
-        // Add red styling to invalid fields
-	addFieldErrorStyling(form);
-        form.reportValidity(); 
-        return false;
-    }
-    
-    return true;
-}
-
-function validateGenericForm(formId) {
-    const form = document.getElementById(formId); // Updated selector
-    const isValid = form.checkValidity();
-    
-    if (!isValid) {
-        showErrorMessage();
-        // Add red styling to invalid fields
-	addFieldErrorStyling(form);
-        form.reportValidity(); 
-        return false;
-    }
-    
-    return true;
-}
-
-  function addFieldErrorStyling(form) {
-    // Remove existing error classes
-    const existingErrors = form.querySelectorAll('.field-error');
-    existingErrors.forEach(el => el.classList.remove('field-error'));
-    
-    // Add error class to invalid fields
-    const invalidFields = form.querySelectorAll(':invalid');
-    invalidFields.forEach(field => {
-        field.classList.add('field-error');
-        // Also add to parent if it's a field container
-        if (field.parentElement) {
-            field.parentElement.classList.add('field-error');
-        }
-    });
-}
-
-function showErrorMessage() {
-    const messageBox = document.getElementById('thank-you-message');
-    const messageTitle = document.getElementById('message-title');
-    const messageBody = document.getElementById('message-body');
-    
-    // Show error message
-    messageTitle.textContent = '';
-    messageBody.textContent = 'Please review your submission and ensure all fields are completed.';
-    messageBody.style.color = 'red';
-    messageBox.style.display = 'block';
-}
-
-function showSuccessMessage() {
-    const messageBox = document.getElementById('thank-you-message');
-    const messageTitle = document.getElementById('message-title');
-    const messageBody = document.getElementById('message-body');
-    
-    // Show success message
-    messageTitle.textContent = 'Thank you!';
-    // Added button and auto-redirect message
-    messageBody.innerHTML = 'Your form has been submitted successfully.<br><br><button type="button" class="btn-back" onclick="returnToFormSwitcher()">Submit Another Form</button><br><small>You will be redirected to form selection in 5 seconds...</small>';
-    messageBody.style.color = ''; // Reset color to default
-    messageBox.style.display = 'block';
-    
-    // Auto-redirect after 5 seconds
-    setTimeout(() => {
-        returnToFormSwitcher();
-        document.getElementById('thank-you-message').style.display = 'none';
-    }, 5000);
-}
-
-// Optional: Function to reset/hide the message
-function hideMessage() {
-    const messageBox = document.getElementById('thank-you-message');
-    messageBox.style.display = 'none';
-  // Hide message if validation passes (you may replace this with success logic)
-  messageBox.style.display = 'none';
-  return true;
-}
-
-    // Initialize default dates when the page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      setDefaultDate();
-      
-       // Add event listeners for each form
-        document.getElementById('bog-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Validate the entire form
-    if (!validateForm()) {
-        return; // Stop submission if validation fails
-            }
-
-            // Collect checkbox values for SWMS
-            const checkedSWMS = Array.from(document.querySelectorAll('input[name="bog-SWMS[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            
-            // Collect form data - modify this based on your actual form fields
-            const formData = {
-                'date': document.getElementById('bog-date').value,
-                'First Site Location?': document.getElementById('bog-site-location').value,
-                'Onsite Crew Lead': document.getElementById('bog-site-contact').value,
-                'Onsite Crew Lead Mobile': document.getElementById('bog-onsite-crew-lead-mobile').value,
-                'Your Company Name': document.getElementById('bog-company-name').value,
-                'Discipline': document.getElementById('bog-discipline').value,
-                'Number of People at Location?': document.getElementById('bog-Number-of-People-at-Location').value,
-                'List Names of Workers in field.': document.getElementById('bog-crews-names').value,
-                'SAM ID': document.getElementById('bog-SAM').value,
-                'ADA': document.getElementById('bog-ADA').value,
-                'Your Genus FCM': document.getElementById('bog-Genus-FCM').value,
-                'I confirm all workers have been inducted and have signed onto the JHA.': document.getElementById('bog-jha-uploaded').value,
-                'Discipline with task Specific SWMS (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)': checkedSWMS,
-                'Will you be disturbing/modifying any possible ACM while onsite?': document.getElementById('bog-ACM').value,
-                'Genus ACM Removal Notification Code and placed on your Construction JHA.': document.getElementById('bog-acm-yes').value,
-                'Ensure Telstra guards are fully locked around all open manholes.  Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.': document.getElementById('bog-guards').value,
-                'Excavation work- have you follow the 5Ps  with a competent locator onsite?': document.getElementById('bog-excavation').value,
-                'Additional Comments': document.getElementById('bog-comments').value,
-                'Submission Date': new Date().toISOString(),
-                'Form Type': 'Boots on Ground'
-            };
-            
-            try {
-                await submitToAirtable('bog', formData);
-                showSuccessMessage();
-            } catch (error) {
-                console.error('Error submitting BOG form:', error);
-                alert('Error submitting form. Please try again.');
-            }
-        });
-
-        document.getElementById('reinstatement-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-       // Validate the form
-        if (!validateGenericForm('reinstatement-form')) {
-            return;
-        }
-            
-            // Collect form data - modify this based on your actual form fields
-            const formData = {
-                'Your Name': document.getElementById('reinstatement-site-contact').value,
-                'Temp Reinstatement Date': document.getElementById('reinstatement-date').value,
-                'Address': document.getElementById('reinstatement-address').value,
-                'SAM': document.getElementById('reinstatement-SAM').value,
-                'ADA': document.getElementById('reinstatement-ADA').value,
-                'Note ID': document.getElementById('reinstatement-note-id').value,
-                'Asset Type': document.getElementById('reinstatement-asset-type').value,
-                'Surface Type': document.getElementById('reinstatement-surface-type').value,
-                'Surface Type - Other': document.getElementById('reinstatement-surface-type-other').value,
-                'Location Type': document.getElementById('reinstatement-location-type').value,
-                'Location Type - Other': document.getElementById('reinstatement-location-type-other').value,
-                'Temp Material Used': document.getElementById('reinstatement-material-type').value,
-                'Temp Material Used - Other': document.getElementById('reinstatement-material-type-other').value,
-                'Temp Contractor Company Name': document.getElementById('reinstatement-company-name').value,
-                'Proposed Permanent Reinstatement Date': document.getElementById('reinstatement-perm-date').value,
-                'Permanent Reinstatement Area (m2)': document.getElementById('reinstatement-area').value,
-                'Full Panel Required?': document.getElementById('reinstatement-panel').value,
-                'Submission Date': new Date().toISOString(),
-                'Form Type': 'Reinstatement',
-            };
-            
-            try {
-                await submitToAirtable('reinstatement', formData);
-                showSuccessMessage();
-            } catch (error) {
-                console.error('Error submitting Reinstatement form:', error);
-                alert('Error submitting form. Please try again.');
-            }
-        });
-
-        document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-       // Validate the form
-        if (!validateGenericForm('pitlinkin-form')) {
-            return;
-        }
-            
-            // Collect form data - modify this based on your actual form fields
-            const formData = {
-               'Your Name': document.getElementById('pitlinkin-site-contact').value,
-                'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
-                'Address': document.getElementById('pitlinkin-location').value,
-                'SAM': document.getElementById('pitlinkin-SAM').value,
-                'ADA': document.getElementById('pitlinkin-ADA').value,
-                'Duct FIR number': document.getElementById('pitlinkin-duct-fir').value,
-                'Pit FIR number': document.getElementById('pitlinkin-pit-fir').value,
-                'Pit Material': document.getElementById('pitlinkin-pit-material').value,
-                'Pit Type': document.getElementById('pitlinkin-pit-type').value,
-                'Pit Type - Other': document.getElementById('pitlinkin-pit-type-other').value,
-                'Pit Fit for Purpose': document.getElementById('pitlinkin-ffp').value,
-                'Current Duct State': document.getElementById('pitlinkin-duct-state').value,
-                'RRP Completed?': document.getElementById('pitlinkin-rrp').value,
-                'Reinstatement Required?': document.getElementById('pitlinkin-reinstatement-req').value,
-                'Reported By': document.getElementById('pitlinkin-company-name').value,
-                'Submission Date': new Date().toISOString(),
-                'Form Type': 'Pit Link-in',
-            };
-            
-            try {
-                await submitToAirtable('pitlinkin', formData);
-                showSuccessMessage();
-            } catch (error) {
-                console.error('Error submitting Pit Link-in form:', error);
-                alert('Error submitting form. Please try again.');
-            }
-        });
-
-function returnToFormSwitcher() {
-    // Hide thank you message
-    document.getElementById('thank-you-message').style.display = 'none';
-    
-    // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
-    forms.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.classList.add('hidden');
-            element.style.display = 'none';
-            // Reset the form
-            element.reset();
-            // Remove any error styling
-            const errorFields = element.querySelectorAll('.field-error');
-            errorFields.forEach(field => field.classList.remove('field-error'));
-        }
-    });
-
-    // Show all buttons and remove active state
-    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
-    buttons.forEach(btnId => {
-        const btn = document.getElementById(btnId);
-        if (btn) {
-            btn.style.display = 'inline-block';
-            btn.classList.remove('active');
-        }
-    });
-}
-
-  // Show selected form
-            const targetForm = document.getElementById(`form-${formType}`);
-            if (targetForm) {
-                targetForm.classList.remove('hidden');
-            }
-
-    function toggleACMField() {
-  const select = document.getElementById("bog-ACM");
-  const acmField = document.getElementById("bog-acm-notification-field");
-  const acmYes = document.getElementById("bog-acm-yes");
-
-  if (select.value === "Yes") {
-    acmField.style.display = "block";
-    acmYes.setAttribute("required", "required");
-  } else {
-    acmField.style.display = "none";
-    acmYes.removeAttribute("required");
-  }
-}
-
-    function toggleSurfaceTypeField() {
-      const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
-      const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
-      const surfacetypeInput = document.getElementById("reinstatement-surface-type-other");
-
-      if (surfacetypeSelect.value === "Other") {
-        surfacetypeField.style.display = "block";
-        surfacetypeInput.required = true;
-      } else {
-        surfacetypeField.style.display = "none";
-        surfacetypeInput.required = false;
-        surfacetypeInput.value = ""; // clear the input if hidden
-      }
-    }
-
-    function toggleLocationTypeField() {
-      const locationtypeSelect = document.getElementById("reinstatement-location-type");
-      const locationtypeField = document.getElementById("reinstatement-location-type-notification-field");
-      const locationtypeInput = document.getElementById("reinstatement-location-type-other");
-
-      if (locationtypeSelect.value === "Other") {
-        locationtypeField.style.display = "block";
-        locationtypeInput.required = true;
-      } else {
-       locationtypeField.style.display = "none";
-        locationtypeInput.required = false;
-        locationtypeInput.value = ""; // clear the input if hidden
-      }
-    }
-
-    function toggleMaterialTypeField() {
-      const materialtypeSelect = document.getElementById("reinstatement-material-type");
-      const materialtypeField = document.getElementById("reinstatement-material-type-notification-field");
-      const materialtypeInput = document.getElementById("reinstatement-material-type-other");
-
-      if (materialtypeSelect.value === "Other") {
-        materialtypeField.style.display = "block";
-        materialtypeInput.required = true;
-      } else {
-       materialtypeField.style.display = "none";
-        materialtypeInput.required = false;
-        materialtypeInput.value = ""; // clear the input if hidden
-      }
-    }
-
-    function togglePitTypeField() {
-      const pittypeSelect = document.getElementById("pitlinkin-pit-type");
-      const pittypeField = document.getElementById("pitlinkin-pit-type-notification-field");
-      const pittypeInput = document.getElementById("pitlinkin-pit-type-other");
-
-      if (pittypeSelect.value === "Other") {
-        pittypeField.style.display = "block";
-        pittypeInput.required = true;
-      } else {
-       pittypeField.style.display = "none";
-        pittypeInput.required = false;
-        pittypeInput.value = ""; // clear the input if hidden
-      }
-    }
-    });
-  </script>
-
-  <script>
-    function initAutocomplete() {
-      const inputs = document.querySelectorAll(".address-autocomplete");
-      inputs.forEach(input => {
-        new google.maps.places.Autocomplete(input, {
-          types: ['geocode'],
-          componentRestrictions: { country: 'au' }
-        });
-      });
-    }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
-
 </head>
 <body>
   <header>
@@ -1351,5 +880,476 @@ function returnToFormSwitcher() {
       </form>
     </div>
   </main>
+
+  <script>
+function confirmReset(formType) {
+            const isConfirmed = confirm("Are you sure you want to reset this form and return to the form selection screen?");
+            
+            if (isConfirmed) {
+                // Reset the specific form
+                location.reload();
+            }
+        }
+
+// Airtable configuration - Replace with your actual values
+        const AIRTABLE_CONFIG = {
+            bog: {
+                baseId: 'appegmSLEvbJSkRvd',
+                tableId: 'Table 1',
+                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
+            },
+            reinstatement: {
+                baseId: 'appI6d8aW2GqotwlL',
+                tableId: 'Table 1',
+                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
+            },
+            pitlinkin: {
+                baseId: 'appI6d8aW2GqotwlL',
+                tableId: 'Table 1',
+                apiKey: 'patHwUeS1KtSAEshe.480c68dd3a23986657ed6b97dd43f135b42a9c7e3bcb0e5e5b19497462ff2ae0'
+            }
+        };
+
+	   // Global submitToAirtable function
+           function submitToAirtable(formType, formData) {
+            const config = AIRTABLE_CONFIG[formType];
+            const url = `https://api.airtable.com/v0/${config.baseId}/${config.tableId}`;
+            
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${config.apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    records: [{
+                        fields: formData
+                    }]
+                })
+            });
+        }
+
+
+    // Set default date to today in Western Standard Time (Australia/Perth)
+    function setDefaultDate() {
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      const todayString = `${year}-${month}-${day}`;
+      
+      // Set default date for all forms
+      const bogDateField = document.getElementById('bog-date');
+      const pitlinkinDateField = document.getElementById('pitlinkin-date');
+      const reinstatementDateField = document.getElementById('reinstatement-date');
+
+      if (bogDateField) bogDateField.value = todayString;
+      if (pitlinkinDateField) pitlinkinDateField.value = todayString;
+      if (reinstatementDateField) reinstatementDateField.value = todayString;
+    }
+
+function showForm(formType) {
+    console.log('showForm called with:', formType);
+
+    // Hide thank you message
+    document.getElementById('thank-you-message').style.display = 'none';
+        
+    // Hide all forms using both methods
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    forms.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.add('hidden');
+            element.style.display = 'none';
+        }
+    });
+
+    // Show selected form using both methods
+    const targetForm = document.getElementById(`form-${formType}`);
+    if (targetForm) {
+        targetForm.classList.remove('hidden');
+        targetForm.style.display = 'block';
+        console.log(`Showing form: form-${formType}`);
+    } else {
+        console.error(`Form not found: form-${formType}`);
+    }
+
+      // Set default date for the current form
+      setDefaultDate();
+
+       // Hide all buttons except the selected one
+            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    if (btnId === `btn-${formType}`) {
+                        btn.classList.add('active');
+                        btn.style.display = 'inline-block';
+                    } else {
+                        btn.classList.remove('active');
+                        btn.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+function validateSWMS() {
+    const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
+    const errorElement = document.getElementById('swms-error');
+    
+    if (checkedSWMS.length === 0) {
+        // Show error message if it exists
+        if (errorElement) {
+            errorElement.style.display = 'block';
+        }
+        return false; // Prevent form submission
+    } else {
+        // Hide error message if it exists
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
+        return true; // Allow form submission
+    }
+}
+
+function validateBogForm() {
+    const form = document.querySelector('#bog-form'); // Updated selector
+    const isValid = form.checkValidity();
+    
+    if (!isValid || !swmsValid) {
+        showErrorMessage();
+        // Add red styling to invalid fields
+	addFieldErrorStyling(form);
+        form.reportValidity(); 
+        return false;
+    }
+    
+    return true;
+}
+
+function validateGenericForm(formId) {
+    const form = document.getElementById(formId); // Updated selector
+    const isValid = form.checkValidity();
+    
+    if (!isValid) {
+        showErrorMessage();
+        // Add red styling to invalid fields
+	addFieldErrorStyling(form);
+        form.reportValidity(); 
+        return false;
+    }
+    
+    return true;
+}
+
+  function addFieldErrorStyling(form) {
+    // Remove existing error classes
+    const existingErrors = form.querySelectorAll('.field-error');
+    existingErrors.forEach(el => el.classList.remove('field-error'));
+    
+    // Add error class to invalid fields
+    const invalidFields = form.querySelectorAll(':invalid');
+    invalidFields.forEach(field => {
+        field.classList.add('field-error');
+        // Also add to parent if it's a field container
+        if (field.parentElement) {
+            field.parentElement.classList.add('field-error');
+        }
+    });
+}
+
+function showErrorMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    const messageTitle = document.getElementById('message-title');
+    const messageBody = document.getElementById('message-body');
+    
+    // Show error message
+    messageTitle.textContent = '';
+    messageBody.textContent = 'Please review your submission and ensure all fields are completed.';
+    messageBody.style.color = 'red';
+    messageBox.style.display = 'block';
+}
+
+function showSuccessMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    const messageTitle = document.getElementById('message-title');
+    const messageBody = document.getElementById('message-body');
+    
+    // Show success message
+    messageTitle.textContent = 'Thank you!';
+    // Added button and auto-redirect message
+    messageBody.innerHTML = 'Your form has been submitted successfully.<br><br><button type="button" class="btn-back" onclick="returnToFormSwitcher()">Submit Another Form</button><br><small>You will be redirected to form selection in 5 seconds...</small>';
+    messageBody.style.color = ''; // Reset color to default
+    messageBox.style.display = 'block';
+    
+    // Auto-redirect after 5 seconds
+    setTimeout(() => {
+        returnToFormSwitcher();
+        document.getElementById('thank-you-message').style.display = 'none';
+    }, 5000);
+}
+
+// Optional: Function to reset/hide the message
+function hideMessage() {
+    const messageBox = document.getElementById('thank-you-message');
+    messageBox.style.display = 'none';
+  // Hide message if validation passes (you may replace this with success logic)
+  messageBox.style.display = 'none';
+  return true;
+}
+
+    // Initialize default dates when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setDefaultDate();
+      
+       // Add event listeners for each form
+        document.getElementById('bog-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validate the entire form
+    if (!validateForm()) {
+        return; // Stop submission if validation fails
+            }
+
+            // Collect checkbox values for SWMS
+            const checkedSWMS = Array.from(document.querySelectorAll('input[name="bog-SWMS[]"]:checked'))
+                                     .map(checkbox => checkbox.value);
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+                'date': document.getElementById('bog-date').value,
+                'First Site Location?': document.getElementById('bog-site-location').value,
+                'Onsite Crew Lead': document.getElementById('bog-site-contact').value,
+                'Onsite Crew Lead Mobile': document.getElementById('bog-onsite-crew-lead-mobile').value,
+                'Your Company Name': document.getElementById('bog-company-name').value,
+                'Discipline': document.getElementById('bog-discipline').value,
+                'Number of People at Location?': document.getElementById('bog-Number-of-People-at-Location').value,
+                'List Names of Workers in field.': document.getElementById('bog-crews-names').value,
+                'SAM ID': document.getElementById('bog-SAM').value,
+                'ADA': document.getElementById('bog-ADA').value,
+                'Your Genus FCM': document.getElementById('bog-Genus-FCM').value,
+                'I confirm all workers have been inducted and have signed onto the JHA.': document.getElementById('bog-jha-uploaded').value,
+                'Discipline with task Specific SWMS (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)': checkedSWMS,
+                'Will you be disturbing/modifying any possible ACM while onsite?': document.getElementById('bog-ACM').value,
+                'Genus ACM Removal Notification Code and placed on your Construction JHA.': document.getElementById('bog-acm-yes').value,
+                'Ensure Telstra guards are fully locked around all open manholes.  Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.': document.getElementById('bog-guards').value,
+                'Excavation work- have you follow the 5Ps  with a competent locator onsite?': document.getElementById('bog-excavation').value,
+                'Additional Comments': document.getElementById('bog-comments').value,
+                'Submission Date': new Date().toISOString(),
+                'Form Type': 'Boots on Ground'
+            };
+            
+            try {
+                await submitToAirtable('bog', formData);
+                showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting BOG form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+        document.getElementById('reinstatement-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+       // Validate the form
+        if (!validateGenericForm('reinstatement-form')) {
+            return;
+        }
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+                'Your Name': document.getElementById('reinstatement-site-contact').value,
+                'Temp Reinstatement Date': document.getElementById('reinstatement-date').value,
+                'Address': document.getElementById('reinstatement-address').value,
+                'SAM': document.getElementById('reinstatement-SAM').value,
+                'ADA': document.getElementById('reinstatement-ADA').value,
+                'Note ID': document.getElementById('reinstatement-note-id').value,
+                'Asset Type': document.getElementById('reinstatement-asset-type').value,
+                'Surface Type': document.getElementById('reinstatement-surface-type').value,
+                'Surface Type - Other': document.getElementById('reinstatement-surface-type-other').value,
+                'Location Type': document.getElementById('reinstatement-location-type').value,
+                'Location Type - Other': document.getElementById('reinstatement-location-type-other').value,
+                'Temp Material Used': document.getElementById('reinstatement-material-type').value,
+                'Temp Material Used - Other': document.getElementById('reinstatement-material-type-other').value,
+                'Temp Contractor Company Name': document.getElementById('reinstatement-company-name').value,
+                'Proposed Permanent Reinstatement Date': document.getElementById('reinstatement-perm-date').value,
+                'Permanent Reinstatement Area (m2)': document.getElementById('reinstatement-area').value,
+                'Full Panel Required?': document.getElementById('reinstatement-panel').value,
+                'Submission Date': new Date().toISOString(),
+                'Form Type': 'Reinstatement',
+            };
+            
+            try {
+                await submitToAirtable('reinstatement', formData);
+                showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting Reinstatement form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+        document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+       // Validate the form
+        if (!validateGenericForm('pitlinkin-form')) {
+            return;
+        }
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+               'Your Name': document.getElementById('pitlinkin-site-contact').value,
+                'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
+                'Address': document.getElementById('pitlinkin-location').value,
+                'SAM': document.getElementById('pitlinkin-SAM').value,
+                'ADA': document.getElementById('pitlinkin-ADA').value,
+                'Duct FIR number': document.getElementById('pitlinkin-duct-fir').value,
+                'Pit FIR number': document.getElementById('pitlinkin-pit-fir').value,
+                'Pit Material': document.getElementById('pitlinkin-pit-material').value,
+                'Pit Type': document.getElementById('pitlinkin-pit-type').value,
+                'Pit Type - Other': document.getElementById('pitlinkin-pit-type-other').value,
+                'Pit Fit for Purpose': document.getElementById('pitlinkin-ffp').value,
+                'Current Duct State': document.getElementById('pitlinkin-duct-state').value,
+                'RRP Completed?': document.getElementById('pitlinkin-rrp').value,
+                'Reinstatement Required?': document.getElementById('pitlinkin-reinstatement-req').value,
+                'Reported By': document.getElementById('pitlinkin-company-name').value,
+                'Submission Date': new Date().toISOString(),
+                'Form Type': 'Pit Link-in',
+            };
+            
+            try {
+                await submitToAirtable('pitlinkin', formData);
+                showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting Pit Link-in form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+function returnToFormSwitcher() {
+    // Hide thank you message
+    document.getElementById('thank-you-message').style.display = 'none';
+    
+    // Hide all forms using both methods
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    forms.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.add('hidden');
+            element.style.display = 'none';
+            // Reset the form
+            element.reset();
+            // Remove any error styling
+            const errorFields = element.querySelectorAll('.field-error');
+            errorFields.forEach(field => field.classList.remove('field-error'));
+        }
+    });
+
+    // Show all buttons and remove active state
+    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            btn.style.display = 'inline-block';
+            btn.classList.remove('active');
+        }
+    });
+}
+
+  // Show selected form
+            const targetForm = document.getElementById(`form-${formType}`);
+            if (targetForm) {
+                targetForm.classList.remove('hidden');
+            }
+
+    function toggleACMField() {
+  const select = document.getElementById("bog-ACM");
+  const acmField = document.getElementById("bog-acm-notification-field");
+  const acmYes = document.getElementById("bog-acm-yes");
+
+  if (select.value === "Yes") {
+    acmField.style.display = "block";
+    acmYes.setAttribute("required", "required");
+  } else {
+    acmField.style.display = "none";
+    acmYes.removeAttribute("required");
+  }
+}
+
+    function toggleSurfaceTypeField() {
+      const surfacetypeSelect = document.getElementById("reinstatement-surface-type");
+      const surfacetypeField = document.getElementById("reinstatement-surface-type-notification-field");
+      const surfacetypeInput = document.getElementById("reinstatement-surface-type-other");
+
+      if (surfacetypeSelect.value === "Other") {
+        surfacetypeField.style.display = "block";
+        surfacetypeInput.required = true;
+      } else {
+        surfacetypeField.style.display = "none";
+        surfacetypeInput.required = false;
+        surfacetypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleLocationTypeField() {
+      const locationtypeSelect = document.getElementById("reinstatement-location-type");
+      const locationtypeField = document.getElementById("reinstatement-location-type-notification-field");
+      const locationtypeInput = document.getElementById("reinstatement-location-type-other");
+
+      if (locationtypeSelect.value === "Other") {
+        locationtypeField.style.display = "block";
+        locationtypeInput.required = true;
+      } else {
+       locationtypeField.style.display = "none";
+        locationtypeInput.required = false;
+        locationtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleMaterialTypeField() {
+      const materialtypeSelect = document.getElementById("reinstatement-material-type");
+      const materialtypeField = document.getElementById("reinstatement-material-type-notification-field");
+      const materialtypeInput = document.getElementById("reinstatement-material-type-other");
+
+      if (materialtypeSelect.value === "Other") {
+        materialtypeField.style.display = "block";
+        materialtypeInput.required = true;
+      } else {
+       materialtypeField.style.display = "none";
+        materialtypeInput.required = false;
+        materialtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function togglePitTypeField() {
+      const pittypeSelect = document.getElementById("pitlinkin-pit-type");
+      const pittypeField = document.getElementById("pitlinkin-pit-type-notification-field");
+      const pittypeInput = document.getElementById("pitlinkin-pit-type-other");
+
+      if (pittypeSelect.value === "Other") {
+        pittypeField.style.display = "block";
+        pittypeInput.required = true;
+      } else {
+       pittypeField.style.display = "none";
+        pittypeInput.required = false;
+        pittypeInput.value = ""; // clear the input if hidden
+      }
+    }
+    });
+  </script>
+
+  <script>
+    function initAutocomplete() {
+      const inputs = document.querySelectorAll(".address-autocomplete");
+      inputs.forEach(input => {
+        new google.maps.places.Autocomplete(input, {
+          types: ['geocode'],
+          componentRestrictions: { country: 'au' }
+        });
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
