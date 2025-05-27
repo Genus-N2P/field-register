@@ -288,7 +288,6 @@ textarea {
   <div id="thank-you-message" class="thank-you-message" style="display: none;">
     <h3 id="message-title">Thank you!</h3>
     <p id="message-body">Your form has been submitted successfully.</p>
-    <button type="button" class="btn-back" onclick="returnToFormSwitcher()">Submit Another Form</button>
   </div>
     
     <section class="form-switcher">
@@ -1243,6 +1242,8 @@ function hideMessage() {
                 alert('Error submitting form. Please try again.');
             }
         });
+
+
 
         document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
             e.preventDefault();
