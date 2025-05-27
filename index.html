@@ -596,7 +596,16 @@ textarea {
         </select>
 
         <label for="reinstatement-note-id">Note ID</label>
-        <input type="number" id="reinstatement-note-id" name="reinstatement-note-id" placeholder="Enter Note ID number only, eg. 12345" oninvalid="this.setCustomValidity('Enter number as 12345')" oninput="this.setCustomValidity('')" required />
+<input
+  type="text"
+  id="reinstatement-note-id"
+  name="reinstatement-note-id"
+  placeholder="Enter Note ID number only, e.g. 12345"
+  pattern="^\d{5}$"
+  oninvalid="this.setCustomValidity('Enter a 5-digit number like 12345')"
+  oninput="this.setCustomValidity('')"
+  required
+/>
 
         <label for="reinstatement-asset-type">Asset Type</label>
         <select id="reinstatement-asset-type" name="reinstatement-asset-type" required>
