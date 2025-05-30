@@ -1284,7 +1284,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -1637,7 +1637,7 @@ function returnToFormSwitcher() {
     });
 
     // Show all buttons and remove active state
-    const buttons = ['form-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
