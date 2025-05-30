@@ -269,9 +269,7 @@ textarea {
   box-sizing: border-box;
 }
 
-.conditional-field.show {
-      display: block;
-    }
+
   </style>
 
 </head>
@@ -1065,9 +1063,10 @@ textarea {
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('input[name="forecast-discipline[]"]').forEach(checkbox => {
-        checkbox.addEventListener('change', () => handleCheckboxChange(checkbox));
-      });
+  document.querySelectorAll('input[name="forecast-discipline[]"]').forEach(checkbox => {
+    checkbox.addEventListener('change', () => handleCheckboxChange(checkbox));
+    handleCheckboxChange(checkbox); // Ensure initial state is correct on load
+  });
 
       document.getElementById('forecast-form').addEventListener('submit', function(e) {
         e.preventDefault();
