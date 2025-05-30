@@ -1077,17 +1077,7 @@ textarea {
     handleCheckboxChange(checkbox); // Ensure initial state is correct on load
   });
 
-      document.getElementById('forecast-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const checked = document.querySelectorAll('input[name="forecast-discipline[]"]:checked');
-        const errorEl = document.getElementById('discipline-error');
-        if (checked.length === 0) {
-          errorEl.style.display = 'block';
-        } else {
-          errorEl.style.display = 'none';
-          alert('Form submitted!');
-        }
-      });
+      
     });
   </script>
 
