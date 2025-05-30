@@ -271,16 +271,6 @@ textarea {
   max-width: 100%;
   box-sizing: border-box;
 }
-
-.conditional-field {
-  margin-top: 10px;
-  margin-left: 20px;
-  padding: 10px;
-  background-color: var(--accent-05);
-  border-left: 3px solid var(--primary-accent);
-  border-radius: 0.5rem;
-  display: none;
-}
   </style>
 
 </head>
@@ -302,162 +292,10 @@ textarea {
     
     <section class="form-switcher">
       <h2>Please select which form you require:</h2>
-      <button id="btn-forecast" onclick="showForm('forecast')">Subcontractor Week ahead forecast</button>
       <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
       <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
       <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
-
-    <div id="form-forecast" class="form-section hidden">
-      <h3>Subcontractor Week ahead forecast: Genus N2P project</h3>
-      <p>Please complete to provide your week ahead forecast for planning purposes.</p>
-      <form id="forecast-form" onsubmit="return validateForecastForm()">
-
-<div class="current-date" id="current-date"></div>
-
-        <label for="forecast-company-name">Your Company Name</label>
-        <select id="forecast-company-name" name="forecast-company-name" required>
-          <option value="">Select one</option>
-          <option value="Boretech Contracting">Boretech Contracting</option>
-          <option value="Connectit Communications">Connectit Communications</option>
-          <option value="Dawn Techcomms">Dawn Techcomms</option>
-          <option value="DDS Underground">DDS Underground</option>
-          <option value="Dizza Communications">Dizza Communications</option>
-          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
-          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
-          <option value="Genus Services">Genus Services</option>
-          <option value="JNJTech Services">JNJTech Services</option>
-          <option value="Lightsource">Lightsource</option>
-          <option value="MNC Drilling">MNC Drilling</option>
-          <option value="Netline Services">Netline Services</option>
-          <option value="Versatile Services">Versatile Services</option>
-        </select>
-
-        <div class="date-field">
-                <label for="forecast-date">Week of:</label>
-                <input type="date" id="forecast-date" name="forecast-date" required disabled />
-            </div>
-
-        <label for="forecast-SAM">SAM ID</label>
-        <select id="forecast-SAM" name="forecast-SAM" required>
-          <option value="">Select one</option>
-          <option value="K-6ALN-05">K-6ALN-05</option>
-          <option value="K-6ALN-20">K-6ALN-20</option>
-          <option value="K-6ALN-21">K-6ALN-21</option>
-          <option value="K-6ALN-22">K-6ALN-22</option>
-          <option value="K-6ALN-23">K-6ALN-23</option>
-          <option value="K-6AUU-20">K-6AUU-20</option>
-          <option value="K-6BGT-20">K-6BGT-20</option>
-          <option value="K-6CGD-20">K-6CGD-20</option>
-          <option value="K-6CND-20">K-6CND-20</option>
-          <option value="K-6CVN-20">K-6CVN-20</option>
-          <option value="K-6DNH-20">K-6DNH-20</option>
-          <option value="K-6DNK-20">K-6DNK-20</option>
-          <option value="K-6ESP-20">K-6ESP-20</option>
-          <option value="K-6ESP-21">K-6ESP-21</option>
-          <option value="K-6ESP-40">K-6ESP-40</option>
-          <option value="K-6EXM-01">K-6EXM-01</option>
-          <option value="K-6HOP-01">K-6HOP-01</option>
-          <option value="K-6KAM-20">K-6KAM-20</option>
-          <option value="K-6KAT-20">K-6KAT-20</option>
-          <option value="K-6KLB-01">K-6KLB-01</option>
-          <option value="K-6KOJ-20">K-6KOJ-20</option>
-          <option value="K-6LEA-20">K-6LEA-20</option>
-          <option value="K-6MBA-20">K-6MBA-20</option>
-          <option value="K-6MJM-01">K-6MJM-01</option>
-          <option value="K-6NRG-20">K-6NRG-20</option>
-          <option value="K-6NWM-01">K-6NWM-01</option>
-          <option value="K-6NWM-20">K-6NWM-20</option>
-          <option value="K-6PDO-20">K-6PDO-20</option>
-          <option value="K-6SCR-20">K-6SCR-20</option>
-          <option value="K-6TPC-20">K-6TPC-20</option>
-          <option value="L-6ALN-05">L-6ALN-05</option>
-          <option value="L-6ALN-20">L-6ALN-20</option>
-          <option value="L-6ALN-21">L-6ALN-21</option>
-          <option value="L-6ALN-23">L-6ALN-23</option>
-          <option value="M-6ALN-21">M-6ALN-21</option>
-          <option value="X-6ALN-20">X-6ALN-20</option>
-          <option value="X-6BGT-20">X-6BGT-20</option>
-          <option value="X-6COI-01">X-6COI-01</option>
-          <option value="X-6DNK-20">X-6DNK-20</option>
-          <option value="Z-6ALN-22">Z-6ALN-22</option>
-          <option value="Z-6KAT-20">Z-6KAT-20</option>
-          <option value="Z-6NRG-20">Z-6NRG-20</option>
-        </select>
-
-        <label for="forecast-Discipline">Select the Disciplines your company will be working on in this SAM for the upcoming week</label>
-        <input type="checkbox" name="forecast-Discipline[]" value="Scoping" onchange="toggleDisciplineField('Scoping')" /> Scoping<br />
-        <div id="scoping-field" class="conditional-field">
-          <label for="scoping-crews">How many Scoping crews per day are anticipated</label>
-          <input type="number" id="scoping-crews" name="scoping-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Clear Blockage" onchange="toggleDisciplineField('Clear Blockage')" /> Clear Blockage<br />
-        <div id="clear-blockage-field" class="conditional-field">
-          <label for="clear-blockage-crews">How many Blockage crews per day are anticipated</label>
-          <input type="number" id="clear-blockage-crews" name="clear-blockage-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Pit Remediation" onchange="toggleDisciplineField('Pit Remediation')" /> Pit Remediation<br />
-        <div id="pit-remediation-field" class="conditional-field">
-          <label for="pit-remediation-crews">How many Pit Remediation crews per day are anticipated</label>
-          <input type="number" id="pit-remediation-crews" name="pit-remediation-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="New Build" onchange="toggleDisciplineField('New Build')" /> New Build (Boring and/or Trenching)<br />
-        <div id="new-build-field" class="conditional-field">
-          <label for="new-build-crews">How many New Build crews per day are anticipated</label>
-          <input type="number" id="new-build-crews" name="new-build-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Hauling" onchange="toggleDisciplineField('Hauling')" /> Hauling<br />
-        <div id="hauling-field" class="conditional-field">
-          <label for="hauling-crews">How many Hauling crews per day are anticipated</label>
-          <input type="number" id="hauling-crews" name="hauling-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Splicing" onchange="toggleDisciplineField('Splicing')" /> Splicing<br />
-        <div id="splicing-field" class="conditional-field">
-          <label for="splicing-crews">How many Splicing crews per day are anticipated</label>
-          <input type="number" id="splicing-crews" name="splicing-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Service Locating" onchange="toggleDisciplineField('Service Locating')" /> Service Locating<br />
-        <div id="service-locating-field" class="conditional-field">
-          <label for="service-locating-crews">How many Service Locating crews per day are anticipated</label>
-          <input type="number" id="service-locating-crews" name="service-locating-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Reinstatement" onchange="toggleDisciplineField('Reinstatement')" /> Reinstatement<br />
-        <div id="reinstatement-discipline-field" class="conditional-field">
-          <label for="reinstatement-crews">How many Reinstatement crews per day are anticipated</label>
-          <input type="number" id="reinstatement-crews" name="reinstatement-crews" min="1" step="1" />
-        </div>
-        
-        <input type="checkbox" name="forecast-Discipline[]" value="Other Civils" onchange="toggleDisciplineField('Other Civils')" /> Other Civils (Pit Link-in)<br />
-        <div id="other-civils-field" class="conditional-field">
-          <label for="other-civils-crews">How many Other Civils crews per day are anticipated</label>
-          <input type="number" id="other-civils-crews" name="other-civils-crews" min="1" step="1" />
-        </div>
-        
-        <p id="discipline-error" style="color: red; display: none;">Please select at least one discipline.</p>
-
-        <label for="forecast-Workdays">Select the days of the week your company will be working on in this SAM for the upcoming week</label>
-        <input type="checkbox" name="forecast-Workdays[]" value="Monday" /> Monday<br />
-        <input type="checkbox" name="forecast-Workdays[]" value="Tuesday" /> Tuesday<br />
-        <input type="checkbox" name="forecast-Workdays[]" value="Wednesday" /> Wednesday<br />
-        <input type="checkbox" name="forecast-Workdays[]" value="Thursday" /> Thursday<br />
-        <input type="checkbox" name="forecast-Workdays[]" value="Friday" /> Friday<br />
-        <input type="checkbox" name="forecast-Workdays[]" value="Saturday" /> Saturday<br />
-        <input type="checkbox" name="forecast-Workdays[]" value="Sunday" /> Sunday<br />
-        <p id="workday-error" style="color: red; display: none;">Please select at least one day of the week.</p>
-
-        <div class="form-footer">
-          <button type="button" class="btn-back" onclick="confirmReset('forecast')">Back</button>
-          <button type="submit">Submit Forecast</button>
-        </div>
-      </form>
-    </div>
 
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
@@ -1057,60 +895,6 @@ textarea {
     </div>
   </main>
 
-<script>
-        function getNextSunday() {
-            const today = new Date();
-            const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
-            
-            // Calculate days until next Sunday
-            // If today is Sunday (0), we want next Sunday (7 days)
-            // If today is Monday (1), we want 6 days to reach Sunday
-            // If today is Saturday (6), we want 1 day to reach Sunday
-            const daysUntilSunday = currentDay === 0 ? 7 : (7 - currentDay);
-            
-            // Create new date for next Sunday + 7 more days
-            const nextSunday = new Date(today);
-            nextSunday.setDate(today.getDate() + daysUntilSunday + 7);
-            
-            return nextSunday;
-        }
-        
-        function formatDateForInput(date) {
-            // Format date as YYYY-MM-DD for HTML date input
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        
-        function formatDateForDisplay(date) {
-            // Format date as DD/MM/YYYY for display
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        }
-        
-        function initializeDateField() {
-            const today = new Date();
-            const nextSunday = getNextSunday();
-            
-            // Set the date input value
-            const dateInput = document.getElementById('forecast-date');
-            dateInput.value = formatDateForInput(nextSunday);
-            
-            // Display current date and calculated Sunday
-            const currentDateDiv = document.getElementById('current-date');
-            currentDateDiv.innerHTML = `
-                Today: ${formatDateForDisplay(today)}<br>
-                Week ending: ${formatDateForDisplay(nextSunday)}
-            `;
-        }
-        
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initializeDateField);
-    </script>
-
   <script>
 function confirmReset(formType) {
             const isConfirmed = confirm("Are you sure you want to reset this form and return to the form selection screen?");
@@ -1261,7 +1045,7 @@ function showForm(formType) {
     document.getElementById('thank-you-message').style.display = 'none';
         
     // Hide all forms using both methods
-    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1284,7 +1068,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -1318,44 +1102,6 @@ function validateSWMS() {
     }
 }
 
-function validateDiscipline() {
-    const checkedDiscipline = document.querySelectorAll('input[name="forecast-Discipline[]"]:checked');
-    const errorElement = document.getElementById('discipline-error');
-    
-    if (checkedDiscipline.length === 0) {
-        // Show error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'block';
-        }
-        return false; // Prevent form submission
-    } else {
-        // Hide error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'none';
-        }
-        return true; // Allow form submission
-    }
-}
-
-function validateWorkday() {
-    const checkedWorkday = document.querySelectorAll('input[name="forecast-Workday[]"]:checked');
-    const errorElement = document.getElementById('workday-error');
-    
-    if (checkedWorkday.length === 0) {
-        // Show error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'block';
-        }
-        return false; // Prevent form submission
-    } else {
-        // Hide error message if it exists
-        if (errorElement) {
-            errorElement.style.display = 'none';
-        }
-        return true; // Allow form submission
-    }
-}
-
 function validateBogForm() {
     const form = document.querySelector('#bog-form'); // Updated selector
     const isValid = form.checkValidity();
@@ -1371,31 +1117,6 @@ function validateBogForm() {
     
     return true;
 }
-
-function validateForecastForm() {
-    const form = document.querySelector('#forecast-form'); // Updated selector
-    const isValid = form.checkValidity();
-    const disciplineValid = validateDiscipline();
-    const workdayValid = validateWorkday();
-    
-    if (!isValid || !disciplineValid) {
-        showErrorMessage();
-        // Add red styling to invalid fields
-	addFieldErrorStyling(form);
-        form.reportValidity(); 
-        return false;
-    
-    if (!isValid || !workdayValid) {
-        showErrorMessage();
-        // Add red styling to invalid fields
-	addFieldErrorStyling(form);
-        form.reportValidity(); 
-        return false;
-    }
-    
-    return true;
-}
-
 
 function validateGenericForm(formId) {
     const form = document.getElementById(formId); // Updated selector
@@ -1622,7 +1343,7 @@ function returnToFormSwitcher() {
     location.reload();
     
     // Hide all forms using both methods
-    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1637,7 +1358,7 @@ function returnToFormSwitcher() {
     });
 
     // Show all buttons and remove active state
-    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
