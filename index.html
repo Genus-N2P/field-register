@@ -32,6 +32,7 @@
       color: var(--primary-dark);
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
@@ -261,10 +262,6 @@
   overflow-x: auto; /* Ensure horizontal scrolling if content overflows */
 }
 
-body {
-  overflow-x: hidden;
-}
-
 input,
 select,
 textarea {
@@ -308,7 +305,7 @@ textarea {
       <form id="forecast-form" onsubmit="validateForecastForm()">
 
 <div class="current-date" id="current-date"></div>
-div class="date-field">
+<div class="date-field">
                 <label for="forecast-date">Week of:</label>
                 <input type="date" id="forecast-date" name="forecast-date" required disabled />
             </div>
@@ -1072,7 +1069,7 @@ div class="date-field">
         checkbox.addEventListener('change', () => handleCheckboxChange(checkbox));
       });
 
-      document.getElementById('forecastForm').addEventListener('submit', function(e) {
+      document.getElementById('forecast-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const checked = document.querySelectorAll('input[name="forecast-discipline[]"]:checked');
         const errorEl = document.getElementById('discipline-error');
