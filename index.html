@@ -1411,18 +1411,17 @@ function showForm(formType) {
 
        // Hide all buttons except the selected one
             const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
-            buttons.forEach(btnId => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    if (btnId === `btn-${formType}`) {
-                        btn.classList.add('active');
-                        btn.style.display = 'inline-block';
-                    } else {
-                        btn.classList.remove('active');
-                        btn.style.display = 'none';
-                    }
-                }
-            });
+buttons.forEach(btnId => {
+    const btn = document.getElementById(btnId);
+    if (btn) {
+        if (btnId === `btn-${formType}`) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        btn.style.display = 'inline-block'; // ✅ Always show buttons
+    }
+});
         }
 
 function validatediscipline() {
