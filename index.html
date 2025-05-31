@@ -1432,11 +1432,34 @@ function validatediscipline() {
     }
 }
 
-function validateworkdays() {
-    const checkedworkdays = document.querySelectorAll('input[name="forecast-workdays[]"]:checked');
-    const errorElement = document.getElementById('workdays-error');
+function validateWorkdays(fieldName) {
+    const checkedWorkdays = document.querySelectorAll(`input[name="${fieldName}[]"]:checked`);
     
-    if (checkedworkdays.length === 0) {
+    // Generate error element ID based on your HTML structure
+    let errorElementId;
+    if (fieldName === 'Scoping-workdays') {
+        errorElementId = 'scopingworkdays-error';
+    } else if (fieldName === 'Blockages-workdays') {
+        errorElementId = 'Blockagesworkdays-error';
+    } else if (fieldName === 'Pit-workdays') {
+        errorElementId = 'Pitworkdays-error';
+    } else if (fieldName === 'New-Build-workdays') {
+        errorElementId = 'New-Buildworkdays-error';
+    } else if (fieldName === 'Hauling-workdays') {
+        errorElementId = 'Haulingworkdays-error';
+    } else if (fieldName === 'Splicing-workdays') {
+        errorElementId = 'Splicingworkdays-error';
+    } else if (fieldName === 'Locating-workdays') {
+        errorElementId = 'Locatingworkdays-error';
+    } else if (fieldName === 'Reinstatement-workdays') {
+        errorElementId = 'Reinstatementworkdays-error';
+    } else if (fieldName === 'Civils-workdays') {
+        errorElementId = 'Civilsworkdays-error';
+    }
+    
+    const errorElement = document.getElementById(errorElementId);
+    
+    if (checkedWorkdays.length === 0) {
         // Show error message if it exists
         if (errorElement) {
             errorElement.style.display = 'block';
@@ -1450,7 +1473,6 @@ function validateworkdays() {
         return true; // Allow form submission
     }
 }
-
 
 function validateSWMS() {
     const checkedSWMS = document.querySelectorAll('input[name="bog-SWMS[]"]:checked');
