@@ -389,6 +389,18 @@ textarea {
       <div id="Scoping-field" class="conditional-field">
         <label for="Scoping-crews">Number of Scoping crews forecast for next week:</label>
         <input type="number" id="Scoping-crews" name="Scoping-crews" min="0" placeholder="0">
+<label for="Scoping-workdays">Forecast of days your Scoping Crew(s) will be in the field for next week (exclude Mob & Demob days):</label>
+<label for="Scoping-workdays">Select the day(s) that your Scoping crews will be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Scoping-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="workdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Blockages" name="forecast-discipline[]" value="Blockages">
       <label for="Blockages" style="display:inline; font-weight:normal">Blockages</label>
@@ -440,18 +452,6 @@ textarea {
       </div><br />
     </div>
 <p id="discipline-error" class="error">Please select at least one discipline.</p>
-
-        <label for="forecast-workdays">Select the day(s) that your crews will be in the field next week:</label>
-
-  <input type="checkbox" name="forecast-workdays[]" value="Monday" /> Monday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Tuesday" /> Tuesday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Wednesday" /> Wednesday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Thursday" /> Thursday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Friday" /> Friday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Saturday" /> Saturday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Sunday" /> Sunday<br />
-
-  <p id="workdays-error" style="color: red; display: none;">Please select at least one work day.</p>
 
         <div class="form-footer">
           <button type="button" class="btn-forecast" onclick="confirmReset('forecast')">Back</button>
@@ -1077,7 +1077,17 @@ textarea {
     handleCheckboxChange(checkbox); // Ensure initial state is correct on load
   });
 
-      
+      document.getElementById('forecast-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const checked = document.querySelectorAll('input[name="forecast-discipline[]"]:checked');
+        const errorEl = document.getElementById('discipline-error');
+        if (checked.length === 0) {
+          errorEl.style.display = 'block';
+        } else {
+          errorEl.style.display = 'none';
+          alert('Form submitted!');
+        }
+      });
     });
   </script>
 
@@ -1343,7 +1353,7 @@ function validatediscipline() {
 }
 
 function validateworkdays() {
-    const checkedworkdays = document.querySelectorAll('input[name="forecast-workdays[]"]:checked');
+    const checkedworkdays = document.querySelectorAll('input[name="scoping-workdays[]"]:checked');
     const errorElement = document.getElementById('workdays-error');
     
     if (checkedworkdays.length === 0) {
