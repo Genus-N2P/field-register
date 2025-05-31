@@ -382,6 +382,8 @@ textarea {
           <option value="Z-6NRG-20">Z-6NRG-20</option>
         </select>
 
+
+
 <label for="forecast-discipline">Select the discipline(s) your company will be working on:</label>
     <div class="checkbox-item">
       <input type="checkbox" id="Scoping" name="forecast-discipline[]" value="Scoping">
@@ -389,69 +391,157 @@ textarea {
       <div id="Scoping-field" class="conditional-field">
         <label for="Scoping-crews">Number of Scoping crews forecast for next week:</label>
         <input type="number" id="Scoping-crews" name="Scoping-crews" min="0" placeholder="0">
+<label for="Scoping-workdays">Select the day(s) that your Scoping crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Scoping-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Scoping-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="scopingworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Blockages" name="forecast-discipline[]" value="Blockages">
       <label for="Blockages" style="display:inline; font-weight:normal">Blockages</label>
       <div id="Blockages-field" class="conditional-field">
         <label for="Blockages-crews">Number of Blockages crews forecast for next week:</label>
         <input type="number" id="Blockages-crews" name="Blockages-crews" min="0" placeholder="0">
+<label for="Blockages-workdays">Select the day(s) that your Blockage crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Blockages-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Blockages-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Blockages-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Blockages-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Blockages-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Blockages-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Blockages-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Blockagesworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Pit-Remediation" name="forecast-discipline[]" value="Pit-Remediation">
       <label for="Pit-Remediation" style="display:inline; font-weight:normal">Pit Remediation</label>
       <div id="Pit-Remediation-field" class="conditional-field">
         <label for="Pit-Remediation-crews">Number of Pit Remediation crews forecast for next week:</label>
         <input type="number" id="Pit-Remediation-crews" name="Pit-Remediation-crews" min="0" placeholder="0">
+<label for="Pit-workdays">Select the day(s) that your Pit Remediation crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Pit-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Pit-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Pit-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Pit-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Pit-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Pit-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Pit-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Pitworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="New-Build" name="forecast-discipline[]" value="New-Build">
       <label for="New-Build" style="display:inline; font-weight:normal">New Build</label>
       <div id="New-Build-field" class="conditional-field">
         <label for="New-Build-crews">Number of New Build crews forecast for next week:</label>
         <input type="number" id="New-Build-crews" name="New-Build-crews" min="0" placeholder="0">
+<label for="New-Build-workdays">Select the day(s) that your New Build crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="New-Build-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="New-Build-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="New-Build-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="New-Build-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="New-Build-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="New-Build-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="New-Build-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="New-Buildworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Hauling" name="forecast-discipline[]" value="Hauling">
       <label for="Hauling" style="display:inline; font-weight:normal">Hauling</label>
       <div id="Hauling-field" class="conditional-field">
         <label for="Hauling-crews">Number of Hauling crews forecast for next week:</label>
         <input type="number" id="Hauling-crews" name="Hauling-crews" min="0" placeholder="0">
+<label for="Hauling-workdays">Select the day(s) that your Hauling crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Hauling-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Hauling-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Hauling-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Hauling-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Hauling-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Hauling-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Hauling-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Haulingworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Splicing" name="forecast-discipline[]" value="Splicing">
       <label for="Splicing" style="display:inline; font-weight:normal">Splicing</label>
       <div id="Splicing-field" class="conditional-field">
         <label for="Splicing-crews">Number of Splicing crews forecast for next week:</label>
         <input type="number" id="Splicing-crews" name="Splicing-crews" min="0" placeholder="0">
+<label for="Splicing-workdays">Select the day(s) that your Splicing crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Splicing-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Splicing-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Splicing-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Splicing-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Splicing-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Splicing-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Splicing-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Splicingworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Service-Locating" name="forecast-discipline[]" value="Service-Locating">
       <label for="Service-Locating" style="display:inline; font-weight:normal">Service Locating</label>
       <div id="Service-Locating-field" class="conditional-field">
         <label for="Service-Locating-crews">Number of Service Locating crews forecast for next week:</label>
         <input type="number" id="Service-Locating-crews" name="Service-Locating-crews" min="0" placeholder="0">
+<label for="Locating-workdays">Select the day(s) that your Locating crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Locating-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Locating-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Locating-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Locating-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Locating-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Locating-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Locating-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Locatingworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Reinstatement" name="forecast-discipline[]" value="Reinstatement">
       <label for="Reinstatement" style="display:inline; font-weight:normal">Reinstatement</label>
       <div id="Reinstatement-field" class="conditional-field">
         <label for="Reinstatement-crews">Number of Reinstatement crews forecast for next week:</label>
         <input type="number" id="Reinstatement-crews" name="Reinstatement-crews" min="0" placeholder="0">
+<label for="Reinstatement-workdays">Select the day(s) that your Reinstatement crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Reinstatement-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Reinstatementworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
       <input type="checkbox" id="Other-Civils" name="forecast-discipline[]" value="Other-Civils">
       <label for="Other-Civils" style="display:inline; font-weight:normal">Other Civils (eg. Pit Link-in's)</label>
       <div id="Other-Civils-field" class="conditional-field">
         <label for="Other-Civils-crews">Number of Other Civils crews forecast for next week:</label>
         <input type="number" id="Other-Civils-crews" name="Other-Civils-crews" min="0" placeholder="0">
+<label for="Civils-workdays">Select the day(s) that your Other Civils crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+
+  <input type="checkbox" name="Civils-workdays[]" value="Monday" /> Monday<br />
+  <input type="checkbox" name="Civils-workdays[]" value="Tuesday" /> Tuesday<br />
+  <input type="checkbox" name="Civils-workdays[]" value="Wednesday" /> Wednesday<br />
+  <input type="checkbox" name="Civils-workdays[]" value="Thursday" /> Thursday<br />
+  <input type="checkbox" name="Civils-workdays[]" value="Friday" /> Friday<br />
+  <input type="checkbox" name="Civils-workdays[]" value="Saturday" /> Saturday<br />
+  <input type="checkbox" name="Civils-workdays[]" value="Sunday" /> Sunday<br />
+
+  <p id="Civilsworkdays-error" style="color: red; display: none;">Please select at least one work day.</p>
       </div><br />
     </div>
 <p id="discipline-error" class="error">Please select at least one discipline.</p>
 
-        <label for="forecast-workdays">Select the day(s) that your crews will be in the field next week:</label>
-
-  <input type="checkbox" name="forecast-workdays[]" value="Monday" /> Monday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Tuesday" /> Tuesday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Wednesday" /> Wednesday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Thursday" /> Thursday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Friday" /> Friday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Saturday" /> Saturday<br />
-  <input type="checkbox" name="forecast-workdays[]" value="Sunday" /> Sunday<br />
-
-  <p id="workdays-error" style="color: red; display: none;">Please select at least one work day.</p>
 
         <div class="form-footer">
           <button type="button" class="btn-forecast" onclick="confirmReset('forecast')">Back</button>
@@ -1490,6 +1580,58 @@ function hideMessage() {
     document.addEventListener('DOMContentLoaded', function() {
       setDefaultDate();
       
+       // Add event listeners for each form
+        document.getElementById('forecast-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+       // Validate the form
+        if (!validateGenericForm('reinstatement-form')) {
+            return;
+        }
+
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+                'Week Ending': document.getElementById('forecast-date').value,
+                'Your Company Name': document.getElementById('forecast-company-name').value,
+                'SAM': document.getElementById('forecast-SAM').value,
+                'Discipline': document.getElementById('forecast-discipline').value,
+                'Scoping-Crews': document.getElementById('Scoping-crews').value,
+                'Scoping-Workdays': document.getElementById('Scoping-workdays').value,
+                'Blockage-Crews': document.getElementById('Blockages-crews').value,
+                'Blockages-Workdays': document.getElementById('Blockages-workdays').value,
+                'Pit-Crews': document.getElementById('Pit-Remediation-crews').value,
+                'Pits-Workdays': document.getElementById('Pit-workdays').value,
+                'New Build-Crews': document.getElementById('New-Build-crews').value,
+                'New Build-Workdays': document.getElementById('New-Build-workdays').value,
+                'Hauling-Crews': document.getElementById('Hauling-crews').value,
+                'Hauling-Workdays': document.getElementById('Hauling-workdays').value,
+                'Splicing-Crews': document.getElementById('Splicing-crews').value,
+                'Splicing-Workdays': document.getElementById('Splicing-workdays').value,
+                'Locating-Crews': document.getElementById('Service-Locating-crews').value,
+                'Locating-Workdays': document.getElementById('Locating-workdays').value,
+                'Remediation-Crews': document.getElementById('Reinstatement-crews').value,
+                'Remediation-Workdays': document.getElementById('Reinstatement-workdays').value,
+                'Civils-Crews': document.getElementById('Other-Civils-crews').value,
+                'Civils-Workdays': document.getElementById('Civils-workdays').value,
+            };
+            
+            try {
+                const response = await submitToAirtable('forecast', formData);
+const result = await response.json();
+if (!response.ok) {
+  console.error('Airtable error:', result);
+  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+  return;
+}
+
+showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting Forecast form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
             e.preventDefault();
