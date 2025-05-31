@@ -1147,38 +1147,6 @@ textarea {
   </main>
 
 <script>
-    function handleCheckboxChange(checkbox) {
-      const conditionalField = document.getElementById(checkbox.id + '-field');
-      if (checkbox.checked) {
-        conditionalField.classList.add('show');
-      } else {
-        conditionalField.classList.remove('show');
-        const input = conditionalField.querySelector('input[type="number"]');
-        if (input) input.value = '';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('input[name="forecast-discipline[]"]').forEach(checkbox => {
-    checkbox.addEventListener('change', () => handleCheckboxChange(checkbox));
-    handleCheckboxChange(checkbox); // Ensure initial state is correct on load
-  });
-
-      document.getElementById('forecast-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const checked = document.querySelectorAll('input[name="forecast-discipline[]"]:checked');
-        const errorEl = document.getElementById('discipline-error');
-        if (checked.length === 0) {
-          errorEl.style.display = 'block';
-        } else {
-          errorEl.style.display = 'none';
-          alert('Form submitted!');
-        }
-      });
-    });
-  </script>
-
-<script>
         function getNextSunday() {
             const today = new Date();
             const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
@@ -1644,7 +1612,6 @@ function hideMessage() {
             try {
                 const response = await submitToAirtable('forecast', formData);
 const result = await response.json();
-
 if (!response.ok) {
   console.error('Airtable error:', result);
   alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
