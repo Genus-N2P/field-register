@@ -311,10 +311,77 @@ textarea {
     </section>
 
     <div id="form-forecast" class="form-section hidden">
-        <h3>Subcontractor Weekly Forecast</h3>
-        <p>Please complete your weekly forecast.</p>
+        <h3>Subcontractor Weekly Forecast: Genus N2P project</h3>
+        <p>Please complete weekly by 5pm Thursday.<br>This is a new reporting requirement implemented by nbn.</p>
         <p>Week Ending: <strong id="weekEndingDate">Calculating...</strong></p>
         <form id="forecast-form" onsubmit="return validateGenericForm('forecast-form')">
+
+            <label for="forecast-company-name">Your Company Name</label>
+            <select id="forecast-company-name" name="forecast-company-name" required>
+          <option value="">Select one</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communications">Dizza Communications</option>
+          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
+
+
+            <label for="forecast-sam-id">SAM ID - Please submit 1 form per SAM.</label>
+            <select id="forecast-sam-id" name="forecast-sam-id" required>
+          <option value="">Select one</option>
+          <option value="K-6ALN-05">K-6ALN-05</option>
+          <option value="K-6ALN-20">K-6ALN-20</option>
+          <option value="K-6ALN-21">K-6ALN-21</option>
+          <option value="K-6ALN-22">K-6ALN-22</option>
+          <option value="K-6ALN-23">K-6ALN-23</option>
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+          <option value="L-6ALN-05">L-6ALN-05</option>
+          <option value="L-6ALN-20">L-6ALN-20</option>
+          <option value="L-6ALN-21">L-6ALN-21</option>
+          <option value="L-6ALN-23">L-6ALN-23</option>
+          <option value="M-6ALN-21">M-6ALN-21</option>
+          <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="X-6BGT-20">X-6BGT-20</option>
+          <option value="X-6COI-01">X-6COI-01</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="Z-6NRG-20">Z-6NRG-20</option>
+        </select>
+
 
       <div class="form-footer">
                 <button type="button" class="btn-back" onclick="confirmReset('forecast')">Back</button>
@@ -1388,7 +1455,8 @@ function hideMessage() {
             const formData = {
                 // Use the calculated "Week Commencing Date" for Airtable
                 'Week Commencing Date': weekCommencingDateFormatted, 
-                'Company Name': document.getElementById('forecast-company-name').value,
+                'Company Name': document.getElementById('forecast-company-name').value, // ADDED THIS FIELD
+                'SAM ID': document.getElementById('forecast-sam-id').value, // ADDED THIS FIELD
                 'Number of Crews Available': document.getElementById('forecast-crew-numbers').value,
                 'Comments': document.getElementById('forecast-comments').value,
                 // Include the formatted "Week Ending" date if you have a separate field for it in Airtable
