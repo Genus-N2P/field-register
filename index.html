@@ -908,7 +908,7 @@ textarea {
     </div>
   </main>
 
-   <script>
+<script>
 function confirmReset(formType) {
             const isConfirmed = confirm("Are you sure you want to reset this form and return to the form selection screen?");
             
@@ -1010,8 +1010,8 @@ function confirmReset(formType) {
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             forecast: { // Added Airtable config for the new forecast form
-                baseId: 'appegmSLEvbJSkRvd', // **REPLACE WITH YOUR FORECAST AIRTABLE BASE ID**
-                tableId: 'Forecast', // **REPLACE WITH YOUR FORECAST AIRTABLE TABLE NAME/ID**
+                baseId: 'appXXXXXXXXXXXXXX', // **REPLACE WITH YOUR FORECAST AIRTABLE BASE ID**
+                tableId: 'Table 1', // **REPLACE WITH YOUR FORECAST AIRTABLE TABLE NAME/ID**
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c' // Assuming the same API key, but adjust if needed
             }
         };
@@ -1388,43 +1388,6 @@ showSuccessMessage();
                 alert('Error submitting form. Please try again.');
             }
         });
-
-
-function returnToFormSwitcher() {
-    // Hide thank you message
-    location.reload();
-    
-    // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-forecast']; // Added 'form-forecast'
-    forms.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.classList.add('hidden');
-            element.style.display = 'none';
-            // Reset the form
-            element.reset();
-            // Remove any error styling
-            const errorFields = element.querySelectorAll('.field-error');
-            errorFields.forEach(field => field.classList.remove('field-error'));
-        }
-    });
-
-    // Show all buttons and remove active state
-    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-forecast']; // Added 'btn-forecast'
-    buttons.forEach(btnId => {
-        const btn = document.getElementById(btnId);
-        if (btn) {
-            btn.style.display = 'inline-block';
-            btn.classList.remove('active');
-        }
-    });
-}
-
-  // Show selected form
-            const targetForm = document.getElementById(`form-${formType}`);
-            if (targetForm) {
-                targetForm.classList.remove('hidden');
-            }
     });
   </script>
 
