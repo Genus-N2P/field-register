@@ -292,10 +292,23 @@ textarea {
     
     <section class="form-switcher">
       <h2>Please select which form you require:</h2>
+      <button id="btn-forecast" onclick="showForm('forecast')">Subcontractor Weekly Forecast</button>
       <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
       <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
       <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
+
+<div id="form-forecast" class="form-section hidden">
+        <h3>Subcontractor Weekly Forecast</h3>
+        <p>Please complete your weekly forecast.</p>
+        <form id="forecast-form" onsubmit="return validateGenericForm('forecast-form')">
+
+      <div class="form-footer">
+                <button type="button" class="btn-back" onclick="confirmReset('forecast')">Back</button>
+                <button type="submit">Submit Forecast</button>
+            </div>
+        </form>
+    </div>
 
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
@@ -895,7 +908,7 @@ textarea {
     </div>
   </main>
 
-  <script>
+   <script>
 function confirmReset(formType) {
             const isConfirmed = confirm("Are you sure you want to reset this form and return to the form selection screen?");
             
@@ -995,6 +1008,11 @@ function confirmReset(formType) {
                 baseId: 'appI6d8aW2GqotwlL',
                 tableId: 'Table 1',
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
+            },
+            forecast: { // Added Airtable config for the new forecast form
+                baseId: 'appegmSLEvbJSkRvd', // **REPLACE WITH YOUR FORECAST AIRTABLE BASE ID**
+                tableId: 'Forecast', // **REPLACE WITH YOUR FORECAST AIRTABLE TABLE NAME/ID**
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c' // Assuming the same API key, but adjust if needed
             }
         };
 
@@ -1032,10 +1050,12 @@ function confirmReset(formType) {
       const bogDateField = document.getElementById('bog-date');
       const pitlinkinDateField = document.getElementById('pitlinkin-date');
       const reinstatementDateField = document.getElementById('reinstatement-date');
+      const forecastDateField = document.getElementById('forecast-date'); // Added for forecast form
 
       if (bogDateField) bogDateField.value = todayString;
       if (pitlinkinDateField) pitlinkinDateField.value = todayString;
       if (reinstatementDateField) reinstatementDateField.value = todayString;
+      if (forecastDateField) forecastDateField.value = todayString; // Set default for forecast
     }
 
 function showForm(formType) {
@@ -1045,7 +1065,7 @@ function showForm(formType) {
     document.getElementById('thank-you-message').style.display = 'none';
         
     // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-forecast']; // Added 'form-forecast'
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1068,7 +1088,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-forecast']; // Added 'btn-forecast'
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -1338,12 +1358,44 @@ showSuccessMessage();
             }
         });
 
+        // Event listener for the new forecast form
+        document.getElementById('forecast-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (!validateGenericForm('forecast-form')) {
+                return;
+            }
+
+            const formData = {
+                'Week Commencing Date': document.getElementById('forecast-date').value,
+                'Company Name': document.getElementById('forecast-company-name').value,
+                'Number of Crews Available': document.getElementById('forecast-crew-numbers').value,
+                'Comments': document.getElementById('forecast-comments').value,
+            };
+
+            try {
+                const response = await submitToAirtable('forecast', formData);
+                const result = await response.json();
+
+                if (!response.ok) {
+                    console.error('Airtable error:', result);
+                    alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+                    return;
+                }
+                showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting Forecast form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+
 function returnToFormSwitcher() {
     // Hide thank you message
     location.reload();
     
     // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-forecast']; // Added 'form-forecast'
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1358,7 +1410,7 @@ function returnToFormSwitcher() {
     });
 
     // Show all buttons and remove active state
-    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-forecast']; // Added 'btn-forecast'
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
