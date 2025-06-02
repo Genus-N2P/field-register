@@ -106,9 +106,6 @@
         height: 160px;
         max-width: 200px;
       }
-      .header-spacer {
-        width: 160px;
-      }
       .header-title h1 {
         font-size: 1.5rem;
       }
@@ -117,10 +114,6 @@
     @media screen and (max-width: 320px) {
       header {
         height: 180px;
-      }
-      .header-logo {
-        height: 130px;
-        max-width: 150px;
       }
       .header-title h1 {
         font-size: 1.3rem;
@@ -1254,10 +1247,48 @@ textarea {
         }
     }
 
+    // This function will calculate the Week Ending date
+    function calculateWeekEndingDate() {
+        const weekEndingDateElement = document.getElementById('weekEndingDate');
+        const submissionDate = new Date(); // Current date and time in local timezone
+        const currentDayOfWeek = submissionDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+        let daysToAdd = 0;
+
+        if (currentDayOfWeek >= 0 && currentDayOfWeek <= 4) { // Sunday (0) to Thursday (4)
+            // If submitted on or before Thursday, Week Ending is Sunday of the *next* full week.
+            // Days to reach coming Sunday (end of current week): (7 - currentDayOfWeek) % 7
+            // Then add 7 days for the *next* Sunday.
+            daysToAdd = (7 - currentDayOfWeek); // Days to reach the end of the *current* week (Sunday)
+            // If it's Sunday, (7-0)+7 = 14. This is correct as it's the next next Sunday.
+            // For Thursday: (7-4)+7 = 3+7 = 10. Thursday 29/05/2025 + 10 days = Sunday 08/06/2025. Correct.
+        } else { // Friday (5) or Saturday (6)
+            // If submitted on Friday or Saturday, Week Ending is Sunday of the week *after* the next full week.
+            // Days to reach coming Sunday (end of current week): (7 - currentDayOfWeek) % 7
+            // Then add 14 days (7 for the next Sunday, and another 7 for the Sunday after that).
+            daysToAdd = (7 - currentDayOfWeek) + 14;
+            // For Friday: (7-5)+14 = 2+14 = 16. Friday 30/05/2025 + 16 days = Sunday 15/06/2025. Correct.
+            // For Saturday: (7-6)+14 = 1+14 = 15. Saturday 31/05/2025 + 15 days = Sunday 15/06/2025. Correct.
+        }
+
+        const targetWeekEndingDate = new Date(submissionDate);
+        targetWeekEndingDate.setDate(submissionDate.getDate() + daysToAdd);
+
+        // Format the date for display (e.g., "Sunday, 08/06/2025")
+        const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+        const formattedDate = targetWeekEndingDate.toLocaleDateString('en-GB', options); // 'en-GB' gives DD/MM/YYYY
+
+        weekEndingDateElement.textContent = formattedDate;
+        // Store the full date object on the element for easier retrieval in submission
+        weekEndingDateElement.dataset.fullDate = targetWeekEndingDate.toISOString();
+    }
+
     function showForm(formId) {
+      // Hide all form sections
       document.querySelectorAll('.form-section').forEach(form => {
         form.classList.add('hidden');
       });
+      // Show the selected form section
       document.getElementById('form-' + formId).classList.remove('hidden');
 
       // Hide thank you message when switching forms
@@ -1275,6 +1306,19 @@ textarea {
           // Remove field error styling
           form.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
       });
+
+      // Hide all form switcher buttons and remove 'active' class
+      document.querySelectorAll('.form-switcher button').forEach(btn => {
+          btn.style.display = 'none'; // Hide the button
+          btn.classList.remove('active');
+      });
+
+      // Show the clicked button and add 'active' class
+      const clickedButton = document.getElementById('btn-' + formId);
+      if (clickedButton) {
+          clickedButton.style.display = 'inline-block'; // Show the button
+          clickedButton.classList.add('active');
+      }
 
       // Recalculate Week Ending date when showing forecast form
       if (formId === 'forecast') {
@@ -1565,8 +1609,9 @@ textarea {
                         formData[`${checkbox.value} Crews`] = crewsInput.value;
                     }
                     if (daysCheckboxes.length > 0) {
-                        formData[`${checkbox.value} Days`] = Array.from(daysCheckboxes).map(cb => cb.value);
+                        formData[`${checkbox.value} Days`] = Array.from(daysCheckboxes).map(cb => cb.value).join(', '); // Join days with comma
                     }
+
                     // No "Other Civils Description" field anymore
                 }
             });
@@ -1634,7 +1679,7 @@ textarea {
     }
 
     function showErrorMessage(message = 'Please review your submission and ensure all required fields are completed.') {
-        const messageBox = document.getElementById('thank-you-message');
+        const messageBox = document.getElementById('thank-ou-message');
         const messageTitle = document.getElementById('message-title');
         const messageBody = document.getElementById('message-body');
         
@@ -1694,16 +1739,6 @@ textarea {
             });
             if (daysError) daysError.style.display = 'none'; // Hide day error
             if (daysGroup) daysGroup.classList.remove('field-error'); // Remove error styling from day group
-
-
-            // Specific for "Other Civils" description (no longer required)
-            if (disciplineName === 'other-civils') {
-                const otherCivilsDescription = document.getElementById('other-civils-description');
-                if (otherCivilsDescription) {
-                    otherCivilsDescription.value = ''; // Clear description
-                    otherCivilsDescription.classList.remove('field-error'); // Remove error styling
-                }
-            }
         }
         // Re-run validation for the forecast form to update error states immediately
         validateForecastForm();
@@ -1729,56 +1764,9 @@ textarea {
       if (reinstatementDateField) reinstatementDateField.value = todayString;
     }
 
-    // --- NEW JAVASCRIPT FOR WEEK ENDING CALCULATION ---
     document.addEventListener('DOMContentLoaded', function() {
-        const weekEndingDateElement = document.getElementById('weekEndingDate');
-
-        // This function will calculate the Week Ending date
-        function calculateWeekEndingDate() {
-            const submissionDate = new Date(); // Current date and time in local timezone
-            const currentDayOfWeek = submissionDate.getDay(); // 0 (Sunday) to 6 (Saturday)
-
-            let daysToAdd = 0;
-
-            if (currentDayOfWeek >= 0 && currentDayOfWeek <= 4) { // Sunday (0) to Thursday (4)
-                // If submitted on or before Thursday, Week Ending is Sunday of the *next* full week.
-                // Days to reach coming Sunday (end of current week): (7 - currentDayOfWeek) % 7
-                // Then add 7 days for the *next* Sunday.
-                daysToAdd = (7 - currentDayOfWeek); // Days to reach the end of the *current* week (Sunday)
-                // If it's Sunday, (7-0)%7 = 0 days to reach end of current week, but we want the *next* next Sunday.
-                // If it's Monday, (7-1)%7 = 6 days to reach end of current week (Sunday).
-                // If it's Thursday, (7-4)%7 = 3 days to reach end of current week (Sunday).
-
-                // Now, add 7 more days to get to the Sunday of the *next* full week.
-                daysToAdd += 7;
-
-                // Edge case for Sunday: If today is Sunday (day 0), (7-0)+7 = 14. This is correct as it's the next next Sunday.
-                // For Thursday: (7-4)+7 = 3+7 = 10. Thursday 29/05/2025 + 10 days = Sunday 08/06/2025. Correct.
-            } else { // Friday (5) or Saturday (6)
-                // If submitted on Friday or Saturday, Week Ending is Sunday of the week *after* the next full week.
-                // Days to reach coming Sunday (end of current week): (7 - currentDayOfWeek) % 7
-                // Then add 14 days (7 for the next Sunday, and another 7 for the Sunday after that).
-                daysToAdd = (7 - currentDayOfWeek) + 14;
-                // For Friday: (7-5)+14 = 2+14 = 16. Friday 30/05/2025 + 16 days = Sunday 15/06/2025. Correct.
-                // For Saturday: (7-6)+14 = 1+14 = 15. Saturday 31/05/2025 + 15 days = Sunday 15/06/2025. Correct.
-            }
-
-            const targetWeekEndingDate = new Date(submissionDate);
-            targetWeekEndingDate.setDate(submissionDate.getDate() + daysToAdd);
-
-            // Format the date for display (e.g., "Sunday, 08/06/2025")
-            const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-            const formattedDate = targetWeekEndingDate.toLocaleDateString('en-GB', options); // 'en-GB' gives DD/MM/YYYY
-
-            weekEndingDateElement.textContent = formattedDate;
-            // Store the full date object on the element for easier retrieval in submission
-            weekEndingDateElement.dataset.fullDate = targetWeekEndingDate.toISOString();
-        }
-
         // Call the function to set the Week Ending date when the DOM is loaded
         calculateWeekEndingDate();
-        // --- END NEW JAVASCRIPT ---
-
         // Initialize default dates when the page loads
         setDefaultDate();
 
