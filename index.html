@@ -271,6 +271,18 @@ textarea {
   max-width: 100%;
   box-sizing: border-box;
 }
+
+    .week-ending-display {
+      background-color: var(--accent-10);
+      border: 2px solid var(--primary-accent);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
   </style>
 
 </head>
@@ -298,9 +310,10 @@ textarea {
       <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
 
-<div id="form-forecast" class="form-section hidden">
+    <div id="form-forecast" class="form-section hidden">
         <h3>Subcontractor Weekly Forecast</h3>
         <p>Please complete your weekly forecast.</p>
+        <p>Week Ending: <strong id="weekEndingDate">Calculating...</strong></p>
         <form id="forecast-form" onsubmit="return validateGenericForm('forecast-form')">
 
       <div class="form-footer">
@@ -1245,15 +1258,14 @@ function hideMessage() {
             
             try {
                 const response = await submitToAirtable('bog', formData);
-const result = await response.json();
+                const result = await response.json();
 
-if (!response.ok) {
-  console.error('Airtable error:', result);
-  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
-  return;
-}
-
-showSuccessMessage();
+                if (!response.ok) {
+                    console.error('Airtable error:', result);
+                    alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+                    return;
+                }
+                showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting BOG form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1291,18 +1303,15 @@ showSuccessMessage();
             };
             
             try {
-                // await submitToAirtable('reinstatement', formData);
-                // showSuccessMessage();
-const response = await submitToAirtable('reinstatement', formData);
-const result = await response.json();
+                const response = await submitToAirtable('reinstatement', formData);
+                const result = await response.json();
 
-if (!response.ok) {
-  console.error('Airtable error:', result);
-  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
-  return;
-}
-
-showSuccessMessage();
+                if (!response.ok) {
+                    console.error('Airtable error:', result);
+                    alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+                    return;
+                }
+                showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Reinstatement form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1340,18 +1349,15 @@ showSuccessMessage();
             };
             
             try {
-                // await submitToAirtable('pitlinkin', formData);
-                // showSuccessMessage();
-const response = await submitToAirtable('pitlinkin', formData);
-const result = await response.json();
+                const response = await submitToAirtable('pitlinkin', formData);
+                const result = await response.json();
 
-if (!response.ok) {
-  console.error('Airtable error:', result);
-  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
-  return;
-}
-
-showSuccessMessage();
+                if (!response.ok) {
+                    console.error('Airtable error:', result);
+                    alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+                    return;
+                }
+                showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Pit Link-in form:', error);
                 alert('Error submitting form. Please try again.');
@@ -1366,11 +1372,27 @@ showSuccessMessage();
                 return;
             }
 
+            // Get the calculated Week Ending date
+            const weekEndingDateStr = document.getElementById('weekEndingDate').textContent;
+            // You might want to also calculate the "Week Commencing Date" (Monday) for Airtable
+            // For now, I'll use the formatted string, but adjust as needed for your Airtable field.
+            // If Airtable expects a standard date format (YYYY-MM-DD), you'd need to parse weekEndingDateStr
+            // and derive the Monday from it.
+
+            // To get the "Week Commencing Date" (Monday) from the calculated "Week Ending" (Sunday):
+            const weekEndingDateObj = new Date(document.getElementById('weekEndingDate').dataset.fullDate); // Use the dataset for the full date object
+            const weekCommencingDateObj = new Date(weekEndingDateObj);
+            weekCommencingDateObj.setDate(weekEndingDateObj.getDate() - 6); // Subtract 6 days to get to Monday
+            const weekCommencingDateFormatted = weekCommencingDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+
             const formData = {
-                'Week Commencing Date': document.getElementById('forecast-date').value,
+                // Use the calculated "Week Commencing Date" for Airtable
+                'Week Commencing Date': weekCommencingDateFormatted, 
                 'Company Name': document.getElementById('forecast-company-name').value,
                 'Number of Crews Available': document.getElementById('forecast-crew-numbers').value,
                 'Comments': document.getElementById('forecast-comments').value,
+                // Include the formatted "Week Ending" date if you have a separate field for it in Airtable
+                'Week Ending Date': weekEndingDateStr // This is the displayed string, not necessarily for backend processing
             };
 
             try {
@@ -1388,6 +1410,55 @@ showSuccessMessage();
                 alert('Error submitting form. Please try again.');
             }
         });
+
+        // --- NEW JAVASCRIPT FOR WEEK ENDING CALCULATION ---
+        const weekEndingDateElement = document.getElementById('weekEndingDate');
+
+        // This function will calculate the Week Ending date
+        function calculateWeekEndingDate() {
+            const submissionDate = new Date(); // Current date and time in local timezone
+            const currentDayOfWeek = submissionDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+            let daysToAdd = 0;
+
+            if (currentDayOfWeek >= 0 && currentDayOfWeek <= 4) { // Sunday (0) to Thursday (4)
+                // If submitted on or before Thursday, Week Ending is Sunday of the *next* full week.
+                // Days to reach coming Sunday (end of current week): (7 - currentDayOfWeek) % 7
+                // Then add 7 days for the *next* Sunday.
+                daysToAdd = (7 - currentDayOfWeek); // Days to reach the end of the *current* week (Sunday)
+                // If it's Sunday, (7-0)%7 = 0 days to reach end of current week, but we want the *next* next Sunday.
+                // If it's Monday, (7-1)%7 = 6 days to reach end of current week (Sunday).
+                // If it's Thursday, (7-4)%7 = 3 days to reach end of current week (Sunday).
+
+                // Now, add 7 more days to get to the Sunday of the *next* full week.
+                daysToAdd += 7;
+
+                // Edge case for Sunday: If today is Sunday (day 0), (7-0)+7 = 14. This is correct as it's the next next Sunday.
+                // For Thursday: (7-4)+7 = 3+7 = 10. Thursday 29/05/2025 + 10 days = Sunday 08/06/2025. Correct.
+            } else { // Friday (5) or Saturday (6)
+                // If submitted on Friday or Saturday, Week Ending is Sunday of the week *after* the next full week.
+                // Days to reach coming Sunday (end of current week): (7 - currentDayOfWeek) % 7
+                // Then add 14 days (7 for the next Sunday, and another 7 for the Sunday after that).
+                daysToAdd = (7 - currentDayOfWeek) + 14;
+                // For Friday: (7-5)+14 = 2+14 = 16. Friday 30/05/2025 + 16 days = Sunday 15/06/2025. Correct.
+                // For Saturday: (7-6)+14 = 1+14 = 15. Saturday 31/05/2025 + 15 days = Sunday 15/06/2025. Correct.
+            }
+
+            const targetWeekEndingDate = new Date(submissionDate);
+            targetWeekEndingDate.setDate(submissionDate.getDate() + daysToAdd);
+
+            // Format the date for display (e.g., "Sunday, 08/06/2025")
+            const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+            const formattedDate = targetWeekEndingDate.toLocaleDateString('en-GB', options); // 'en-GB' gives DD/MM/YYYY
+
+            weekEndingDateElement.textContent = formattedDate;
+            // Store the full date object on the element for easier retrieval in submission
+            weekEndingDateElement.dataset.fullDate = targetWeekEndingDate.toISOString();
+        }
+
+        // Call the function to set the Week Ending date when the DOM is loaded
+        calculateWeekEndingDate();
+        // --- END NEW JAVASCRIPT ---
     });
   </script>
 
