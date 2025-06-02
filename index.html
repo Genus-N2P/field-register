@@ -1677,7 +1677,7 @@ textarea {
     }
 
     function showErrorMessage(message = 'Please review your submission and ensure all required fields are completed.') {
-        const messageBox = document.getElementById('thank-ou-message');
+        const messageBox = document.getElementById('thank-you-message');
         const messageTitle = document.getElementById('message-title');
         const messageBody = document.getElementById('message-body');
         
@@ -1707,7 +1707,7 @@ textarea {
         // Auto-redirect after 5 seconds
         setTimeout(() => {
             returnToFormSwitcher();
-            document.getElementById('thank-ou-message').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'none';
         }, 5000);
     }
 
