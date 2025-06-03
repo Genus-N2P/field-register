@@ -370,7 +370,7 @@ textarea {
         <h3>Subcontractor Weekly Forecast: Genus N2P project</h3>
         <p>Please complete weekly by 5pm Thursday.<br>This is a new reporting requirement implemented by nbn.</p>
         <p>Week Commencing: <strong id="weekCommencingDate">Calculating...</strong> | Week Ending: <strong id="weekEndingDate">Calculating...</strong></p>
-        <form id="forecast-form" onsubmit="return validateGenericForm('forecast-form')">
+        <form id="forecast-form" onsubmit="">
 
             <label for="forecast-company-name">Your Company Name</label>
             <select id="forecast-company-name" name="forecast-company-name" required>
@@ -1445,6 +1445,80 @@ function confirmReset(formType) {
   </script>
 
 <script>
+// Add this function to handle forecast form validation
+function validateForecastForm() {
+    const form = document.getElementById('forecast-form');
+    let isValid = true;
+    
+    // Clear previous error styling
+    clearFieldErrors(form);
+    
+    // Check basic form validity
+    if (!form.checkValidity()) {
+        isValid = false;
+    }
+    
+    // Check if at least one discipline is selected
+    const disciplineCheckboxes = form.querySelectorAll('input[name="discipline[]"]:checked');
+    const disciplineError = document.getElementById('discipline-error');
+    
+    if (disciplineCheckboxes.length === 0) {
+        disciplineError.style.display = 'block';
+        document.querySelector('.discipline-checkbox-group').classList.add('field-error');
+        isValid = false;
+    } else {
+        disciplineError.style.display = 'none';
+        document.querySelector('.discipline-checkbox-group').classList.remove('field-error');
+    }
+    
+    // Validate each selected discipline's conditional fields
+    disciplineCheckboxes.forEach(checkbox => {
+        const discipline = checkbox.value.toLowerCase().replace(/\s/g, '-');
+        
+        // Check crews field
+        const crewsInput = document.getElementById(`${discipline}-crews`);
+        if (crewsInput && (!crewsInput.value || crewsInput.value < 1)) {
+            crewsInput.classList.add('error-field');
+            isValid = false;
+        }
+        
+        // Check days selection
+        const daysCheckboxes = form.querySelectorAll(`input[name="${discipline}-days[]"]:checked`);
+        const daysError = document.getElementById(`${discipline}-days-error`);
+        
+        if (daysCheckboxes.length === 0) {
+            daysError.style.display = 'block';
+            isValid = false;
+        } else {
+            daysError.style.display = 'none';
+        }
+    });
+    
+    if (!isValid) {
+        showErrorMessage();
+        addFieldErrorStyling(form);
+        form.reportValidity();
+        return false;
+    }
+    
+    return true;
+}
+
+// Add this function to clear field errors
+function clearFieldErrors(form) {
+    // Remove error classes
+    const errorFields = form.querySelectorAll('.field-error, .error-field');
+    errorFields.forEach(field => {
+        field.classList.remove('field-error', 'error-field');
+    });
+    
+    // Hide error messages
+    const errorMessages = form.querySelectorAll('.discipline-days-error');
+    errorMessages.forEach(msg => {
+        msg.style.display = 'none';
+    });
+}
+
 function showForm(formType) {
     console.log('showForm called with:', formType);
 
@@ -1599,6 +1673,84 @@ function hideMessage() {
     // Initialize default dates when the page loads
     document.addEventListener('DOMContentLoaded', function() {
       setDefaultDate();
+
+// Add forecast form event listener in your DOMContentLoaded section
+document.getElementById('forecast-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Validate the form
+    if (!validateForecastForm()) {
+        return;
+    }
+    
+    // Collect selected disciplines
+    const selectedDisciplines = Array.from(document.querySelectorAll('input[name="discipline[]"]:checked'))
+                                     .map(checkbox => checkbox.value);
+    
+    // Collect discipline-specific data
+    let disciplineData = {};
+    selectedDisciplines.forEach(discipline => {
+        const disciplineKey = discipline.toLowerCase().replace(/\s/g, '-');
+        const crews = document.getElementById(`${disciplineKey}-crews`).value;
+        const days = Array.from(document.querySelectorAll(`input[name="${disciplineKey}-days[]"]:checked`))
+                          .map(checkbox => checkbox.value);
+        
+        disciplineData[`${discipline} Crews`] = crews;
+        disciplineData[`${discipline} Days`] = days.join(', ');
+    });
+    
+    // Collect main form data
+    const formData = {
+        'Week Commencing': document.getElementById('weekCommencingDate').value,
+        'Week Ending': document.getElementById('weekEndingDate').value,
+        'Your Company Name': document.getElementById('forecast-company-name').value,
+        'SAM': document.getElementById('forecast-sam-id').value,
+        'Discipline-Scoping': document.getElementById('discipline-scoping').checked,
+        'Discipline-Blockages': document.getElementById('discipline-blockages').checked,
+        'Discipline-Pits': document.getElementById('discipline-pit-remediation').checked,
+        'Discipline-New Build': document.getElementById('discipline-new-build').checked,
+        'Discipline-Hauling': document.getElementById('discipline-hauling').checked,
+        'Discipline-Splicing': document.getElementById('discipline-splicing').checked,
+        'Discipline-Locating': document.getElementById('discipline-service-locating').checked,
+        'Discipline-Reinstatement': document.getElementById('discipline-reinstatement').checked,
+        'Discipline-Civils': document.getElementById('discipline-other-civils').checked,
+        'Scoping-Crews': document.getElementById('scoping-crews').checked,
+        'Blockage-Crews': document.getElementById('blockages-crews').checked,
+        'Pit-Crews': document.getElementById('pit-remediation-crews').checked,
+        'New Build-Crews': document.getElementById('new-build-crews').checked,
+        'Hauling-Crews': document.getElementById('hauling-crews').checked,
+        'Splicing-Crews': document.getElementById('splicing-crews').checked,
+        'Locating-Crews': document.getElementById('service-locating-crews').checked,
+        'Reinstatement-Crews': document.getElementById('reinstatement-crews').checked,
+        'Civils-Crews': document.getElementById('other-civils-crews').checked,
+        'Scoping-Workdays': document.getElementById('scoping-days[]').checked,
+        'Blockage-Workdays': document.getElementById('blockages-days[]').checked,
+        'Pit-Workdays': document.getElementById('pit-remediation-days[]').checked,
+        'New Build-Workdays': document.getElementById('new-build-days[]').checked,
+        'Hauling-Workdays': document.getElementById('hauling-days[]').checked,
+        'Splicing-Workdays': document.getElementById('splicing-days[]').checked,
+        'Locating-Workdays': document.getElementById('service-locating-days[]').checked,
+        'Reinstatement-Workdays': document.getElementById('reinstatement-days[]').checked,
+        'Civils-Workdays': document.getElementById('other-civils-days[]').checked,
+
+    };
+    
+    try {
+        const response = await submitToAirtable('forecast', formData);
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error('Airtable error:', result);
+            alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+            return;
+        }
+
+        showSuccessMessage();
+    } catch (error) {
+        console.error('Error submitting Forecast form:', error);
+        alert('Error submitting form. Please try again.');
+    }
+});
       
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
