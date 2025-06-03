@@ -271,6 +271,74 @@ textarea {
   max-width: 100%;
   box-sizing: border-box;
 }
+
+/* Specific styling for discipline checkboxes and their error messages */
+.discipline-checkbox-group.field-error {
+  border: 2px solid #dc3545;
+  padding: 10px;
+  border-radius: 0.5rem;
+  background-color: #fff5f5;
+}
+
+.discipline-checkbox-group.field-error label {
+  color: #dc3545;
+}
+
+    .week-ending-display {
+      background-color: var(--accent-10);
+      border: 2px solid var(--primary-accent);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Style for the conditional discipline fields */
+    .discipline-conditional-fields {
+        border-left: 3px solid var(--primary-accent);
+        padding-left: 15px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        background-color: var(--accent-05);
+        border-radius: 0.5rem;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .discipline-conditional-fields label {
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .discipline-conditional-fields input[type="number"] {
+        width: calc(100% - 20px); /* Adjust width to fit padding */
+        margin-bottom: 10px;
+    }
+    .discipline-conditional-fields .days-checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 5px;
+    }
+    .discipline-conditional-fields .days-checkbox-group div {
+        flex: 1 1 auto; /* Allow items to grow and shrink */
+        min-width: 100px; /* Minimum width for each day checkbox */
+    }
+    .discipline-conditional-fields .days-checkbox-group input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    .error-field {
+        border: 2px solid red !important;
+        background-color: #ffe0e0 !important;
+    }
+    /* Optional: Style for the error messages */
+    .error-message {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
   </style>
 
 </head>
@@ -292,10 +360,259 @@ textarea {
     
     <section class="form-switcher">
       <h2>Please select which form you require:</h2>
+      <button id="btn-forecast" onclick="showForm('forecast')">Subcontractor Weekly Forecast</button>
       <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
       <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
       <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
     </section>
+
+    <div id="form-forecast" class="form-section hidden">
+        <h3>Subcontractor Weekly Forecast: Genus N2P project</h3>
+        <p>Please complete weekly by 5pm Thursday.<br>This is a new reporting requirement implemented by nbn.</p>
+        <p>Week Commencing: <strong id="weekCommencingDate">Calculating...</strong> | Week Ending: <strong id="weekEndingDate">Calculating...</strong></p>
+        <form id="forecast-form" onsubmit="return validateGenericForm('forecast-form')">
+
+            <label for="forecast-company-name">Your Company Name</label>
+            <select id="forecast-company-name" name="forecast-company-name" required>
+          <option value="">Select one</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communications">Dizza Communications</option>
+          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
+
+
+            <label for="forecast-sam-id">SAM ID - Please submit 1 form per SAM.</label>
+            <select id="forecast-sam-id" name="forecast-sam-id" required>
+          <option value="">Select one</option>
+          <option value="K-6ALN-05">K-6ALN-05</option>
+          <option value="K-6ALN-20">K-6ALN-20</option>
+          <option value="K-6ALN-21">K-6ALN-21</option>
+          <option value="K-6ALN-22">K-6ALN-22</option>
+          <option value="K-6ALN-23">K-6ALN-23</option>
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+          <option value="L-6ALN-05">L-6ALN-05</option>
+          <option value="L-6ALN-20">L-6ALN-20</option>
+          <option value="L-6ALN-21">L-6ALN-21</option>
+          <option value="L-6ALN-23">L-6ALN-23</option>
+          <option value="M-6ALN-21">M-6ALN-21</option>
+          <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="X-6BGT-20">X-6BGT-20</option>
+          <option value="X-6COI-01">X-6COI-01</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="Z-6NRG-20">Z-6NRG-20</option>
+        </select>
+
+            <label>Select the discipline(s) your company will be working on:</label>
+            <div class="discipline-checkbox-group">
+                <input type="checkbox" id="discipline-scoping" name="discipline[]" value="Scoping" onchange="toggleDisciplineFields(this)" /> Scoping<br />
+                <div id="discipline-scoping-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="scoping-crews">Number of Scoping crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="scoping-crews" name="scoping-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Scoping crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="scoping-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="scoping-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="scoping-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="scoping-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="scoping-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="scoping-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="scoping-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="scoping-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-blockages" name="discipline[]" value="Blockages" onchange="toggleDisciplineFields(this)" /> Blockages<br />
+                <div id="discipline-blockages-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="blockages-crews">Number of Blockages crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="blockages-crews" name="blockages-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Blockages crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="blockages-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="blockages-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="blockages-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="blockages-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="blockages-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="blockages-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="blockages-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="blockages-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-pit-remediation" name="discipline[]" value="Pit Remediation" onchange="toggleDisciplineFields(this)" /> Pit Remediation<br />
+                <div id="discipline-pit-remediation-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="pit-remediation-crews">Number of Pit Remediation crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="pit-remediation-crews" name="pit-remediation-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Pit Remediation crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="pit-remediation-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="pit-remediation-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-new-build" name="discipline[]" value="New Build" onchange="toggleDisciplineFields(this)" /> New Build<br />
+                <div id="discipline-new-build-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="new-build-crews">Number of New Build crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="new-build-crews" name="new-build-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your New Build crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="new-build-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="new-build-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="new-build-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="new-build-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="new-build-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="new-build-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="new-build-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="new-build-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-hauling" name="discipline[]" value="Hauling" onchange="toggleDisciplineFields(this)" /> Hauling<br />
+                <div id="discipline-hauling-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="hauling-crews">Number of Hauling crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="hauling-crews" name="hauling-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Hauling crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="hauling-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="hauling-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="hauling-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="hauling-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="hauling-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="hauling-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="hauling-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="hauling-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-splicing" name="discipline[]" value="Splicing" onchange="toggleDisciplineFields(this)" /> Splicing<br />
+                <div id="discipline-splicing-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="splicing-crews">Number of Splicing crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="splicing-crews" name="splicing-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Splicing crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="splicing-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="splicing-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="splicing-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="splicing-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="splicing-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="splicing-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="splicing-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="splicing-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-service-locating" name="discipline[]" value="Service Locating" onchange="toggleDisciplineFields(this)" /> Service Locating<br />
+                <div id="discipline-service-locating-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="service-locating-crews">Number of Service Locating crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="service-locating-crews" name="service-locating-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Service Locating crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="service-locating-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="service-locating-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="service-locating-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="service-locating-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="service-locating-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="service-locating-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="service-locating-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="service-locating-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-reinstatement" name="discipline[]" value="Reinstatement" onchange="toggleDisciplineFields(this)" /> Reinstatement<br />
+                <div id="discipline-reinstatement-fields" class="discipline-conditional-fields" style="display: none;">
+                    <label for="reinstatement-crews">Number of Reinstatement crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="reinstatement-crews" name="reinstatement-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Reinstatement crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="reinstatement-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="reinstatement-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+
+                <input type="checkbox" id="discipline-other-civils" name="discipline[]" value="Other Civils" onchange="toggleDisciplineFields(this)" /> Other Civils (eg. Pit Link-in)<br />
+                <div id="discipline-other-civils-fields" class="discipline-conditional-fields" style="display: none;">
+
+                    <label for="other-civils-crews">Number of Other Civils crews forecast for next week (exclude Mob & Demob days):</label>
+                    <input type="number" id="other-civils-crews" name="other-civils-crews" min="0" step="1" />
+
+                    <label>Select the day(s) that your Other Civils crews are forecast to be in the field next week (exclude Mob & Demob days):</label>
+                    <div class="days-checkbox-group">
+                        <div><input type="checkbox" name="other-civils-days[]" value="Monday" /> Monday</div>
+                        <div><input type="checkbox" name="other-civils-days[]" value="Tuesday" /> Tuesday</div>
+                        <div><input type="checkbox" name="other-civils-days[]" value="Wednesday" /> Wednesday</div>
+                        <div><input type="checkbox" name="other-civils-days[]" value="Thursday" /> Thursday</div>
+                        <div><input type="checkbox" name="other-civils-days[]" value="Friday" /> Friday</div>
+                        <div><input type="checkbox" name="other-civils-days[]" value="Saturday" /> Saturday</div>
+                        <div><input type="checkbox" name="other-civils-days[]" value="Sunday" /> Sunday</div>
+                    </div>
+                    <p id="other-civils-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                </div>
+            </div>
+            <p id="discipline-error" style="color: red; display: none;">Please select at least one discipline.</p>
+
+
+            <div class="form-footer">
+                <button type="button" class="btn-back" onclick="confirmReset('forecast')">Back</button>
+                <button type="submit">Submit Forecast</button>
+            </div>
+        </form>
+    </div>
+
 
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
@@ -1045,7 +1362,7 @@ function showForm(formType) {
     document.getElementById('thank-you-message').style.display = 'none';
         
     // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1068,7 +1385,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -1343,7 +1660,7 @@ function returnToFormSwitcher() {
     location.reload();
     
     // Hide all forms using both methods
-    const forms = ['form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1358,7 +1675,7 @@ function returnToFormSwitcher() {
     });
 
     // Show all buttons and remove active state
-    const buttons = ['btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
