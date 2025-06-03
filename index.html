@@ -1550,43 +1550,42 @@ textarea {
     const dayOfWeek = today.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
     const currentHour = today.getHours(); // 0-23
 
+    let daysToAddForCommencing = 0;
+
+    switch (dayOfWeek) {
+      case 1: // Monday
+        daysToAddForCommencing = 7;
+        break;
+      case 2: // Tuesday
+        daysToAddForCommencing = 6;
+        break;
+      case 3: // Wednesday
+        daysToAddForCommencing = 5;
+        break;
+      case 4: // Thursday
+        if (currentHour < 17) { // Prior to 5 PM
+          daysToAddForCommencing = 4;
+        } else { // After 5 PM
+          daysToAddForCommencing = 11;
+        }
+        break;
+      case 5: // Friday
+        daysToAddForCommencing = 10;
+        break;
+      case 6: // Saturday
+        daysToAddForCommencing = 9;
+        break;
+      case 0: // Sunday
+        daysToAddForCommencing = 8;
+        break;
+    }
+
     let weekCommencing = new Date(today);
-
-    // Calculate the date for the upcoming Monday
-    // If today is Monday (1), daysToAdd will be 0. If Tuesday (2), daysToAdd will be 6 (next Monday).
-    // (1 + 7 - dayOfWeek) % 7 gives 1 for Tuesday, 2 for Wednesday etc... 0 for Monday.
-    // So to get to the *next* Monday (not including today if it's Monday), we adjust
-    let daysUntilNextMonday = (1 + 7 - dayOfWeek) % 7;
-    if (dayOfWeek === 0) { // If today is Sunday, next Monday is tomorrow
-        daysUntilNextMonday = 1;
-    } else if (dayOfWeek === 1) { // If today is Monday, next Monday is 7 days away
-        daysUntilNextMonday = 7;
-    }
-
-
-    let nextMonday = new Date(today);
-    nextMonday.setDate(today.getDate() + daysUntilNextMonday);
-
-    // Check the conditions for setting the "Week Commencing" date
-    const isThursdayAfter5PM = dayOfWeek === 4 && currentHour >= 17;
-    const isFridaySaturdaySunday = dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0;
-
-    if (isThursdayAfter5PM || isFridaySaturdaySunday) {
-      // If it's Thursday after 5 PM, or if it's Friday, Saturday, or Sunday,
-      // the "Week Commencing" date is set to the Monday after the following reporting week.
-      // This means adding 14 days to the upcoming Monday
-      weekCommencing.setDate(nextMonday.getDate() + 14);
-    } else {
-      // Otherwise, it's set to the Monday of the following week.
-      // This means adding 7 days to the upcoming Monday
-      weekCommencing.setDate(nextMonday.getDate() + 7);
-    }
-
-    // Adjust for the correct month and year after setting the date
+    weekCommencing.setDate(today.getDate() + daysToAddForCommencing);
     weekCommencing.setHours(0, 0, 0, 0); // Reset time to start of the day
 
     let weekEnding = new Date(weekCommencing);
-    weekEnding.setDate(weekCommencing.getDate() + 4); // Set to Friday of that week
+    weekEnding.setDate(weekCommencing.getDate() + 6); // Set to 6 days after weekCommencing
 
     const formatter = new Intl.DateTimeFormat('en-AU', {
       day: '2-digit',
@@ -1601,8 +1600,7 @@ textarea {
   // Call updateForecastWeekDates on page load
   document.addEventListener('DOMContentLoaded', () => {
     updateForecastWeekDates();
-  });
-  </script>
+  });  </script>
 
 <script>
   function returnToFormSwitcher() {
