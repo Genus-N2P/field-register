@@ -1196,15 +1196,21 @@ textarea {
 
   <script>
   function showForm(formId) {
+    console.log(`showForm called with formId: ${formId}`);
+
     // Hide all form sections
     document.querySelectorAll('.form-section').forEach(form => {
       form.classList.add('hidden');
+      console.log(`Hidden form section: ${form.id}`);
     });
 
     // Show the selected form section
     const selectedForm = document.getElementById(`form-${formId}`);
     if (selectedForm) {
       selectedForm.classList.remove('hidden');
+      console.log(`Showing selected form: ${selectedForm.id}`);
+    } else {
+      console.error(`Selected form with ID form-${formId} not found!`);
     }
 
     // Hide all non-selected buttons within the form-switcher
@@ -1212,9 +1218,11 @@ textarea {
     document.querySelectorAll('.form-switcher button').forEach(button => {
       if (button.id !== `btn-${formId}`) {
         button.classList.add('hidden'); // Hide the non-selected button
+        console.log(`Hiding button: ${button.id}`);
       } else {
         button.classList.remove('hidden'); // Ensure the selected button is visible
         button.classList.add('active'); // Add active styling to the selected button
+        console.log(`Keeping active button visible: ${button.id}`);
       }
     });
 
@@ -1222,8 +1230,44 @@ textarea {
     const thankYouMessage = document.getElementById('thank-you-message');
     if (thankYouMessage) {
         thankYouMessage.style.display = 'none';
+        console.log("Hiding thank you message.");
     }
   }
+
+  // Keep your returnToFormSwitcher and confirmReset functions as they were updated
+  // from the previous response.
+  function returnToFormSwitcher() {
+    console.log("returnToFormSwitcher called.");
+    const formSwitcher = document.querySelector('.form-switcher');
+    if (formSwitcher) {
+      formSwitcher.classList.remove('hidden');
+    }
+
+    document.querySelectorAll('.form-switcher button').forEach(button => {
+      button.classList.remove('hidden');
+      button.classList.remove('active');
+    });
+
+    document.querySelectorAll('.form-section').forEach(form => {
+      form.classList.add('hidden');
+    });
+
+    const thankYouMessage = document.getElementById('thank-you-message');
+    if (thankYouMessage) {
+      thankYouMessage.style.display = 'none';
+    }
+  }
+
+  function confirmReset(formType) {
+    if (confirm("Are you sure you want to go back? Any unsaved changes will be lost.")) {
+      returnToFormSwitcher();
+    }
+  }
+
+  // Make sure this is present if you need it for the forecast dates
+  document.addEventListener('DOMContentLoaded', () => {
+    // updateForecastWeekDates(); // Uncomment if needed and defined elsewhere
+  });
 
     // General form submission handler
     async function submitToAirtable(formName, data) {
@@ -1624,51 +1668,6 @@ textarea {
   document.addEventListener('DOMContentLoaded', () => {
     updateForecastWeekDates();
   });  </script>
-
-<script>
-  // This function is called when returning from a form to the main selection.
-  function returnToFormSwitcher() {
-    // Ensure the form-switcher section itself is visible (it shouldn't have been hidden by showForm now)
-    const formSwitcher = document.querySelector('.form-switcher');
-    if (formSwitcher) {
-      formSwitcher.classList.remove('hidden');
-    }
-
-    // Show all buttons within the form-switcher and remove their active class
-    document.querySelectorAll('.form-switcher button').forEach(button => {
-      button.classList.remove('hidden'); // Make all buttons visible
-      button.classList.remove('active'); // Remove active styling
-    });
-
-    // Hide all form sections
-    document.querySelectorAll('.form-section').forEach(form => {
-      form.classList.add('hidden');
-    });
-
-    // Hide the thank-you message if it's shown
-    const thankYouMessage = document.getElementById('thank-you-message');
-    if (thankYouMessage) {
-      thankYouMessage.style.display = 'none';
-    }
-
-    // You might also want to reset the forms here if they should be cleared on going back
-    // Example: document.getElementById('forecast-form').reset();
-    // document.getElementById('bog-form').reset();
-    // ...and so on for other forms.
-  }
-
-  // Update the confirmReset function to use the improved returnToFormSwitcher
-  function confirmReset(formType) {
-    if (confirm("Are you sure you want to go back? Any unsaved changes will be lost.")) {
-      returnToFormSwitcher();
-    }
-  }
-
-  // Call updateForecastWeekDates on page load (assuming this function is still needed)
-  document.addEventListener('DOMContentLoaded', () => {
-    // Ensure updateForecastWeekDates is defined elsewhere or included here if it's part of this script block.
-    // updateForecastWeekDates(); // Uncomment if updateForecastWeekDates is in the same script block
-  });</script>
 
   <script>
     function initAutocomplete() {
