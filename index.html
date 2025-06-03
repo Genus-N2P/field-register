@@ -1699,27 +1699,6 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         disciplineData[`${discipline} Days`] = days.join(', ');
     });
 
-            // Collect checkbox values for Workdays
-            const checkedscoping-days = Array.from(document.querySelectorAll('input[name="scoping-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedblockages-days = Array.from(document.querySelectorAll('input[name="blockages-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedpit-remediation-days = Array.from(document.querySelectorAll('input[name="pit-remediation-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkednew-build-days = Array.from(document.querySelectorAll('input[name="new-build-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedhauling-days = Array.from(document.querySelectorAll('input[name="hauling-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedsplicing-days = Array.from(document.querySelectorAll('input[name="splicing-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedservice-locating-days = Array.from(document.querySelectorAll('input[name="service-locating-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedreinstatement-days = Array.from(document.querySelectorAll('input[name="reinstatement-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-            const checkedother-civils-days = Array.from(document.querySelectorAll('input[name="other-civils-days[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
-
-
     
     // Collect main form data
     const formData = {
@@ -1745,15 +1724,15 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         'Locating-Crews': document.getElementById('service-locating-crews').checked,
         'Reinstatement-Crews': document.getElementById('reinstatement-crews').checked,
         'Civils-Crews': document.getElementById('other-civils-crews').checked,
-        'Scoping-Workdays': checkedscoping-days,
-        'Blockage-Workdays': checkedblockages-days,
-        'Pit-Workdays': checkedpit-remediation-days,
-        'New Build-Workdays': checkednew-build-days,
-        'Hauling-Workdays': checkedhauling-days,
-        'Splicing-Workdays': checkedsplicing-days,
-        'Locating-Workdays': checkedservice-locating-days,
-        'Reinstatement-Workdays': checkedreinstatement-days,
-        'Civils-Workdays': checkedother-civils-days,
+        'Scoping-Workdays': document.getElementById('scoping-days[]').checked,
+        'Blockage-Workdays': document.getElementById('blockages-days[]').checked,
+        'Pit-Workdays': document.getElementById('pit-remediation-days[]').checked,
+        'New Build-Workdays': document.getElementById('new-build-days[]').checked,
+        'Hauling-Workdays': document.getElementById('hauling-days[]').checked,
+        'Splicing-Workdays': document.getElementById('splicing-days[]').checked,
+        'Locating-Workdays': document.getElementById('service-locating-days[]').checked,
+        'Reinstatement-Workdays': document.getElementById('reinstatement-days[]').checked,
+        'Civils-Workdays': document.getElementById('other-civils-days[]').checked,
 
     };
     
