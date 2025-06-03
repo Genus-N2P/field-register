@@ -1195,80 +1195,6 @@ textarea {
   </main>
 
   <script>
-  function showForm(formId) {
-    console.log(`showForm called with formId: ${formId}`);
-
-    // Hide all form sections
-    document.querySelectorAll('.form-section').forEach(form => {
-      form.classList.add('hidden');
-      console.log(`Hidden form section: ${form.id}`);
-    });
-
-    // Show the selected form section
-    const selectedForm = document.getElementById(`form-${formId}`);
-    if (selectedForm) {
-      selectedForm.classList.remove('hidden');
-      console.log(`Showing selected form: ${selectedForm.id}`);
-    } else {
-      console.error(`Selected form with ID form-${formId} not found!`);
-    }
-
-    // Hide all non-selected buttons within the form-switcher
-    // and mark the selected button as active
-    document.querySelectorAll('.form-switcher button').forEach(button => {
-      if (button.id !== `btn-${formId}`) {
-        button.classList.add('hidden'); // Hide the non-selected button
-        console.log(`Hiding button: ${button.id}`);
-      } else {
-        button.classList.remove('hidden'); // Ensure the selected button is visible
-        button.classList.add('active'); // Add active styling to the selected button
-        console.log(`Keeping active button visible: ${button.id}`);
-      }
-    });
-
-    // Optionally, hide the thank-you message if it's visible.
-    const thankYouMessage = document.getElementById('thank-you-message');
-    if (thankYouMessage) {
-        thankYouMessage.style.display = 'none';
-        console.log("Hiding thank you message.");
-    }
-  }
-
-  // Keep your returnToFormSwitcher and confirmReset functions as they were updated
-  // from the previous response.
-  function returnToFormSwitcher() {
-    console.log("returnToFormSwitcher called.");
-    const formSwitcher = document.querySelector('.form-switcher');
-    if (formSwitcher) {
-      formSwitcher.classList.remove('hidden');
-    }
-
-    document.querySelectorAll('.form-switcher button').forEach(button => {
-      button.classList.remove('hidden');
-      button.classList.remove('active');
-    });
-
-    document.querySelectorAll('.form-section').forEach(form => {
-      form.classList.add('hidden');
-    });
-
-    const thankYouMessage = document.getElementById('thank-you-message');
-    if (thankYouMessage) {
-      thankYouMessage.style.display = 'none';
-    }
-  }
-
-  function confirmReset(formType) {
-    if (confirm("Are you sure you want to go back? Any unsaved changes will be lost.")) {
-      returnToFormSwitcher();
-    }
-  }
-
-  // Make sure this is present if you need it for the forecast dates
-  document.addEventListener('DOMContentLoaded', () => {
-    // updateForecastWeekDates(); // Uncomment if needed and defined elsewhere
-  });
-
     // General form submission handler
     async function submitToAirtable(formName, data) {
         const apiKey = 'pat24227f31131154c153f8e5c8e3295c514751f0f04e84e5114798935c441a4a49c'; 
@@ -1681,5 +1607,80 @@ textarea {
     }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
+<script>
+  function showForm(formId) {
+    console.log(`showForm called with formId: ${formId}`);
+
+    // Hide all form sections
+    document.querySelectorAll('.form-section').forEach(form => {
+      form.classList.add('hidden');
+      console.log(`Hidden form section: ${form.id}`);
+    });
+
+    // Show the selected form section
+    const selectedForm = document.getElementById(`form-${formId}`);
+    if (selectedForm) {
+      selectedForm.classList.remove('hidden');
+      console.log(`Showing selected form: ${selectedForm.id}`);
+    } else {
+      console.error(`Selected form with ID form-${formId} not found!`);
+    }
+
+    // Hide all non-selected buttons within the form-switcher
+    // and mark the selected button as active
+    document.querySelectorAll('.form-switcher button').forEach(button => {
+      if (button.id !== `btn-${formId}`) {
+        button.classList.add('hidden'); // Hide the non-selected button
+        console.log(`Hiding button: ${button.id}`);
+      } else {
+        button.classList.remove('hidden'); // Ensure the selected button is visible
+        button.classList.add('active'); // Add active styling to the selected button
+        console.log(`Keeping active button visible: ${button.id}`);
+      }
+    });
+
+    // Optionally, hide the thank-you message if it's visible.
+    const thankYouMessage = document.getElementById('thank-you-message');
+    if (thankYouMessage) {
+        thankYouMessage.style.display = 'none';
+        console.log("Hiding thank you message.");
+    }
+  }
+
+  // Keep your returnToFormSwitcher and confirmReset functions as they were updated
+  // from the previous response.
+  function returnToFormSwitcher() {
+    console.log("returnToFormSwitcher called.");
+    const formSwitcher = document.querySelector('.form-switcher');
+    if (formSwitcher) {
+      formSwitcher.classList.remove('hidden');
+    }
+
+    document.querySelectorAll('.form-switcher button').forEach(button => {
+      button.classList.remove('hidden');
+      button.classList.remove('active');
+    });
+
+    document.querySelectorAll('.form-section').forEach(form => {
+      form.classList.add('hidden');
+    });
+
+    const thankYouMessage = document.getElementById('thank-you-message');
+    if (thankYouMessage) {
+      thankYouMessage.style.display = 'none';
+    }
+  }
+
+  function confirmReset(formType) {
+    if (confirm("Are you sure you want to go back? Any unsaved changes will be lost.")) {
+      returnToFormSwitcher();
+    }
+  }
+
+  // Make sure this is present if you need it for the forecast dates
+  document.addEventListener('DOMContentLoaded', () => {
+    // updateForecastWeekDates(); // Uncomment if needed and defined elsewhere
+  });
+</script>
 </body>
 </html>
