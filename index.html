@@ -1545,54 +1545,63 @@ textarea {
     }
 
     // Function to calculate and update week commencing/ending dates
-    function updateForecastWeekDates() {
-        const now = new Date();
-        const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 4 = Thursday, 5 = Friday
-        const currentHour = now.getHours(); // 0-23
+  function updateForecastWeekDates() {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+    const currentHour = today.getHours(); // 0-23
 
-        let weekCommencing = new Date(now);
-        let weekEnding = new Date(now);
+    let weekCommencing = new Date(today);
 
-        // Adjust to Monday of the current week (or previous if Sunday)
-        const diffToMonday = now.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-        weekCommencing.setDate(diffToMonday);
-        weekCommencing.setHours(0, 0, 0, 0); // Set to start of the day
-
-        // If today is Thursday (dayOfWeek = 4) and it's after 5 PM (17:00)
-        if (dayOfWeek === 4 && currentHour >= 17) {
-            // Move to the Monday of the *next* week
-            weekCommencing.setDate(weekCommencing.getDate() + 7);
-        } else if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) { // If Friday, Saturday, or Sunday
-            // Move to the Monday of the *next* week
-            weekCommencing.setDate(weekCommencing.getDate() + 7);
-        }
-
-        weekEnding.setDate(weekCommencing.getDate() + 6); // Week ending is 6 days after week commencing
-
-        const formatter = new Intl.DateTimeFormat('en-AU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-
-        document.getElementById('weekCommencingDate').innerText = formatter.format(weekCommencing);
-        document.getElementById('weekEndingDate').innerText = formatter.format(weekEnding);
+    // Calculate the date for the upcoming Monday
+    // If today is Monday (1), daysToAdd will be 0. If Tuesday (2), daysToAdd will be 6 (next Monday).
+    // (1 + 7 - dayOfWeek) % 7 gives 1 for Tuesday, 2 for Wednesday etc... 0 for Monday.
+    // So to get to the *next* Monday (not including today if it's Monday), we adjust
+    let daysUntilNextMonday = (1 + 7 - dayOfWeek) % 7;
+    if (dayOfWeek === 0) { // If today is Sunday, next Monday is tomorrow
+        daysUntilNextMonday = 1;
+    } else if (dayOfWeek === 1) { // If today is Monday, next Monday is 7 days away
+        daysUntilNextMonday = 7;
     }
 
-    // Call updateForecastWeekDates on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        updateForecastWeekDates();
-        // Set today's date for bog-date field if it exists
-        const bogDateField = document.getElementById('bog-date');
-        if (bogDateField) {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = (today.getMonth() + 1).toString().padStart(2, '0');
-            const day = today.getDate().toString().padStart(2, '0');
-            bogDateField.value = `${year}-${month}-${day}`;
-        }
+
+    let nextMonday = new Date(today);
+    nextMonday.setDate(today.getDate() + daysUntilNextMonday);
+
+    // Check the conditions for setting the "Week Commencing" date
+    const isThursdayAfter5PM = dayOfWeek === 4 && currentHour >= 17;
+    const isFridaySaturdaySunday = dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0;
+
+    if (isThursdayAfter5PM || isFridaySaturdaySunday) {
+      // If it's Thursday after 5 PM, or if it's Friday, Saturday, or Sunday,
+      // the "Week Commencing" date is set to the Monday after the following reporting week.
+      // This means adding 14 days to the upcoming Monday
+      weekCommencing.setDate(nextMonday.getDate() + 14);
+    } else {
+      // Otherwise, it's set to the Monday of the following week.
+      // This means adding 7 days to the upcoming Monday
+      weekCommencing.setDate(nextMonday.getDate() + 7);
+    }
+
+    // Adjust for the correct month and year after setting the date
+    weekCommencing.setHours(0, 0, 0, 0); // Reset time to start of the day
+
+    let weekEnding = new Date(weekCommencing);
+    weekEnding.setDate(weekCommencing.getDate() + 4); // Set to Friday of that week
+
+    const formatter = new Intl.DateTimeFormat('en-AU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
     });
 
+    document.getElementById('weekCommencingDate').innerText = formatter.format(weekCommencing);
+    document.getElementById('weekEndingDate').innerText = formatter.format(weekEnding);
+  }
+
+  // Call updateForecastWeekDates on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    updateForecastWeekDates();
+  });
   </script>
 
 <script>
@@ -1612,6 +1621,6 @@ textarea {
       });
     }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
