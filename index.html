@@ -1195,6 +1195,31 @@ textarea {
   </main>
 
   <script>
+  function showForm(formId) {
+    // Hide all form sections
+    document.querySelectorAll('.form-section').forEach(form => {
+      form.classList.add('hidden');
+    });
+
+    // Show the selected form section
+    const selectedForm = document.getElementById(`form-${formId}`);
+    if (selectedForm) {
+      selectedForm.classList.remove('hidden');
+    }
+
+    // Hide the form-switcher section itself
+    const formSwitcher = document.querySelector('.form-switcher');
+    if (formSwitcher) {
+      formSwitcher.classList.add('hidden');
+    }
+
+    // Optionally, if there's a thank-you message that might be visible, hide it.
+    const thankYouMessage = document.getElementById('thank-you-message');
+    if (thankYouMessage) {
+        thankYouMessage.style.display = 'none';
+    }
+  }
+
     // General form submission handler
     async function submitToAirtable(formName, data) {
         const apiKey = 'pat24227f31131154c153f8e5c8e3295c514751f0f04e84e5114798935c441a4a49c'; 
@@ -1271,13 +1296,6 @@ textarea {
       // Initialize date for forecast form when shown
       if (formId === 'forecast') {
           updateForecastWeekDates();
-      }
-    }
-
-    function confirmReset(formId) {
-      if (confirm('Are you sure you want to go back? All unsaved changes will be lost.')) {
-        document.getElementById(`${formId}-form`).reset();
-        location.reload();
       }
     }
 
@@ -1603,8 +1621,37 @@ textarea {
   });  </script>
 
 <script>
+    // Existing function for returning to the form switcher
+  // Modified to directly manage visibility instead of reloading the page
   function returnToFormSwitcher() {
-    location.reload();
+    // Show the form-switcher section
+    const formSwitcher = document.querySelector('.form-switcher');
+    if (formSwitcher) {
+      formSwitcher.classList.remove('hidden');
+    }
+
+    // Hide all form sections
+    document.querySelectorAll('.form-section').forEach(form => {
+      form.classList.add('hidden');
+    });
+
+    // Hide the thank-you message if it's shown
+    const thankYouMessage = document.getElementById('thank-you-message');
+    if (thankYouMessage) {
+      thankYouMessage.style.display = 'none';
+    }
+
+    // You might also want to reset the forms here if they should be cleared on going back
+    // Example: document.getElementById('forecast-form').reset();
+    // document.getElementById('bog-form').reset();
+    // ...and so on for other forms.
+  }
+
+  // Update the confirmReset function to use the improved returnToFormSwitcher
+  function confirmReset(formType) {
+    if (confirm("Are you sure you want to go back? Any unsaved changes will be lost.")) {
+      returnToFormSwitcher();
+    }
   }
 </script>
 
