@@ -1586,40 +1586,10 @@ textarea {
             }
         });
 
-
-        if (isValid) {
-            // Collect data for Airtable submission
-            const formData = {
-                'Company Name': document.getElementById('forecast-company-name').value,
-                'SAM ID': document.getElementById('forecast-sam-id').value,
-                'Week Ending Date': document.getElementById('weekEndingDate').dataset.fullDate, // Use the ISO string for backend
-                'Disciplines Selected': Array.from(document.querySelectorAll('#forecast-form input[name="discipline[]"]:checked')).map(cb => cb.value),
-            };
-
-            // Add conditional discipline data
-            disciplineCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    const disciplineName = checkbox.value.toLowerCase().replace(/\s/g, '-');
-                    const crewsInput = document.getElementById(`${disciplineName}-crews`);
-                    const daysCheckboxes = document.querySelectorAll(`input[name="${disciplineName}-days[]"]:checked`);
-                    
-                    if (crewsInput) {
-                        formData[`${checkbox.value} Crews`] = crewsInput.value;
-                    }
-                    if (daysCheckboxes.length > 0) {
-                        formData[`${checkbox.value} Days`] = Array.from(daysCheckboxes).map(cb => cb.value).join(', '); // Join days with comma
-                    }
-
-                    // No "Other Civils Description" field anymore
-                }
-            });
-
-            submitForecastForm(formData); // Call the new submission function
-            return false; // Prevent default form submission
-        } else {
+        if (!isValid) {
             showErrorMessage();
-            return false; // Prevent form submission
         }
+        return isValid; // Return true/false for validation status
     }
 
     async function submitForecastForm(formData) {
@@ -1686,11 +1656,11 @@ textarea {
         messageBody.style.color = 'red';
         messageBox.style.display = 'block';
 
-        // Apply error styling to all invalid fields
-        addFieldErrorStyling(document.getElementById('forecast-form')); // Apply to forecast form
-        addFieldErrorStyling(document.getElementById('bog-form')); // Apply to bog form
-        addFieldErrorStyling(document.getElementById('reinstatement-form')); // Apply to reinstatement form
-        addFieldErrorStyling(document.getElementById('pitlinkin-form')); // Apply to pitlinkin form
+        // Apply error styling to all invalid forms
+        addFieldErrorStyling(document.getElementById('forecast-form'));
+        addFieldErrorStyling(document.getElementById('bog-form'));
+        addFieldErrorStyling(document.getElementById('reinstatement-form'));
+        addFieldErrorStyling(document.getElementById('pitlinkin-form'));
     }
 
     function showSuccessMessage() {
@@ -1738,7 +1708,6 @@ textarea {
             if (daysError) daysError.style.display = 'none'; // Hide day error
             if (daysGroup) daysGroup.classList.remove('field-error'); // Remove error styling from day group
         }
-        // Removed the call to validateForecastForm() from here
     }
 
 
@@ -1771,32 +1740,26 @@ textarea {
         document.getElementById('forecast-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            // Validate the form first
             if (!validateForecastForm()) {
-                return;
+                // If validation fails, show error message (already handled by validateForecastForm)
+                return; // Stop the submission process
             }
 
-            // Get the calculated Week Ending date
-            const weekEndingDateStr = document.getElementById('weekEndingDate').textContent;
-            // You might want to also calculate the "Week Commencing Date" (Monday) for Airtable
-            // For now, I'll use the formatted string, but adjust as needed for your Airtable field.
-            // If Airtable expects a standard date format (YYYY-MM-DD), you'd need to parse weekEndingDateStr
-            // and derive the Monday from it.
-
-            // To get the "Week Commencing Date" (Monday) from the calculated "Week Ending" (Sunday):
-            const weekEndingDateObj = new Date(document.getElementById('weekEndingDate').dataset.fullDate); // Use the dataset for the full date object
+            // Data collection logic for forecast form
+            const weekEndingDateObj = new Date(document.getElementById('weekEndingDate').dataset.fullDate);
             const weekCommencingDateObj = new Date(weekEndingDateObj);
             weekCommencingDateObj.setDate(weekEndingDateObj.getDate() - 6); // Subtract 6 days to get to Monday
-            const weekCommencingDateFormatted = weekCommencingDateObj.toISOString().split('T')[0]; //YYYY-MM-DD
+            const weekCommencingDateFormatted = weekCommencingDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
 
             const formData = {
-                // Use the calculated "Week Commencing Date" for Airtable
                 'Week Commencing Date': weekCommencingDateFormatted,
                 'Week Ending': document.getElementById('weekEndingDate').dataset.fullDate, // Use ISO string for backend
                 'Company Name': document.getElementById('forecast-company-name').value,
                 'SAM ID': document.getElementById('forecast-sam-id').value,
+                'Disciplines Selected': Array.from(document.querySelectorAll('#forecast-form input[name="discipline[]"]:checked')).map(cb => cb.value),
             };
 
-            // Add conditional discipline data
             const disciplineCheckboxes = document.querySelectorAll('#forecast-form input[name="discipline[]"]');
             disciplineCheckboxes.forEach(checkbox => {
                 if (checkbox.checked) {
@@ -1810,12 +1773,11 @@ textarea {
                     if (daysCheckboxes.length > 0) {
                         formData[`${checkbox.value} Days`] = Array.from(daysCheckboxes).map(cb => cb.value).join(', '); // Join days with comma
                     }
-
-                    // No "Other Civils Description" field anymore
                 }
             });
 
-            submitForecastForm(formData); // Call the new submission function
+            // Submit the collected data
+            submitForecastForm(formData);
         });
 
         // Add event listeners for other forms
@@ -1975,6 +1937,6 @@ textarea {
       });
     }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
