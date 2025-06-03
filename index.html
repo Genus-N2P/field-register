@@ -1222,6 +1222,30 @@ function confirmReset(formType) {
             }
         }
 
+    function toggleDisciplineFields(checkbox) {
+        const discipline = checkbox.value.toLowerCase().replace(/\s/g, '-');
+        const fieldsDiv = document.getElementById(`discipline-${discipline}-fields`);
+        if (checkbox.checked) {
+            fieldsDiv.style.display = 'block';
+            // Set crews to 1 by default, if empty
+            const crewsInput = document.getElementById(`${discipline}-crews`);
+            if (crewsInput && crewsInput.value === '') {
+                crewsInput.value = '1';
+            }
+        } else {
+            fieldsDiv.style.display = 'none';
+            // Clear values when unchecked
+            const crewsInput = document.getElementById(`${discipline}-crews`);
+            if (crewsInput) {
+                crewsInput.value = '';
+            }
+            const daysCheckboxes = fieldsDiv.querySelectorAll(`input[name="${discipline}-days[]"]`);
+            daysCheckboxes.forEach(dayCheckbox => (dayCheckbox.checked = false));
+            document.getElementById(`${discipline}-days-error`).style.display = 'none'; // Hide error
+        }
+    }
+
+
     function toggleACMField() {
   const select = document.getElementById("bog-ACM");
   const acmField = document.getElementById("bog-acm-notification-field");
@@ -1298,6 +1322,11 @@ function confirmReset(formType) {
 
 // Airtable configuration - Replace with your actual values
         const AIRTABLE_CONFIG = {
+            forecast: {
+                baseId: 'appegmSLEvbJSkRvd',
+                tableId: 'Forecast',
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
+            },
             bog: {
                 baseId: 'appegmSLEvbJSkRvd',
                 tableId: 'Table 1',
@@ -1355,6 +1384,67 @@ function confirmReset(formType) {
       if (reinstatementDateField) reinstatementDateField.value = todayString;
     }
 
+    // Function to calculate and update week commencing/ending dates
+  function updateForecastWeekDates() {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // Sunday - 0, Monday - 1, ..., Saturday - 6
+    const currentHour = today.getHours(); // 0-23
+
+    let daysToAddForCommencing = 0;
+
+    switch (dayOfWeek) {
+      case 1: // Monday
+        daysToAddForCommencing = 7;
+        break;
+      case 2: // Tuesday
+        daysToAddForCommencing = 6;
+        break;
+      case 3: // Wednesday
+        daysToAddForCommencing = 5;
+        break;
+      case 4: // Thursday
+        if (currentHour < 17) { // Prior to 5 PM
+          daysToAddForCommencing = 4;
+        } else { // After 5 PM
+          daysToAddForCommencing = 11;
+        }
+        break;
+      case 5: // Friday
+        daysToAddForCommencing = 10;
+        break;
+      case 6: // Saturday
+        daysToAddForCommencing = 9;
+        break;
+      case 0: // Sunday
+        daysToAddForCommencing = 8;
+        break;
+    }
+
+    let weekCommencing = new Date(today);
+    weekCommencing.setDate(today.getDate() + daysToAddForCommencing);
+    weekCommencing.setHours(0, 0, 0, 0); // Reset time to start of the day
+
+    let weekEnding = new Date(weekCommencing);
+    weekEnding.setDate(weekCommencing.getDate() + 6); // Set to 6 days after weekCommencing
+
+    const formatter = new Intl.DateTimeFormat('en-AU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+
+    document.getElementById('weekCommencingDate').innerText = formatter.format(weekCommencing);
+    document.getElementById('weekEndingDate').innerText = formatter.format(weekEnding);
+  }
+</script>
+<script>
+  // Call updateForecastWeekDates on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    updateForecastWeekDates();
+  });
+  </script>
+
+<script>
 function showForm(formType) {
     console.log('showForm called with:', formType);
 
