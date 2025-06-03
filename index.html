@@ -1681,6 +1681,14 @@ textarea {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. Call updateForecastWeekDates on page load ---
+        // Ensure updateForecastWeekDates() function is defined elsewhere in your script,
+        // or include its definition here if it's not.
+        // If it's defined globally, this call is fine.
+        // If it's commented out in your original file, keep it commented unless you need it.
+        // updateForecastWeekDates(); // Uncomment if you need this to run immediately on load
+
+        // --- 2. Set default dates for bog-date, reinstatement-date, pitlinkin-date ---
         const today = new Date();
         const year = today.getFullYear();
         const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
@@ -1702,6 +1710,8 @@ textarea {
         if (pitlinkinDateField) {
             pitlinkinDateField.value = formattedDate;
         }
+
+        // --- 3. Form Validation Functions ---
         // Function to validate a single form
         function validateForm(event) {
             const form = event.target;
@@ -1763,8 +1773,19 @@ textarea {
         forms.forEach(form => {
             form.addEventListener('submit', validateForm);
         });
-</script>
 
+        // --- 4. Other DOMContentLoaded related calls (like updateForecastWeekDates() from another block) ---
+        // The last commented out block was:
+        // document.addEventListener('DOMContentLoaded', () => {
+        //   // updateForecastWeekDates(); // Uncomment if needed and defined elsewhere
+        // });
+        // This is now integrated into the single listener. If updateForecastWeekDates is
+        // indeed meant to be called on page load, ensure its definition is accessible
+        // (either global or defined within this same DOMContentLoaded block).
+        // If it's a function that's only called when the 'forecast' form is shown (as per your original showForm),
+        // then it doesn't need to be called here.
+    });
+</script>
   <script>
     function initAutocomplete() {
       const inputs = document.querySelectorAll(".address-autocomplete");
