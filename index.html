@@ -1207,13 +1207,18 @@ textarea {
       selectedForm.classList.remove('hidden');
     }
 
-    // Hide the form-switcher section itself
-    const formSwitcher = document.querySelector('.form-switcher');
-    if (formSwitcher) {
-      formSwitcher.classList.add('hidden');
-    }
+    // Hide all non-selected buttons within the form-switcher
+    // and mark the selected button as active
+    document.querySelectorAll('.form-switcher button').forEach(button => {
+      if (button.id !== `btn-${formId}`) {
+        button.classList.add('hidden'); // Hide the non-selected button
+      } else {
+        button.classList.remove('hidden'); // Ensure the selected button is visible
+        button.classList.add('active'); // Add active styling to the selected button
+      }
+    });
 
-    // Optionally, if there's a thank-you message that might be visible, hide it.
+    // Optionally, hide the thank-you message if it's visible.
     const thankYouMessage = document.getElementById('thank-you-message');
     if (thankYouMessage) {
         thankYouMessage.style.display = 'none';
@@ -1621,14 +1626,19 @@ textarea {
   });  </script>
 
 <script>
-    // Existing function for returning to the form switcher
-  // Modified to directly manage visibility instead of reloading the page
+  // This function is called when returning from a form to the main selection.
   function returnToFormSwitcher() {
-    // Show the form-switcher section
+    // Ensure the form-switcher section itself is visible (it shouldn't have been hidden by showForm now)
     const formSwitcher = document.querySelector('.form-switcher');
     if (formSwitcher) {
       formSwitcher.classList.remove('hidden');
     }
+
+    // Show all buttons within the form-switcher and remove their active class
+    document.querySelectorAll('.form-switcher button').forEach(button => {
+      button.classList.remove('hidden'); // Make all buttons visible
+      button.classList.remove('active'); // Remove active styling
+    });
 
     // Hide all form sections
     document.querySelectorAll('.form-section').forEach(form => {
@@ -1653,7 +1663,12 @@ textarea {
       returnToFormSwitcher();
     }
   }
-</script>
+
+  // Call updateForecastWeekDates on page load (assuming this function is still needed)
+  document.addEventListener('DOMContentLoaded', () => {
+    // Ensure updateForecastWeekDates is defined elsewhere or included here if it's part of this script block.
+    // updateForecastWeekDates(); // Uncomment if updateForecastWeekDates is in the same script block
+  });</script>
 
   <script>
     function initAutocomplete() {
