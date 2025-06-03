@@ -322,6 +322,15 @@ textarea {
     .discipline-conditional-fields .days-checkbox-group input[type="checkbox"] {
         margin-right: 5px;
     }
+    .error-field {
+        border: 2px solid red !important;
+        background-color: #ffe0e0 !important;
+    }
+    /* Optional: Style for the error messages */
+    .error-message {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
   </style>
 
 </head>
@@ -1694,6 +1703,68 @@ textarea {
             pitlinkinDateField.value = formattedDate;
         }
     });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to validate a single form
+        function validateForm(event) {
+            const form = event.target;
+            let isValid = true;
+
+            // Remove any existing error flags
+            form.querySelectorAll('.error-field').forEach(field => {
+                field.classList.remove('error-field');
+            });
+            form.querySelectorAll('.error-message').forEach(msg => {
+                msg.remove();
+            });
+
+            // Select all required input, select, and textarea elements within the form
+            const requiredFields = form.querySelectorAll('[required]');
+
+            requiredFields.forEach(field => {
+                if (field.type === 'checkbox' && !field.checked) {
+                    isValid = false;
+                    flagField(field, 'This checkbox must be checked.');
+                } else if (field.value.trim() === '') {
+                    isValid = false;
+                    flagField(field, 'This field is required.');
+                } else if (field.tagName === 'SELECT' && field.value === '') {
+                    // Assuming empty string or a default "Select one" option with value=""
+                    isValid = false;
+                    flagField(field, 'Please select an option.');
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); // Prevent form submission
+                alert('Please fill in all required fields.'); // Alert the user
+            }
+
+            return isValid;
+        }
+
+        // Function to visually flag a field and add an error message
+        function flagField(field, message) {
+            field.classList.add('error-field'); // Add a class for styling
+            const errorMessage = document.createElement('div');
+            errorMessage.classList.add('error-message');
+            errorMessage.style.color = 'red';
+            errorMessage.style.fontSize = '0.8em';
+            errorMessage.textContent = message;
+
+            // Insert the error message after the field or its parent container
+            // This might need adjustment based on your specific HTML structure
+            if (field.parentNode.classList.contains('form-group')) { // Assuming a common parent
+                field.parentNode.appendChild(errorMessage);
+            } else {
+                field.after(errorMessage);
+            }
+        }
+
+        // Attach the validateForm function to the submit event of each form
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', validateForm);
+        });
 </script>
 
   <script>
