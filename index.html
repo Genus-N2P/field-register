@@ -1239,6 +1239,26 @@ textarea {
         }
     }
 
+    // Set default date to today in Western Standard Time (Australia/Perth)
+    function setDefaultDate() {
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Perth"}));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      const todayString = `${year}-${month}-${day}`;
+      
+      // Set default date for all forms
+      const bogDateField = document.getElementById('bog-date');
+      const pitlinkinDateField = document.getElementById('pitlinkin-date');
+      const reinstatementDateField = document.getElementById('reinstatement-date');
+
+      if (bogDateField) bogDateField.value = todayString;
+      if (pitlinkinDateField) pitlinkinDateField.value = todayString;
+      if (reinstatementDateField) reinstatementDateField.value = todayString;
+    }
+
+
     function showSuccessMessage() {
         document.getElementById('message-title').innerText = 'Success!';
         document.getElementById('message-body').innerText = 'Your form has been submitted successfully.';
