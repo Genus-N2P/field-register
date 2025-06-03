@@ -208,6 +208,12 @@
       font-weight: 600;
     }
 
+    legend {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+    }
+
     input[type="text"],
     input[type="date"],
     input[type="number"],
@@ -442,8 +448,8 @@ textarea {
                 <legend>Select the discipline(s) your company will be working on:</legend>
                 <div class="discipline-checkbox-group">
                     <div>
-                        <input type="checkbox" id="discipline-scoping" name="discipline[]" value="Scoping" onchange="toggleDisciplineFields(this)" />
                         <label for="discipline-scoping">Scoping</label>
+                        <input type="checkbox" id="discipline-scoping" name="discipline[]" value="Scoping" onchange="toggleDisciplineFields(this)" />
                     </div>
                     <div id="discipline-scoping-fields" class="discipline-conditional-fields" style="display: none;">
                         <label for="scoping-crews">Number of Scoping crews forecast for next week (exclude Mob & Demob days):</label>
@@ -804,15 +810,13 @@ textarea {
           <option value="Sean Muldoon">Sean Muldoon</option>
         </select>
                 
-        <label for="bog-jha">I confirm all workers have been inducted and have signed onto the JHA.</label>
+        <label for="bog-jha-uploaded">I confirm all workers have been inducted and have signed onto the JHA.</label>
           <input type="checkbox" id="bog-jha-uploaded" name="bog-jha-uploaded" required> Please induct all visitors to JHA and complete prior to starting at each site.
 
-    <label for="bog-SWMS">
-    Discipline with task Specific SWMS
-    <br />
-    (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)
-  </label>
-  <p>All workers to have signed into Task SWMS being utilised with copy available - latest version.</p>
+   <fieldset>
+    <legend><strong>Discipline with task Specific SWMS</strong></legend>
+    <p>(SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)</p>
+    <p>All workers to have signed into Task SWMS being utilised with copy available - latest version.</p>
 
   <input type="checkbox" name="bog-SWMS[]" value="Scoping" /> Scoping (0017 Surveying & Scoping)<br />
   <input type="checkbox" name="bog-SWMS[]" value="Trenching" /> Trenching (0012 Excavation & Trenching)<br />
