@@ -763,7 +763,7 @@ textarea {
   <p id="swms-error" style="color: red; display: none;">Please select at least one SWMS discipline.</p>
 
         <label for="bog-ACM">Will you be disturbing/modifying any possible ACM while onsite?</label>
-        <select id="bog-ACM" name="bog-ACM" onchange="toggleACMField()" required>
+        <select id="bog-ACM" name="bog-ACM" onchange="toggleBogAcmYes()" required>
           <option value="">Select one</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
@@ -916,7 +916,7 @@ textarea {
         </select>
 
         <label for="reinstatement-surface-type">Surface Type</label>
-        <select id="reinstatement-surface-type" name="reinstatement-surface-type" onchange="toggleSurfaceTypeField()" required>
+        <select id="reinstatement-surface-type" name="reinstatement-surface-type" onchange="toggleReinstatementSurfaceType()" required>
           <option value="">Select one</option>
           <option value="Aggregate">Aggregate</option>
           <option value="Bitument">Bitument</option>
@@ -935,7 +935,7 @@ textarea {
 </div>
 
         <label for="reinstatement-location-type">Location Type</label>
-        <select id="reinstatement-location-type" name="reinstatement-location-type" onchange="toggleLocationTypeField()" required>
+        <select id="reinstatement-location-type" name="reinstatement-location-type" onchange="toggleReinstatementLocationType()" required>
           <option value="">Select one</option>
           <option value="Driveway">Driveway</option>
           <option value="Footpath">Footpath</option>
@@ -950,7 +950,7 @@ textarea {
 </div>
 
         <label for="reinstatement-material-type">Temp Material Used</label>
-        <select id="reinstatement-material-type" name="reinstatement-material-type" onchange="toggleMaterialTypeField()" required>
+        <select id="reinstatement-material-type" name="reinstatement-material-type" onchange="toggleReinstatementMaterialType()" required>
           <option value="">Select one</option>
           <option value="Cold Mix">Cold Mix</option>
           <option value="Cracker Dust">Cracker Dust</option>
@@ -1119,7 +1119,7 @@ textarea {
         </select>
 
 <label for="pitlinkin-pit-type">Pit Type</label>
-        <select id="pitlinkin-pit-type" name="pitlinkin-pit-type" onchange="togglePitTypeField()" required>
+        <select id="pitlinkin-pit-type" name="pitlinkin-pit-type" onchange="togglePitlinkinPitType()" required>
           <option value="">Select one</option>
           <option value="B Pit">B Pit</option>
           <option value="C Pit">C Pit</option>
@@ -1294,6 +1294,66 @@ textarea {
                 showFieldError(input, 'This field is required.');
             }
         });
+
+function toggleBogAcmYes() {
+    const bogAcm = document.getElementById('bog-ACM');
+    const bogAcmYesField = document.getElementById('bog-acm-yes');
+    if (bogAcm && bogAcmYesField) {
+        if (bogAcm.value === 'Yes') {
+            bogAcmYesField.style.display = 'block';
+        } else {
+            bogAcmYesField.style.display = 'none';
+        }
+    }
+}
+
+function toggleReinstatementSurfaceType() {
+    const surfaceType = document.getElementById('reinstatement-surface-type');
+    const notificationField = document.getElementById('reinstatement-surface-type-notification-field');
+    if (surfaceType && notificationField) {
+        if (surfaceType.value === 'Other') {
+            notificationField.style.display = 'block';
+        } else {
+            notificationField.style.display = 'none';
+        }
+    }
+}
+
+function toggleReinstatementLocationType() {
+    const locationType = document.getElementById('reinstatement-location-type');
+    const notificationField = document.getElementById('reinstatement-location-type-notification-field');
+    if (locationType && notificationField) {
+        if (locationType.value === 'Other') {
+            notificationField.style.display = 'block';
+        } else {
+            notificationField.style.display = 'none';
+        }
+    }
+}
+
+function toggleReinstatementMaterialType() {
+    const materialType = document.getElementById('reinstatement-material-type');
+    const notificationField = document.getElementById('reinstatement-material-type-notification-field');
+    if (materialType && notificationField) {
+        if (materialType.value === 'Other') {
+            notificationField.style.display = 'block';
+        } else {
+            notificationField.style.display = 'none';
+        }
+    }
+}
+
+function togglePitlinkinPitType() {
+    const pitType = document.getElementById('pitlinkin-pit-type');
+    const notificationField = document.getElementById('pitlinkin-pit-type-notification-field');
+    if (pitType && notificationField) {
+        if (pitType.value === 'Other') {
+            notificationField.style.display = 'block';
+        } else {
+            notificationField.style.display = 'none';
+        }
+    }
+}
 
         // Validate discipline checkboxes and their conditional fields for Forecast form
         if (formId === 'forecast-form') {
@@ -1673,7 +1733,7 @@ textarea {
 
   function confirmReset(formType) {
     if (confirm("Are you sure you want to go back? Any unsaved changes will be lost.")) {
-      returnToFormSwitcher();
+      location.reload();
     }
   }
 
