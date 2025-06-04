@@ -1770,28 +1770,29 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         'Discipline-Splicing': document.getElementById('discipline-splicing').checked,
         'Discipline-Locating': document.getElementById('discipline-service-locating').checked,
         'Discipline-Reinstatement': document.getElementById('discipline-reinstatement').checked,
-        'Discipline-Civils': document.getElementById('discipline-other-civils').checked,
-        'Scoping-Crews': document.getElementById('scoping-crews').checked,
-        'Blockage-Crews': document.getElementById('blockages-crews').checked,
-        'Pit-Crews': document.getElementById('pit-remediation-crews').checked,
-        'New Build-Crews': document.getElementById('new-build-crews').checked,
-        'Hauling-Crews': document.getElementById('hauling-crews').checked,
-        'Splicing-Crews': document.getElementById('splicing-crews').checked,
-        'Locating-Crews': document.getElementById('service-locating-crews').checked,
-        'Reinstatement-Crews': document.getElementById('reinstatement-crews').checked,
-        'Civils-Crews': document.getElementById('other-civils-crews').checked,
-        'Scoping-Workdays': document.getElementById('scoping-days[]').checked,
-        'Blockage-Workdays': document.getElementById('blockages-days[]').checked,
-        'Pit-Workdays': document.getElementById('pit-remediation-days[]').checked,
-        'New Build-Workdays': document.getElementById('new-build-days[]').checked,
-        'Hauling-Workdays': document.getElementById('hauling-days[]').checked,
-        'Splicing-Workdays': document.getElementById('splicing-days[]').checked,
-        'Locating-Workdays': document.getElementById('service-locating-days[]').checked,
-        'Reinstatement-Workdays': document.getElementById('reinstatement-days[]').checked,
-        'Civils-Workdays': document.getElementById('other-civils-days[]').checked,
+        'Discipline-Civils': document.getElementById('discipline-other-civils').checked,    };
 
-    };
-    
+    // Collect and merge discipline-specific data (crews and days)
+    // This loop ensures that crew numbers and selected days are added ONLY for
+    // the disciplines that have been selected by the user.
+    selectedDisciplines.forEach(discipline => {
+        const disciplineKey = discipline.toLowerCase().replace(/\s/g, '-'); // e.g., "scoping", "blockages"
+
+        // Get crew number value
+        const crewsInput = document.getElementById(`${disciplineKey}-crews`);
+        if (crewsInput) {
+            formData[`${discipline} Crews`] = crewsInput.value;
+        } else {
+            // If for some reason the input doesn't exist, provide a default (e.g., empty string or '0')
+            formData[`${discipline} Crews`] = '';
+        }
+
+        // Get selected days for this discipline
+        const daysCheckboxes = document.querySelectorAll(`input[name="${disciplineKey}-days[]"]:checked`);
+        const days = Array.from(daysCheckboxes).map(checkbox => checkbox.value);
+        formData[`${discipline} Days`] = days.join(', '); // Format as comma-separated string
+    });
+
     try {
         const response = await submitToAirtable('forecast', formData);
         const result = await response.json();
