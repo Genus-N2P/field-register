@@ -313,10 +313,13 @@ textarea {
         padding-bottom: 10px;
     }
 
-    discipline-checkbox-group label {
-      margin: 1rem 0 0.5rem;
-      font-weight: 600;
-    }
+/* Styles for the main discipline checkboxes' labels */
+.discipline-checkbox-group > div label {
+    font-weight: bold; /* Make these labels bold */
+    color: var(--primary-dark); /* Use a darker color */
+    margin-left: 5px; /* Add some space if the input is first */
+    /* Add any other styles specific to these main labels */
+}
 
 /* Styles for labels within the conditional discipline fields */
 .discipline-conditional-fields label {
@@ -329,12 +332,14 @@ textarea {
         width: calc(100% - 20px); /* Adjust width to fit padding */
         margin-bottom: 10px;
     }
-    .discipline-conditional-fields .days-checkbox-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 5px;
-    }
+/* More specifically, styles for the day checkboxes' labels */
+.discipline-conditional-fields .days-checkbox-group label {
+    font-weight: normal; /* Ensure they are not bold */
+    color: var(--primary-dark); /* Can revert to primary-dark for contrast */
+    display: inline; /* Keep them inline with their checkboxes */
+    margin-left: 5px; /* Space next to the checkbox */
+    margin-bottom: 0; /* Remove block margin */
+}
     .discipline-conditional-fields .days-checkbox-group div {
         flex: 1 1 auto; /* Allow items to grow and shrink */
         min-width: 100px; /* Minimum width for each day checkbox */
