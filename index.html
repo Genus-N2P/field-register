@@ -208,6 +208,11 @@
       font-weight: 600;
     }
 
+    labelcheck {
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+    }
+
     legend {
       display: block;
       margin: 1rem 0 0.5rem;
@@ -444,12 +449,14 @@ textarea {
           <option value="Z-6NRG-20">Z-6NRG-20</option>
         </select>
 
+  <input type="checkbox" name="bog-SWMS[]" value="Scoping" /> Scoping (0017 Surveying & Scoping)<br />
+
 <fieldset>
                 <legend>Select the discipline(s) your company will be working on:</legend>
                 <div class="discipline-checkbox-group">
                     <div>
-                        <label for="discipline-scoping">Scoping</label>
                         <input type="checkbox" id="discipline-scoping" name="discipline[]" value="Scoping" onchange="toggleDisciplineFields(this)" />
+                        <labelcheck for="discipline-scoping">Scoping</labelcheck>
                     </div>
                     <div id="discipline-scoping-fields" class="discipline-conditional-fields" style="display: none;">
                         <label for="scoping-crews">Number of Scoping crews forecast for next week (exclude Mob & Demob days):</label>
@@ -458,13 +465,13 @@ textarea {
                         <fieldset>
                             <legend>Select the day(s) that your Scoping crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
                             <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="scoping-monday" name="scoping-days[]" value="Monday" /><label for="scoping-monday">Monday</label></div>
-                                <div><input type="checkbox" id="scoping-tuesday" name="scoping-days[]" value="Tuesday" /><label for="scoping-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="scoping-wednesday" name="scoping-days[]" value="Wednesday" /><label for="scoping-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="scoping-thursday" name="scoping-days[]" value="Thursday" /><label for="scoping-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="scoping-friday" name="scoping-days[]" value="Friday" /><label for="scoping-friday">Friday</label></div>
-                                <div><input type="checkbox" id="scoping-saturday" name="scoping-days[]" value="Saturday" /><label for="scoping-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="scoping-sunday" name="scoping-days[]" value="Sunday" /><label for="scoping-sunday">Sunday</label></div>
+                                <div><input type="checkbox" id="scoping-monday" name="scoping-days[]" value="Monday" /><labelcheck for="scoping-monday">Monday</labelcheck></div>
+                                <div><input type="checkbox" id="scoping-tuesday" name="scoping-days[]" value="Tuesday" /><labelcheck for="scoping-tuesday">Tuesday</labelcheck></div>
+                                <div><input type="checkbox" id="scoping-wednesday" name="scoping-days[]" value="Wednesday" /><labelcheck for="scoping-wednesday">Wednesday</labelcheck></div>
+                                <div><input type="checkbox" id="scoping-thursday" name="scoping-days[]" value="Thursday" /><labelcheck for="scoping-thursday">Thursday</labelcheck></div>
+                                <div><input type="checkbox" id="scoping-friday" name="scoping-days[]" value="Friday" /><labelcheck for="scoping-friday">Friday</labelcheck></div>
+                                <div><input type="checkbox" id="scoping-saturday" name="scoping-days[]" value="Saturday" /><labelcheck for="scoping-saturday">Saturday</labelcheck></div>
+                                <div><input type="checkbox" id="scoping-sunday" name="scoping-days[]" value="Sunday" /><labelcheck for="scoping-sunday">Sunday</labelcheck></div>
                             </div>
                         </fieldset>
                         <p id="scoping-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
