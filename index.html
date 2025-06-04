@@ -1738,51 +1738,28 @@ function hideMessage() {
     document.addEventListener('DOMContentLoaded', function() {
       setDefaultDate();
 
-// Add forecast form event listener in your DOMContentLoaded section
 document.getElementById('forecast-form').addEventListener('submit', async function(e) {
     e.preventDefault();
-    
-    // Validate the form
+
+    // Validate the form (assuming validateForecastForm() works correctly)
     if (!validateForecastForm()) {
         return;
     }
-    
-    // Collect selected disciplines
+
+    // Collect selected disciplines (e.g., ["Scoping", "Blockages"])
     const selectedDisciplines = Array.from(document.querySelectorAll('input[name="discipline[]"]:checked'))
                                      .map(checkbox => checkbox.value);
-    
-    // Collect discipline-specific data
-    let disciplineData = {};
-    selectedDisciplines.forEach(discipline => {
-        const disciplineKey = discipline.toLowerCase().replace(/\s/g, '-');
-        const crews = document.getElementById(`${disciplineKey}-crews`).value;
-        const days = Array.from(document.querySelectorAll(`input[name="${disciplineKey}-days[]"]:checked`))
-                          .map(checkbox => checkbox.value);
-        
-        disciplineData[`${discipline} Crews`] = crews;
-        disciplineData[`${discipline} Days`] = days.join(', ');
-    });
 
-    
-    // Collect main form data
+    // Collect main form data (general fields)
     const formData = {
         'Week Commencing': document.getElementById('weekCommencingDate').value,
         'Week Ending': document.getElementById('weekEndingDate').value,
         'Your Company Name': document.getElementById('forecast-company-name').value,
         'SAM': document.getElementById('forecast-sam-id').value,
-     // 'Discipline-Scoping': document.getElementById('discipline-scoping').checked,
-     // 'Discipline-Blockages': document.getElementById('discipline-blockages').checked,
-     // 'Discipline-Pits': document.getElementById('discipline-pit-remediation').checked,
-     // 'Discipline-New Build': document.getElementById('discipline-new-build').checked,
-     // 'Discipline-Hauling': document.getElementById('discipline-hauling').checked,
-     // 'Discipline-Splicing': document.getElementById('discipline-splicing').checked,
-     // 'Discipline-Locating': document.getElementById('discipline-service-locating').checked,
-     // 'Discipline-Reinstatement': document.getElementById('discipline-reinstatement').checked,
-     // 'Discipline-Civils': document.getElementById('discipline-other-civils').checked,
+        // REMOVED: 'Discipline-Scoping', 'Discipline-Blockages', etc.
+        // These fields are computed in Airtable and should not be sent directly.
     };
-    // Collect selected disciplines (e.g., ["Scoping", "Blockages"])
-    const selectedDisciplines = Array.from(document.querySelectorAll('input[name="discipline[]"]:checked'))
-                                     .map(checkbox => checkbox.value);
+
     // Collect and merge discipline-specific data (crews and days)
     // This loop ensures that crew numbers and selected days are added ONLY for
     // the disciplines that have been selected by the user.
@@ -1794,7 +1771,6 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         if (crewsInput) {
             formData[`${discipline} Crews`] = crewsInput.value;
         } else {
-            // If for some reason the input doesn't exist, provide a default (e.g., empty string or '0')
             formData[`${discipline} Crews`] = '';
         }
 
