@@ -1769,15 +1769,15 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         // Get crew number value
         const crewsInput = document.getElementById(`${disciplineKey}-crews`);
         if (crewsInput) {
-            formData[`${discipline} Crews`] = crewsInput.value;
+            formData[`${discipline}-Crews`] = crewsInput.value;
         } else {
-            formData[`${discipline} Crews`] = '';
+            formData[`${discipline}-Crews`] = '';
         }
 
         // Get selected days for this discipline
         const daysCheckboxes = document.querySelectorAll(`input[name="${disciplineKey}-days[]"]:checked`);
         const days = Array.from(daysCheckboxes).map(checkbox => checkbox.value);
-        formData[`${discipline} Days`] = days.join(', '); // Format as comma-separated string
+        formData[`${discipline}-Workdays`] = days.join(', '); // Format as comma-separated string
     });
 
     try {
