@@ -318,10 +318,12 @@ textarea {
       font-weight: 600;
     }
 
-    .discipline-conditional-fields label {
-        margin-top: 0.5rem;
-        margin-bottom: 0.25rem;
-    }
+/* Styles for labels within the conditional discipline fields */
+.discipline-conditional-fields label {
+    font-size: 0.95rem; /* Slightly smaller font for these */
+    color: var(--primary-mid); /* Use a lighter color */
+    display: inline; /* Make them stack above their inputs */
+    margin-bottom: 0.5rem; /* Add space below them */    }
 
     .discipline-conditional-fields input[type="number"] {
         width: calc(100% - 20px); /* Adjust width to fit padding */
@@ -455,7 +457,7 @@ textarea {
                 <div class="discipline-checkbox-group">
                     <div>
                         <input type="checkbox" id="discipline-scoping" name="discipline[]" value="Scoping" onchange="toggleDisciplineFields(this)" />
-                        <label>Scoping</label>
+                        <label for="discipline-scoping">Scoping</label>
                     </div>
                     <div id="discipline-scoping-fields" class="discipline-conditional-fields" style="display: none;">
                         <label for="scoping-crews">Number of Scoping crews forecast for next week (exclude Mob & Demob days):</label>
@@ -464,7 +466,7 @@ textarea {
                         <fieldset>
                             <legend>Select the day(s) that your Scoping crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
                             <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="scoping-monday" name="scoping-days[]" value="Monday" /><label>Monday</label></div>
+                                <div><input type="checkbox" id="scoping-monday" name="scoping-days[]" value="Monday" /><label for="scoping-monday">Monday</label></div>
                                 <div><input type="checkbox" id="scoping-tuesday" name="scoping-days[]" value="Tuesday" /><label for="scoping-tuesday">Tuesday</label></div>
                                 <div><input type="checkbox" id="scoping-wednesday" name="scoping-days[]" value="Wednesday" /><label for="scoping-wednesday">Wednesday</label></div>
                                 <div><input type="checkbox" id="scoping-thursday" name="scoping-days[]" value="Thursday" /><label for="scoping-thursday">Thursday</label></div>
