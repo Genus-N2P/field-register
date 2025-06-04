@@ -1752,8 +1752,8 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
 
     // Collect main form data (general fields)
     const formData = {
-        'Week Commencing': document.getElementById('weekCommencingDate').value,
-        'Week Ending': document.getElementById('weekEndingDate').value,
+        'Week Commencing': document.getElementById('weekCommencingDate').textContent,
+        'Week Ending': document.getElementById('weekEndingDate').textContent,
         'Your Company Name': document.getElementById('forecast-company-name').value,
         'SAM': document.getElementById('forecast-sam-id').value,
         // REMOVED: 'Discipline-Scoping', 'Discipline-Blockages', etc.
