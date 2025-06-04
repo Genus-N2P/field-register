@@ -1770,7 +1770,7 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         const disciplineCheckboxes = document.querySelectorAll(`input[name="Discipline-${disciplineKey}[]"]:checked`);
         const disciplinetype = Array.from(disciplineCheckboxes).map(checkbox => checkbox.value);
         formData[`Discipline`] = disciplinetype.join(', '); // Format as comma-separated string
-        }
+        });
 
         // Get crew number value
         const crewsInput = document.getElementById(`${disciplineKey}-crews`);
