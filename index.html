@@ -1770,16 +1770,19 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
         'Week Ending': document.getElementById('weekEndingDate').value,
         'Your Company Name': document.getElementById('forecast-company-name').value,
         'SAM': document.getElementById('forecast-sam-id').value,
-        'Discipline-Scoping': document.getElementById('discipline-scoping').checked,
-        'Discipline-Blockages': document.getElementById('discipline-blockages').checked,
-        'Discipline-Pits': document.getElementById('discipline-pit-remediation').checked,
-        'Discipline-New Build': document.getElementById('discipline-new-build').checked,
-        'Discipline-Hauling': document.getElementById('discipline-hauling').checked,
-        'Discipline-Splicing': document.getElementById('discipline-splicing').checked,
-        'Discipline-Locating': document.getElementById('discipline-service-locating').checked,
-        'Discipline-Reinstatement': document.getElementById('discipline-reinstatement').checked,
-        'Discipline-Civils': document.getElementById('discipline-other-civils').checked,    };
-
+     // 'Discipline-Scoping': document.getElementById('discipline-scoping').checked,
+     // 'Discipline-Blockages': document.getElementById('discipline-blockages').checked,
+     // 'Discipline-Pits': document.getElementById('discipline-pit-remediation').checked,
+     // 'Discipline-New Build': document.getElementById('discipline-new-build').checked,
+     // 'Discipline-Hauling': document.getElementById('discipline-hauling').checked,
+     // 'Discipline-Splicing': document.getElementById('discipline-splicing').checked,
+     // 'Discipline-Locating': document.getElementById('discipline-service-locating').checked,
+     // 'Discipline-Reinstatement': document.getElementById('discipline-reinstatement').checked,
+     // 'Discipline-Civils': document.getElementById('discipline-other-civils').checked,
+    };
+    // Collect selected disciplines (e.g., ["Scoping", "Blockages"])
+    const selectedDisciplines = Array.from(document.querySelectorAll('input[name="discipline[]"]:checked'))
+                                     .map(checkbox => checkbox.value);
     // Collect and merge discipline-specific data (crews and days)
     // This loop ensures that crew numbers and selected days are added ONLY for
     // the disciplines that have been selected by the user.
