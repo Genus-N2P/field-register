@@ -32,6 +32,7 @@
       color: var(--primary-dark);
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
@@ -174,8 +175,18 @@
       
     .btn-back:hover {
       background-color: #5a6268 !important;
-    }       
-
+    }   
+    
+    .search-btn {
+      background-color: var(--primary-accent);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    } 
+      
     .thank-you-message {
       background-color: var(--accent-10);
       border: 2px solid var(--primary-accent);
@@ -267,10 +278,6 @@
   overflow-x: auto; /* Ensure horizontal scrolling if content overflows */
 }
 
-body {
-  overflow-x: hidden;
-}
-
 input,
 select,
 textarea {
@@ -358,6 +365,59 @@ textarea {
         margin-bottom: 10px;
     }
 
+.pitlinkin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+}
+
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.right-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+ .right-group label {
+  white-space: nowrap; /* prevents label from wrapping */
+ }
+
+#pitlinkin-PitA-Note-ID {
+  width: 100%;
+}
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 2rem 0;
+  font-family: 'Exo', sans-serif;
+}
+
+.or-divider .line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--accent-60);
+  border: none;
+}
+
+.or-divider .or-text {
+  padding: 0 1rem;
+  font-weight: 600;
+  color: var(--primary-accent);
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
   </style>
 
 </head>
@@ -383,6 +443,8 @@ textarea {
       <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
       <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
       <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
+      <button id="btn-vactruck" onclick="showForm('vactruck')">Vac Truck Register</button>
+
     </section>
 
     <div id="form-forecast" class="form-section hidden">
@@ -843,6 +905,7 @@ textarea {
   <input type="checkbox" name="bog-SWMS[]" value="Reinstatement" /> Reinstatement (0012 Excavation & Trenching)<br />
 
   <p id="swms-error" style="color: red; display: none;">Please select at least one SWMS discipline.</p>
+   </fieldset>
 
         <label for="bog-ACM">Will you be disturbing/modifying any possible ACM while onsite?</label>
         <select id="bog-ACM" name="bog-ACM" onchange="toggleACMField()" required>
@@ -882,6 +945,23 @@ textarea {
       <h3>Reinstatement Register: Genus N2P project</h3>
       <p>Please complete for any temporary reinstatement works.</p>
       <form id="reinstatement-form" onsubmit="return validateGenericForm('reinstatement-form')">
+
+<label for="reinstatement-note-id-search">Search Note ID</label>
+<div style="display: flex; gap: 0.5rem; align-items: center;">
+  <input type="text" id="reinstatement-note-id-search" placeholder="Enter Note ID" />
+  <button type="button" id="reinstatement-search-btn" class="search-btn">Search</button>
+</div>
+
+<!-- Optional read-only summary or error display -->
+<div id="reinstatement-note-summary" style="margin-top: 1rem; font-weight: bold;"></div>
+
+<!-- OR Divider -->
+<div class="or-divider">
+  <hr class="line" />
+  <span class="or-text">OR</span>
+  <hr class="line" />
+</div>
+
 
 	<!-- Hidden input hardcoded to 'Reinstatement' -->
 	<input type="hidden" id="reinstatement-type" name="reinstatement-type" value="Reinstatement">
@@ -976,17 +1056,9 @@ textarea {
           <option value="31">31</option>
         </select>
 
-        <label for="reinstatement-note-id">Note ID</label>
-<input
-  type="text"
-  id="reinstatement-note-id"
-  name="reinstatement-note-id"
-  placeholder="Enter Note ID number only, e.g. 12345"
-  pattern="^\d{5}$"
-  oninvalid="this.setCustomValidity('Enter a 5-digit number like 12345')"
-  oninput="this.setCustomValidity('')"
-  required
-/>
+        <label for="reinstatement-Pit-Note-ID">Pit Note ID:</label>
+        <input type="text" id="reinstatement-Pit-Note-ID" name="reinstatement-Pit-Note-ID" required />
+
 
         <label for="reinstatement-asset-type">Asset Type</label>
         <select id="reinstatement-asset-type" name="reinstatement-asset-type" required>
@@ -1001,7 +1073,7 @@ textarea {
         <select id="reinstatement-surface-type" name="reinstatement-surface-type" onchange="toggleSurfaceTypeField()" required>
           <option value="">Select one</option>
           <option value="Aggregate">Aggregate</option>
-          <option value="Bitument">Bitument</option>
+          <option value="Bitumen">Bitumen</option>
           <option value="Concrete">Concrete</option>
           <option value="Cracker Dust">Cracker Dust</option>
           <option value="Gravel">Gravel</option>
@@ -1081,9 +1153,60 @@ textarea {
           <option value="No">No</option>
         </select>
 
+        <label for="reinstatement-perm-material">Permanent Reinstatement Material Type</label>
+        <select id="reinstatement-perm-material" name="reinstatement-perm-material" onchange="togglePermMaterialTypeField()" required>
+          <option value="">Select one</option>
+          <option value="Aggregate">Aggregate</option>
+          <option value="Bitumen">Bitumen</option>
+          <option value="Bitumen-Red">Bitumen - Red</option>
+          <option value="Concrete">Concrete</option>
+          <option value="Cracker Dust">Cracker Dust</option>
+          <option value="Gravel">Gravel</option>
+          <option value="Limestone">Limestone</option>
+          <option value="Paved">Paved</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <!-- Conditional Field -->
+<div id="reinstatement-perm-material-notification-field" style="display: none; margin-top: 10px;">
+  <label for="reinstatement-perm-material-other">Permanent Reinstatement Material Used - Other</label>
+<input type="text" id="reinstatement-perm-material-other" name="reinstatement-perm-material-other" />
+</div>
+
+        <label for="reinstatement-perm-company-name">Permanent Reinstatement Contractor Company Name</label>
+        <select id="reinstatement-perm-company-name" name="reinstatement-perm-company-name" required>
+          <option value="">Select one</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communications">Dizza Communications</option>
+          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
+
+	<label>
+	<input type="checkbox" id="reinstatement-Non-Standard" name="reinstatement-Non-Standard" />
+	Was this a non-standard Permanent Reinstatement?
+	</label>
+
+        <label for="reinstatement-comments">Any additional comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
+        <textarea id="reinstatement-comments" name="reinstatement-comments" placeholder="If there are no additional comments, there is no need to enter anything here"></textarea>
+
+	<label>
+	<input type="checkbox" id="reinstatement-completed" name="reinstatement-completed" />
+	Permanent Reinstatement Completed
+	</label>
+
         <div class="form-footer">
           <button type="button" class="btn-back" onclick="confirmReset('reinstatement')">Back</button>
-          <button type="submit">Submit Reinstatement</button>
+          <button type="submit" id="reinstatement-submit-btn">Submit Reinstatement</button>
         </div>
       </form>
     </div>
@@ -1093,6 +1216,22 @@ textarea {
       <p>Please complete for any pit link-in's required to be done by another contractor.</p>
       <form id="pitlinkin-form" onsubmit="return validateGenericForm('pitlinkin-form')">
 
+<label for="pitlinkin-note-id-search">Search Duct Note ID</label>
+<div style="display: flex; gap: 0.5rem; align-items: center;">
+  <input type="text" id="pitlinkin-note-id-search" placeholder="Enter Note ID" />
+  <button type="button" id="pitlinkin-search-btn" class="search-btn">Search</button>
+</div>
+
+<!-- Optional read-only summary or error display -->
+<div id="pitlinkin-note-summary" style="margin-top: 1rem; font-weight: bold;"></div>
+
+<!-- OR Divider -->
+<div class="or-divider">
+  <hr class="line" />
+  <span class="or-text">OR</span>
+  <hr class="line" />
+</div>
+
 	<!-- Hidden input hardcoded to 'Pit Link-in' -->
 	<input type="hidden" id="pitlinkin-type" name="pitlinkin-type" value="Pit Link-in">
 
@@ -1101,9 +1240,6 @@ textarea {
 
         <label for="pitlinkin-date">Date Reported</label>
         <input type="date" id="pitlinkin-date" name="pitlinkin-date" required />
-
-        <label for="pitlinkin-location">Pit Location</label>
-        <input type="text" id="pitlinkin-location" name="pitlinkin-location" class="address-autocomplete" required />
 
         <label for="pitlinkin-SAM">SAM ID</label>
         <select id="pitlinkin-SAM" name="pitlinkin-SAM" required>
@@ -1186,72 +1322,104 @@ textarea {
           <option value="31">31</option>
         </select>
 
-        <label for="pitlinkin-duct-fir">Duct FIR number</label>
-        <input type="text" id="pitlinkin-duct-fir" name="pitlinkin-duct-fir" required />
-
-        <label for="pitlinkin-pit-fir">Pit FIR number</label>
-        <input type="text" id="pitlinkin-pit-fir" name="pitlinkin-pit-fir" required />
-
-        <label for="pitlinkin-pit-material">Pit Material</label>
-        <select id="pitlinkin-pit-material" name="pitlinkin-pit-material" required>
-          <option value="">Select one</option>
-          <option value="ACM">ACM</option>
-          <option value="Concrete / Brick">Concrete / Brick</option>
-          <option value="Plastic">Plastic</option>
-        </select>
-
-<label for="pitlinkin-pit-type">Pit Type</label>
-        <select id="pitlinkin-pit-type" name="pitlinkin-pit-type" onchange="togglePitTypeField()" required>
-          <option value="">Select one</option>
-          <option value="B Pit">B Pit</option>
-          <option value="C Pit">C Pit</option>
-          <option value="D Pit">D Pit</option>
-          <option value="P2">P2</option>
-          <option value="P3">P3</option>
-          <option value="P5">P5</option>
-          <option value="P6">P6</option>
-          <option value="P8">P8</option>
-          <option value="P9">P9</option>
-          <option value="Manhole">Manhole</option>
-          <option value="Other">Other</option>
-        </select>
-
-        <!-- Conditional Field -->
-<div id="pitlinkin-pit-type-notification-field" style="display: none; margin-top: 10px;">
-  <label for="pitlinkin-pit-type-other">Pit Type - Other</label>
-<input type="text" id="pitlinkin-pit-type-other" name="pitlinkin-pit-type-other" />
+        <label for="pitlinkin-Duct-Note-ID">Duct Note ID:</label>
+        <input type="text" id="pitlinkin-Duct-Note-ID" name="pitlinkin-Duct-Note-ID" required />
+                
+<div class="pitlinkin-row">
+  <div class="left-group">
+    <label for="pitlinkin-PitA-linkin-required">Pit A Link-in Required?</label>
+    <input type="checkbox" id="pitlinkin-PitA-linkin-required" name="pitlinkin-PitA-linkin-required">
+  </div>
+  <div class="right-group">
+    <label for="pitlinkin-PitA-Note-ID">Pit A Note ID:</label>
+    <input type="text" id="pitlinkin-PitA-Note-ID" name="pitlinkin-PitA-Note-ID" required>
+  </div>
 </div>
 
-        <label for="pitlinkin-ffp">Pit Fit for Purpose</label>
-        <select id="pitlinkin-ffp" name="pitlinkin-ffp" required>
+        <label for="pitlinkin-PitA-ffp">Is Pit A Fit for Purpose</label>
+        <select id="pitlinkin-PitA-ffp" name="pitlinkin-PitA-ffp" required>
           <option value="">Select one</option>
           <option value="Yes">Yes</option>
           <option value="No - Contact FCM">No - Contact FCM</option>
         </select>
 
-        <label for="pitlinkin-duct-state">Current Duct State</label>
-        <select id="pitlinkin-duct-state" name="pitlinkin-duct-state" required>
+<div class="pitlinkin-row">
+  <div class="left-group">
+    <label for="pitlinkin-PitB-linkin-required">Pit B Link-in Required?</label>
+    <input type="checkbox" id="pitlinkin-PitB-linkin-required" name="pitlinkin-PitB-linkin-required">
+  </div>
+  <div class="right-group">
+    <label for="pitlinkin-PitB-Note-ID">Pit B Note ID:</label>
+    <input type="text" id="pitlinkin-PitB-Note-ID" name="pitlinkin-PitB-Note-ID" required>
+  </div>
+</div>
+
+        <label for="pitlinkin-PitB-ffp">Is Pit B Fit for Purpose</label>
+        <select id="pitlinkin-PitB-ffp" name="pitlinkin-PitB-ffp" required>
           <option value="">Select one</option>
-          <option value="Buried">Buried</option>
-          <option value="Exposed">Exposed</option>
+          <option value="Yes">Yes</option>
+          <option value="No - Contact FCM">No - Contact FCM</option>
         </select>
 
         <label for="pitlinkin-rrp">RRP Completed?</label>
-        <select id="pitlinkin-rrp" name="pitlinkin-rrp" required>
+        <select id="pitlinkin-rrp" name="pitlinkin-rrp" onchange="toggleRRPCompleteField()" required>
           <option value="">Select one</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
 
-        <label for="pitlinkin-reinstatement-req">Reinstatement Required?</label>
-        <select id="pitlinkin-reinstatement-req" name="pitlinkin-reinstatement-req" required>
+        <!-- Conditional Field -->
+<div id="pitlinkin-rrp-notification-field" style="display: none; margin-top: 10px;">
+  <label for="pitlinkin-rrp-no">What is the reason RRP has not been completed?</label>
+<select id="pitlinkin-rrp-no" name="pitlinkin-rrp-no">
           <option value="">Select one</option>
-          <option value="Yes - Added to Reinstatement Register">Yes - Added to Reinstatement Register</option>
-          <option value="No">No</option>
+          <option value="Weather">Weather</option>
+          <option value="Material">Material Shortage</option>
+          <option value="Other">Other Reasons (add in "Additional Comments" section of this form)</option>
         </select>
+        
+</div>
 
-        <label for="pitlinkin-company-name">Reported By</label>
-        <select id="pitlinkin-company-name" name="pitlinkin-company-name" required>
+        <label for="pitlinkin-comments">Any additional comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
+        <textarea id="pitlinkin-comments" name="pitlinkin-comments" placeholder="If there are no additional comments, there is no need to enter anything here"></textarea>
+
+<label>
+  <input type="checkbox" id="pitlinkin-completed" name="pitlinkin-completed" />
+  Link-in's completed
+</label>
+
+        <div class="form-footer">
+          <button type="button" class="btn-back" onclick="confirmReset('pitlinkin')">Back</button>
+          <button type="submit" id="pitlinkin-submit-btn">Submit Pit Link-in</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="form-vactruck" class="form-section hidden">
+      <h3>Vac Truck Register: Genus N2P project</h3>
+      <form id="vactruck-form" onsubmit="return validateGenericForm('vactruck-form')">
+
+<label for="vactruck-note-id-search">Search Pit Note ID</label>
+<div style="display: flex; gap: 0.5rem; align-items: center;">
+  <input type="text" id="vactruck-note-id-search" placeholder="Enter Note ID" />
+  <button type="button" id="vactruck-search-btn" class="search-btn">Search</button>
+</div>
+
+<!-- Optional read-only summary or error display -->
+<div id="vactruck-note-summary" style="margin-top: 1rem; font-weight: bold;"></div>
+
+<!-- OR Divider -->
+<div class="or-divider">
+  <hr class="line" />
+  <span class="or-text">OR</span>
+  <hr class="line" />
+</div>
+
+	<!-- Hidden input hardcoded to 'Vac Truck' -->
+	<input type="hidden" id="vactruck-type" name="vactruck-type" value="Vac Truck">
+
+        <label for="vactruck-company-name">Your Company Name</label>
+          <select id="vactruck-company-name" name="vactruck-company-name" required>
           <option value="">Select one</option>
           <option value="Boretech Contracting">Boretech Contracting</option>
           <option value="Connectit Communications">Connectit Communications</option>
@@ -1268,9 +1436,104 @@ textarea {
           <option value="Versatile Services">Versatile Services</option>
         </select>
 
+        <label for="vactruck-date">Date Idendified</label>
+        <input type="date" id="vactruck-date" name="vactruck-date" required />
+
+        <label for="vactruck-SAM">SAM ID</label>
+        <select id="vactruck-SAM" name="vactruck-SAM" required>
+          <option value="">Select one</option>
+          <option value="K-6ALN-05">K-6ALN-05</option>
+          <option value="K-6ALN-20">K-6ALN-20</option>
+          <option value="K-6ALN-21">K-6ALN-21</option>
+          <option value="K-6ALN-22">K-6ALN-22</option>
+          <option value="K-6ALN-23">K-6ALN-23</option>
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+          <option value="L-6ALN-05">L-6ALN-05</option>
+          <option value="L-6ALN-20">L-6ALN-20</option>
+          <option value="L-6ALN-21">L-6ALN-21</option>
+          <option value="L-6ALN-23">L-6ALN-23</option>
+          <option value="M-6ALN-21">M-6ALN-21</option>
+          <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="X-6BGT-20">X-6BGT-20</option>
+          <option value="X-6COI-01">X-6COI-01</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="Z-6NRG-20">Z-6NRG-20</option>
+        </select>
+
+        <label for="vactruck-ADA">ADA ID</label>
+        <select id="vactruck-ADA" name="vactruck-ADA" required>
+          <option value="">Select one</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+
+        <label for="vactruck-Pit-Note-ID">Pit Note ID:</label>
+        <input type="text" id="vactruck-Pit-Note-ID" name="vactruck-Pit-Note-ID" required />
+
+        <label for="vactruck-comments">Any additional comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
+        <textarea id="vactruck-comments" name="vactruck-comments" placeholder="If there are no additional comments, there is no need to enter anything here"></textarea>
+                
+	<label>
+	<input type="checkbox" id="vactruck-completed" name="vactruck-completed" />
+	Pit Cleanout Completed
+	</label>
+
         <div class="form-footer">
-          <button type="button" class="btn-back" onclick="confirmReset('pitlinkin')">Back</button>
-          <button type="submit">Submit Pit Link-in</button>
+          <button type="button" class="btn-back" onclick="confirmReset('vactruck')">Back</button>
+          <button type="submit" id="vactruck-submit-btn">Submit Vac Truck</button>
         </div>
       </form>
     </div>
@@ -1369,18 +1632,32 @@ function confirmReset(formType) {
       }
     }
 
-    function togglePitTypeField() {
-      const pittypeSelect = document.getElementById("pitlinkin-pit-type");
-      const pittypeField = document.getElementById("pitlinkin-pit-type-notification-field");
-      const pittypeInput = document.getElementById("pitlinkin-pit-type-other");
+    function togglePermMaterialTypeField() {
+      const permmaterialtypeSelect = document.getElementById("reinstatement-perm-material");
+      const permmaterialtypeField = document.getElementById("reinstatement-perm-material-notification-field");
+      const permmaterialtypeInput = document.getElementById("reinstatement-perm-material-other");
 
-      if (pittypeSelect.value === "Other") {
-        pittypeField.style.display = "block";
-        pittypeInput.required = true;
+      if (permmaterialtypeSelect.value === "Other") {
+        permmaterialtypeField.style.display = "block";
+        permmaterialtypeInput.required = true;
       } else {
-       pittypeField.style.display = "none";
-        pittypeInput.required = false;
-        pittypeInput.value = ""; // clear the input if hidden
+       permmaterialtypeField.style.display = "none";
+        permmaterialtypeInput.required = false;
+        permmaterialtypeInput.value = ""; // clear the input if hidden
+      }
+    }
+
+    function toggleRRPCompleteField() {
+      const RRPCompleteSelect = document.getElementById("pitlinkin-rrp");
+      const RRPCompleteField = document.getElementById("pitlinkin-rrp-notification-field");
+      const RRPCompleteInput = document.getElementById("pitlinkin-rrp-no");
+
+      if (RRPCompleteSelect.value === "No") {
+        RRPCompleteField.style.display = "block";
+        RRPCompleteInput.setAttribute("required", "required");
+      } else {
+        RRPCompleteField.style.display = "none";
+        RRPCompleteInput.removeAttribute("required");
       }
     }
 
@@ -1393,17 +1670,22 @@ function confirmReset(formType) {
             },
             bog: {
                 baseId: 'appegmSLEvbJSkRvd',
-                tableId: 'Table 1',
+                tableId: 'BOG',
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             reinstatement: {
-                baseId: 'appI6d8aW2GqotwlL',
-                tableId: 'Table 1',
+                baseId: 'appegmSLEvbJSkRvd',
+                tableId: 'Reinstatement',
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             pitlinkin: {
-                baseId: 'appI6d8aW2GqotwlL',
-                tableId: 'Table 1',
+                baseId: 'appegmSLEvbJSkRvd',
+                tableId: 'Pit Link-in',
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
+            },
+            vactruck: {
+                baseId: 'appegmSLEvbJSkRvd',
+                tableId: 'Vac Truck',
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             }
         };
@@ -1442,10 +1724,12 @@ function confirmReset(formType) {
       const bogDateField = document.getElementById('bog-date');
       const pitlinkinDateField = document.getElementById('pitlinkin-date');
       const reinstatementDateField = document.getElementById('reinstatement-date');
+      const vactruckDateField = document.getElementById('vactruck-date');
 
       if (bogDateField) bogDateField.value = todayString;
       if (pitlinkinDateField) pitlinkinDateField.value = todayString;
       if (reinstatementDateField) reinstatementDateField.value = todayString;
+      if (vactruckDateField) vactruckDateField.value = todayString;
     }
 
     // Function to calculate and update week commencing/ending dates
@@ -1590,7 +1874,7 @@ function showForm(formType) {
     document.getElementById('thank-you-message').style.display = 'none';
         
     // Hide all forms using both methods
-    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin'];
+    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1613,7 +1897,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -1847,6 +2131,41 @@ showSuccessMessage();
         document.getElementById('reinstatement-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+    // --- New 5-7-digit ID Validation (Updated) ---
+    let isValid = true;
+    const idFieldsToValidate = [
+        { id: 'reinstatement-Pit-Note-ID', name: 'Pit Note ID' },
+    ];
+    let errorMessage = '';
+
+    idFieldsToValidate.forEach(fieldInfo => {
+        const inputElement = document.getElementById(fieldInfo.id);
+        const value = inputElement ? inputElement.value.trim() : '';
+
+        // Validate if the input element exists and is not disabled.
+        if (inputElement && !inputElement.disabled) {
+            // Check for between 5-7 digits
+            if (!/^\d{5,7}$/.test(value)) {
+                errorMessage += `- '${fieldInfo.name}' must contain between 5-7 digits.\n`;
+                inputElement.classList.add('field-error'); // Add error styling
+                isValid = false;
+            } else {
+                inputElement.classList.remove('field-error'); // Remove error styling if valid
+            }
+        } else if (inputElement) {
+            // Ensure no error styling if the field is disabled
+            inputElement.classList.remove('field-error');
+        }
+    });
+
+    // If a value is empty, it won't match /^\d{5,7}$/ and will be flagged.
+
+    if (!isValid) {
+        alert('Please correct the following errors before submitting:\n' + errorMessage);
+        return; // Prevent submission if validation fails
+    }
+
+
        // Validate the form
         if (!validateGenericForm('reinstatement-form')) {
             return;
@@ -1854,13 +2173,12 @@ showSuccessMessage();
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
-                'Type of work': document.getElementById('reinstatement-type').value,
                 'Your Name': document.getElementById('reinstatement-site-contact').value,
                 'Temp Reinstatement Date': document.getElementById('reinstatement-date').value,
                 'Address': document.getElementById('reinstatement-address').value,
                 'SAM': document.getElementById('reinstatement-SAM').value,
-                'ADA': document.getElementById('reinstatement-ADA').value,
-                'Note ID': document.getElementById('reinstatement-note-id').value,
+                'ADA ID': document.getElementById('reinstatement-ADA').value,
+                'Pit Note ID': document.getElementById('reinstatement-Pit-Note-ID').value,
                 'Asset Type': document.getElementById('reinstatement-asset-type').value,
                 'Surface Type': document.getElementById('reinstatement-surface-type').value,
                 'Surface Type - Other': document.getElementById('reinstatement-surface-type-other').value,
@@ -1872,10 +2190,15 @@ showSuccessMessage();
                 'Proposed Permanent Reinstatement Date': document.getElementById('reinstatement-perm-date').value,
                 'Permanent Reinstatement Area (m2)': document.getElementById('reinstatement-area').value,
                 'Full Panel Required?': document.getElementById('reinstatement-panel').value,
+                'Permanent Material': document.getElementById('reinstatement-perm-material').value,
+                'Permanent Material - Other': document.getElementById('reinstatement-perm-material-other').value,
+                'Permanent Contractor Company Name': document.getElementById('reinstatement-perm-company-name').value,
+                'Non-Standard Reinstatement': document.getElementById('reinstatement-Non-Standard').checked,
+                'Additional Comments': document.getElementById('reinstatement-comments').value,
+                'Permanent Reinstatement Completed': document.getElementById('reinstatement-completed').checked,
             };
             
             try {
-                // await submitToAirtable('reinstatement', formData);
                 // showSuccessMessage();
 const response = await submitToAirtable('reinstatement', formData);
 const result = await response.json();
@@ -1898,6 +2221,43 @@ showSuccessMessage();
         document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+    // --- New 5-7-digit ID Validation (Updated) ---
+    let isValid = true;
+    const idFieldsToValidate = [
+        { id: 'pitlinkin-Duct-Note-ID', name: 'Duct Note ID' },
+        { id: 'pitlinkin-PitA-Note-ID', name: 'Pit A Note ID' }, // Now always required
+        { id: 'pitlinkin-PitB-Note-ID', name: 'Pit B Note ID' }  // Now always required
+    ];
+    let errorMessage = '';
+
+    idFieldsToValidate.forEach(fieldInfo => {
+        const inputElement = document.getElementById(fieldInfo.id);
+        const value = inputElement ? inputElement.value.trim() : '';
+
+        // Validate if the input element exists and is not disabled.
+        // PitA-Note-ID and PitB-Note-ID are now always validated regardless of checkboxes.
+        if (inputElement && !inputElement.disabled) {
+            // Check for between 5-7 digits
+            if (!/^\d{5,7}$/.test(value)) {
+                errorMessage += `- '${fieldInfo.name}' must contain between 5-7 digits.\n`;
+                inputElement.classList.add('field-error'); // Add error styling
+                isValid = false;
+            } else {
+                inputElement.classList.remove('field-error'); // Remove error styling if valid
+            }
+        } else if (inputElement) {
+            // Ensure no error styling if the field is disabled
+            inputElement.classList.remove('field-error');
+        }
+    });
+
+    // If a value is empty, it won't match /^\d{5,7}$/ and will be flagged.
+
+    if (!isValid) {
+        alert('Please correct the following errors before submitting:\n' + errorMessage);
+        return; // Prevent submission if validation fails
+    }
+
        // Validate the form
         if (!validateGenericForm('pitlinkin-form')) {
             return;
@@ -1905,26 +2265,24 @@ showSuccessMessage();
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
-                'Type of work': document.getElementById('pitlinkin-type').value,
                 'Your Name': document.getElementById('pitlinkin-site-contact').value,
                 'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
-                'Address': document.getElementById('pitlinkin-location').value,
                 'SAM': document.getElementById('pitlinkin-SAM').value,
-                'ADA': document.getElementById('pitlinkin-ADA').value,
-                'Duct FIR number': document.getElementById('pitlinkin-duct-fir').value,
-                'Pit FIR number': document.getElementById('pitlinkin-pit-fir').value,
-                'Pit Material': document.getElementById('pitlinkin-pit-material').value,
-                'Pit Type': document.getElementById('pitlinkin-pit-type').value,
-                'Pit Type - Other': document.getElementById('pitlinkin-pit-type-other').value,
-                'Pit Fit for Purpose': document.getElementById('pitlinkin-ffp').value,
-                'Current Duct State': document.getElementById('pitlinkin-duct-state').value,
+                'ADA ID': document.getElementById('pitlinkin-ADA').value,
+                'Duct Note ID': document.getElementById('pitlinkin-Duct-Note-ID').value,
+                'Pit A Note ID': document.getElementById('pitlinkin-PitA-Note-ID').value,
+                'Pit B Note ID': document.getElementById('pitlinkin-PitB-Note-ID').value,
+                'Pit A Required': document.getElementById('pitlinkin-PitA-linkin-required').checked,
+                'Pit B Required': document.getElementById('pitlinkin-PitB-linkin-required').checked,
+                'Pit A Fit for Purpose': document.getElementById('pitlinkin-PitA-ffp').value,
+                'Pit B Fit for Purpose': document.getElementById('pitlinkin-PitB-ffp').value,
                 'RRP Completed?': document.getElementById('pitlinkin-rrp').value,
-                'Reinstatement Required?': document.getElementById('pitlinkin-reinstatement-req').value,
-                'Reported By': document.getElementById('pitlinkin-company-name').value,
+                'RRP Completed - No': document.getElementById('pitlinkin-rrp-no').value,
+                'Additional Comments': document.getElementById('pitlinkin-comments').value,
+		'Pit Link-ins Completed': document.getElementById('pitlinkin-completed').checked
             };
             
             try {
-                // await submitToAirtable('pitlinkin', formData);
                 // showSuccessMessage();
 const response = await submitToAirtable('pitlinkin', formData);
 const result = await response.json();
@@ -1942,27 +2300,97 @@ showSuccessMessage();
             }
         });
 
-function returnToFormSwitcher() {
-    // Hide thank you message
-    location.reload();
-    
-    // Hide all forms using both methods
-    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin'];
-    forms.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.classList.add('hidden');
-            element.style.display = 'none';
-            // Reset the form
-            element.reset();
-            // Remove any error styling
-            const errorFields = element.querySelectorAll('.field-error');
-            errorFields.forEach(field => field.classList.remove('field-error'));
+        document.getElementById('vactruck-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+    // --- New 5-7-digit ID Validation (Updated) ---
+    let isValid = true;
+    const idFieldsToValidate = [
+        { id: 'vactruck-Pit-Note-ID', name: 'Pit Note ID' },
+    ];
+    let errorMessage = '';
+
+    idFieldsToValidate.forEach(fieldInfo => {
+        const inputElement = document.getElementById(fieldInfo.id);
+        const value = inputElement ? inputElement.value.trim() : '';
+
+        // Validate if the input element exists and is not disabled.
+        if (inputElement && !inputElement.disabled) {
+            // Check for between 5-7 digits
+            if (!/^\d{5,7}$/.test(value)) {
+                errorMessage += `- '${fieldInfo.name}' must contain between 5-7 digits.\n`;
+                inputElement.classList.add('field-error'); // Add error styling
+                isValid = false;
+            } else {
+                inputElement.classList.remove('field-error'); // Remove error styling if valid
+            }
+        } else if (inputElement) {
+            // Ensure no error styling if the field is disabled
+            inputElement.classList.remove('field-error');
         }
     });
 
+    // If a value is empty, it won't match /^\d{5,7}$/ and will be flagged.
+
+    if (!isValid) {
+        alert('Please correct the following errors before submitting:\n' + errorMessage);
+        return; // Prevent submission if validation fails
+    }
+
+       // Validate the form
+        if (!validateGenericForm('vactruck-form')) {
+            return;
+        }
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+                'Contractor': document.getElementById('vactruck-company-name').value,
+                'Submission Date': document.getElementById('vactruck-date').value,
+                'SAM': document.getElementById('vactruck-SAM').value,
+                'ADA ID': document.getElementById('vactruck-ADA').value,
+                'Pit Note ID': document.getElementById('vactruck-Pit-Note-ID').value,
+                'Additional Comments': document.getElementById('vactruck-comments').value,
+		'Pit Cleanout Completed': document.getElementById('vactruck-completed').checked
+            };
+            
+            try {
+                // showSuccessMessage();
+const response = await submitToAirtable('vactruck', formData);
+const result = await response.json();
+
+if (!response.ok) {
+  console.error('Airtable error:', result);
+  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+  return;
+}
+
+showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting Vac Truck form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+    
+    // Hide all forms using both methods
+const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck'];
+forms.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+        element.classList.add('hidden');
+        // Optional: skip this if .hidden already handles display:none
+        element.style.display = 'none';
+
+        if (element.tagName === 'FORM') {
+            element.reset();
+        }
+
+        const errorFields = element.querySelectorAll('.field-error');
+        errorFields.forEach(field => field.classList.remove('field-error'));
+    }
+});
+
     // Show all buttons and remove active state
-    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin'];
+    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
@@ -1970,7 +2398,6 @@ function returnToFormSwitcher() {
             btn.classList.remove('active');
         }
     });
-}
 });
   </script>
 
@@ -1992,5 +2419,816 @@ function returnToFormSwitcher() {
     }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let existingRecordId = null;
+
+  const apiBase = 'https://airtable-api.richard-ociepa.workers.dev';
+  const tableKey = 'pit-link-in'; // must match your worker tableMap key
+
+  const fieldMap = {
+    "Your Name": "site-contact",
+    "Pit Link-in Date": "date",
+    "SAM": "SAM",
+    "ADA ID": "ADA",
+    "Duct Note ID": "Duct-Note-ID",
+    "Pit A Note ID": "PitA-Note-ID",
+    "Pit B Note ID": "PitB-Note-ID",
+    "Pit A Required": "PitA-linkin-required",
+    "Pit B Required": "PitB-linkin-required",
+    "Pit A Fit for Purpose": "PitA-ffp",
+    "Pit B Fit for Purpose": "PitB-ffp",
+    "RRP Completed?": "rrp",
+    "RRP Completed - No": "rrp-no",
+    "Additional Comments": "comments",
+    "Pit Link-ins Completed": "completed"
+  };
+
+  // Function to collect all form data
+  function collectFormData() {
+    const data = {};
+    
+    // Iterate through all form fields
+    for (const [airtableField, elementId] of Object.entries(fieldMap)) {
+      const element = document.getElementById(`pitlinkin-${elementId}`);
+      if (!element) continue;
+
+      let value;
+      if (element.type === 'checkbox') {
+        value = element.checked;
+      } else if (element.value && element.value.trim() !== '') {
+        value = element.value.trim();
+      }
+
+      // Only add non-empty values to data
+      if (value !== undefined && value !== null && value !== '') {
+        data[airtableField] = value;
+      }
+    }
+
+    return data;
+  }
+
+  // Initialize form - lock completion checkbox by default
+  function initializeForm() {
+    document.getElementById('pitlinkin-completed').disabled = true;
+  }
+
+  async function searchDuctNoteID() {
+    const noteId = document.getElementById('pitlinkin-note-id-search').value.trim();
+    const summary = document.getElementById('pitlinkin-note-summary');
+    summary.textContent = '';
+
+    if (!noteId) {
+      alert('Please enter a Note ID to search.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiBase}/lookup/${tableKey}?noteId=${encodeURIComponent(noteId)}`);
+      const contentType = response.headers.get('Content-Type') || '';
+
+      if (!response.ok) {
+        const message = contentType.includes('application/json')
+          ? (await response.json()).error || 'Lookup failed'
+          : await response.text();
+        throw new Error(message);
+      }
+
+      const data = await response.json();
+      const submitBtn = document.getElementById('pitlinkin-submit-btn');
+
+      if (!data.record) {
+        summary.textContent = 'No record found. A new entry will need to be created.';
+        existingRecordId = null;
+        unlockForm();
+        // Keep completion checkbox locked when no record exists
+        document.getElementById('pitlinkin-completed').disabled = true;
+        submitBtn.textContent = 'Submit';
+      } else {
+        summary.textContent = 'Record found. All fields locked except completion checkbox.';
+        existingRecordId = data.record.id;
+        populateAndLockForm(data.record.fields);
+        submitBtn.textContent = 'Update';
+      }
+    } catch (err) {
+      console.error(err);
+      summary.textContent = 'Error looking up Note ID.';
+    }
+  }
+
+function populateAndLockForm(fields) {
+  // First, unlock all fields to reset state
+  unlockForm();
+  
+  for (const [key, value] of Object.entries(fields)) {
+    const mappedId = fieldMap[key] || key;
+    const el = document.getElementById(`pitlinkin-${mappedId}`);
+    if (!el) continue;
+
+    // Populate the field
+    if (el.type === 'checkbox') {
+      el.checked = value === true;
+    } else if (el.tagName === 'SELECT') {
+      // Add missing option if not present
+      let optionExists = [...el.options].some(opt => opt.value === value);
+      if (!optionExists && value !== undefined && value !== null) {
+        const newOption = document.createElement('option');
+        newOption.value = value;
+        newOption.textContent = value;
+        newOption.selected = true;
+        el.appendChild(newOption);
+      }
+      el.value = value;
+    } else {
+      el.value = value;
+    }
+
+    // Lock populated fields, leave non-populated fields unlocked
+    if (value !== undefined && value !== null && value !== '') {
+      el.disabled = true;
+      // For conditional fields, only remove required if they're not managed by conditional logic
+      if (el.hasAttribute('required') && el.id !== 'pitlinkin-rrp-no') {
+        el.removeAttribute('required');
+        el.setAttribute('data-was-required', 'true');
+      }
+    } else {
+      // Restore required attribute for non-populated fields if it was previously required
+      if (el.hasAttribute('data-was-required') && el.id !== 'pitlinkin-rrp-no') {
+        el.setAttribute('required', '');
+        el.removeAttribute('data-was-required');
+      }
+    }
+  }
+
+  // Special handling for completion checkbox - always unlock it for existing records
+  const completedCheckbox = document.getElementById('pitlinkin-completed');
+  if (completedCheckbox) {
+    completedCheckbox.disabled = false;
+  }
+
+  // Trigger the conditional logic for RRP field to ensure proper state
+  const rrpSelect = document.getElementById('pitlinkin-rrp');
+  if (rrpSelect && typeof toggleRRPCompleteField === 'function') {
+    toggleRRPCompleteField();
+  }
+}
+
+  function unlockForm() {
+    document.querySelectorAll('#pitlinkin-form input, #pitlinkin-form select, #pitlinkin-form textarea')
+      .forEach(el => {
+        el.disabled = false;
+        // Restore required attribute if it was previously required (but not for conditional fields)
+        if (el.hasAttribute('data-was-required') && el.id !== 'pitlinkin-rrp-no') {
+          el.setAttribute('required', '');
+          el.removeAttribute('data-was-required');
+        }
+      });
+  }
+
+  // Initialize form on page load
+  initializeForm();
+  
+  document.getElementById('pitlinkin-search-btn').addEventListener('click', searchDuctNoteID);
+
+  document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const noteIdEntered = document.getElementById('pitlinkin-note-id-search').value.trim();
+    const completedCheckbox = document.getElementById('pitlinkin-completed');
+    const isChecked = completedCheckbox.checked;
+
+    console.log('Form submission debug:', {
+      noteIdEntered,
+      existingRecordId,
+      isChecked
+    });
+
+    // Handle existing record updates
+    if (existingRecordId) {
+      if (!noteIdEntered) {
+        alert('Note ID is required.');
+        return;
+      }
+
+      if (!isChecked) {
+        alert("Please check 'Pit Link-ins Completed' before submitting.");
+        return;
+      }
+
+      // Collect all unlocked (editable) field data for update
+      let data = {
+        "Pit Link-ins Completed": true
+      };
+
+      // Add timestamp
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      data["Pit Link-in Completed Timestamp"] = `${year}-${month}-${day}`;
+
+      // Collect data from unlocked fields
+      for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
+        const el = document.getElementById(`pitlinkin-${formFieldId}`);
+        if (el && !el.disabled && airtableField !== "Pit Link-ins Completed") {
+          if (el.type === 'checkbox') {
+            data[airtableField] = el.checked;
+          } else if (el.value && el.value.trim() !== '') {
+            data[airtableField] = el.value.trim();
+          }
+        }
+      }
+
+      console.log('Update data:', data);
+
+      try {
+        const url = `${apiBase}/update/${tableKey}/${existingRecordId}`;
+        console.log('Update URL:', url);
+        
+        const response = await fetch(url, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: data })
+        });
+
+        const result = await response.json();
+        console.log('Update response:', result);
+        
+        if (!response.ok) {
+          alert(`Update failed: ${result.error || 'Unknown error'}`);
+          return;
+        }
+
+        alert('Record updated successfully!');
+        location.reload();
+
+      } catch (err) {
+        console.error('Update error:', err);
+        alert('There was an error updating the record.');
+      }
+    }
+    // Handle new record creation
+    else {
+      // Collect all form data for new record
+      const data = collectFormData();
+
+      try {
+        const url = `${apiBase}/create/${tableKey}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: data })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert('Failed to create new record.');
+          console.error('Create error:', result);
+          return;
+        }
+
+        alert('New record created successfully!');
+        location.reload();
+
+      } catch (err) {
+        console.error(err);
+        alert('There was an error creating the record.');
+      }
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let existingRecordId = null;
+
+  const apiBase = 'https://airtable-api.richard-ociepa.workers.dev';
+  const tableKey = 'vactruck'; // must match your worker tableMap key
+
+  const fieldMap = {
+    "Contractor": "company-name",
+    "Submission Date": "date",
+    "SAM": "SAM",
+    "ADA ID": "ADA",
+    "Pit Note ID": "Pit-Note-ID",
+    "Additional Comments": "comments",
+    "Pit Cleanout Completed": "completed"
+  };
+
+  // Initialize form - lock completion checkbox by default
+  function initializeForm() {
+    document.getElementById('vactruck-completed').disabled = true;
+  }
+
+  async function searchvactruckNoteID() {
+    const noteId = document.getElementById('vactruck-note-id-search').value.trim();
+    const summary = document.getElementById('vactruck-note-summary');
+    summary.textContent = '';
+
+    if (!noteId) {
+      alert('Please enter a Note ID to search.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiBase}/lookup/${tableKey}?noteId=${encodeURIComponent(noteId)}`);
+      const contentType = response.headers.get('Content-Type') || '';
+
+      if (!response.ok) {
+        const message = contentType.includes('application/json')
+          ? (await response.json()).error || 'Lookup failed'
+          : await response.text();
+        throw new Error(message);
+      }
+
+      const data = await response.json();
+      const submitBtn = document.getElementById('vactruck-submit-btn');
+
+      if (!data.record) {
+        summary.textContent = 'No record found. A new entry will need to be created.';
+        existingRecordId = null;
+        unlockForm();
+        // Keep completion checkbox locked when no record exists
+        document.getElementById('vactruck-completed').disabled = true;
+        submitBtn.textContent = 'Submit';
+      } else {
+        summary.textContent = 'Record found. All fields locked except completion checkbox.';
+        existingRecordId = data.record.id;
+        populateAndLockForm(data.record.fields);
+        submitBtn.textContent = 'Update';
+      }
+    } catch (err) {
+      console.error(err);
+      summary.textContent = 'Error looking up Note ID.';
+    }
+  }
+
+  function populateAndLockForm(fields) {
+    // First, unlock all fields to reset state
+    unlockForm();
+    
+    for (const [key, value] of Object.entries(fields)) {
+      const mappedId = fieldMap[key] || key;
+      const el = document.getElementById(`vactruck-${mappedId}`);
+      if (!el) continue;
+
+      // Populate the field
+      if (el.type === 'checkbox') {
+        el.checked = value === true;
+      } else if (el.tagName === 'SELECT') {
+        // Add missing option if not present
+        let optionExists = [...el.options].some(opt => opt.value === value);
+        if (!optionExists && value !== undefined && value !== null) {
+          const newOption = document.createElement('option');
+          newOption.value = value;
+          newOption.textContent = value;
+          newOption.selected = true;
+          el.appendChild(newOption);
+        }
+        el.value = value;
+      } else {
+        el.value = value;
+      }
+
+      // Lock populated fields, leave non-populated fields unlocked
+      if (value !== undefined && value !== null && value !== '') {
+        el.disabled = true;
+        // Remove required attribute for populated fields and store it
+        if (el.hasAttribute('required')) {
+          el.removeAttribute('required');
+          el.setAttribute('data-was-required', 'true');
+        }
+      } else {
+        // Restore required attribute for non-populated fields if it was previously required
+        if (el.hasAttribute('data-was-required')) {
+          el.setAttribute('required', '');
+          el.removeAttribute('data-was-required');
+        }
+      }
+    }
+
+    // Special handling for completion checkbox - always unlock it for existing records
+    const completedCheckbox = document.getElementById('vactruck-completed');
+    if (completedCheckbox) {
+      completedCheckbox.disabled = false;
+    }
+  }
+
+  function unlockForm() {
+    document.querySelectorAll('#vactruck-form input, #vactruck-form select, #vactruck-form textarea')
+      .forEach(el => {
+        el.disabled = false;
+        // Restore required attribute if it was previously required
+        if (el.hasAttribute('data-was-required')) {
+          el.setAttribute('required', '');
+          el.removeAttribute('data-was-required');
+        }
+      });
+  }
+
+  // Initialize form on page load
+  initializeForm();
+  
+  document.getElementById('vactruck-search-btn').addEventListener('click', searchvactruckNoteID);
+
+  document.getElementById('vactruck-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const noteIdEntered = document.getElementById('vactruck-note-id-search').value.trim();
+    const completedCheckbox = document.getElementById('vactruck-completed');
+    const isChecked = completedCheckbox.checked;
+
+    console.log('Form submission debug:', {
+      noteIdEntered,
+      existingRecordId,
+      isChecked
+    });
+
+    // For new records, get Note ID from the form field instead of search field
+    let noteIdForSubmission = noteIdEntered;
+    if (!existingRecordId) {
+      const noteIdFormField = document.getElementById('vactruck-Pit-Note-ID');
+      if (noteIdFormField && noteIdFormField.value.trim()) {
+        noteIdForSubmission = noteIdFormField.value.trim();
+      }
+    }
+
+    if (!noteIdForSubmission) {
+      alert('Note ID is required.');
+      return;
+    }
+
+    // If there's an existing record, require completion checkbox
+    if (existingRecordId && !isChecked) {
+      alert("Please check 'Pit Cleanout Completed' before submitting.");
+      return;
+    }
+
+    // Collect form data
+    let data = {};
+
+    // For existing records, only update completion status and add timestamp
+    if (existingRecordId) {
+      data["Pit Cleanout Completed"] = true;
+      
+      // Add timestamp
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      data["Pit Cleanout Datestamp"] = `${year}-${month}-${day}`;
+
+      // Collect data from unlocked fields
+      for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
+        const el = document.getElementById(`vactruck-${formFieldId}`);
+        if (el && !el.disabled && airtableField !== "Pit Cleanout Completed") {
+          if (el.type === 'checkbox') {
+            data[airtableField] = el.checked;
+          } else if (el.value && el.value.trim() !== '') {
+            data[airtableField] = el.value.trim();
+          }
+        }
+      }
+    } else {
+      // For new records, collect all form data
+      for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
+        const el = document.getElementById(`vactruck-${formFieldId}`);
+        if (el) {
+          if (el.type === 'checkbox') {
+            data[airtableField] = el.checked;
+          } else if (el.value && el.value.trim() !== '') {
+            data[airtableField] = el.value.trim();
+          }
+        }
+      }
+
+      // Set Note ID from form field or search field for new records
+      data["Pit Note ID"] = noteIdForSubmission;
+
+      // Add submission date for new records
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      data["Submission Date"] = `${year}-${month}-${day}`;
+    }
+
+    console.log('Submission data:', data);
+
+    try {
+      let url, method;
+      
+      if (existingRecordId) {
+        // Update existing record
+        url = `${apiBase}/update/${tableKey}/${existingRecordId}`;
+        method = 'PATCH';
+      } else {
+        // Create new record
+        url = `${apiBase}/create/${tableKey}`;
+        method = 'POST';
+      }
+      
+      console.log('Request URL:', url);
+      console.log('Request method:', method);
+      
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: data })
+      });
+
+      const result = await response.json();
+      console.log('Response:', result);
+      
+      if (!response.ok) {
+        alert(`${existingRecordId ? 'Update' : 'Submission'} failed: ${result.error || 'Unknown error'}`);
+        return;
+      }
+
+      alert(`Record ${existingRecordId ? 'updated' : 'created'} successfully!`);
+      location.reload();
+
+    } catch (err) {
+      console.error('Submission error:', err);
+      alert(`There was an error ${existingRecordId ? 'updating' : 'creating'} the record.`);
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let existingRecordId = null;
+
+  const apiBase = 'https://airtable-api.richard-ociepa.workers.dev';
+  const tableKey = 'reinstatement'; // must match your worker tableMap key
+
+  const fieldMap = {
+    "Temp Reinstatement Date": "date",
+    "Your Name": "site-contact",
+    "Address": "address",
+    "SAM": "SAM",
+    "ADA ID": "ADA",
+    "Pit Note ID": "Pit-Note-ID",
+    "Asset Type": "asset-type",
+    "Surface Type": "surface-type",
+    "Surface Type - Other": "surface-type-other",
+    "Location Type": "location-type",
+    "Location Type - Other": "location-type-other",
+    "Temp Material Used": "material-type",
+    "Temp Material Used - Other": "material-type-other",
+    "Temp Contractor Company Name": "company-name",
+    "Proposed Permanent Reinstatement Date": "perm-date",
+    "Permanent Reinstatement Area (m2)": "area",
+    "Full Panel Required?": "panel",
+    "Permanent Material": "perm-material",
+    "Permanent Material - Other": "perm-material-other",
+    "Permanent Contractor Company Name": "perm-company-name",
+    "Non-Standard Reinstatement": "Non-Standard",
+    "Additional Comments": "comments",
+    "Permanent Reinstatement Completed": "completed"
+  };
+
+  // Function to collect all form data
+  function collectFormData() {
+    const data = {};
+    
+    // Iterate through all form fields
+    for (const [airtableField, elementId] of Object.entries(fieldMap)) {
+      const element = document.getElementById(`reinstatement-${elementId}`);
+      if (!element) continue;
+
+      let value;
+      if (element.type === 'checkbox') {
+        value = element.checked;
+      } else if (element.value && element.value.trim() !== '') {
+        value = element.value.trim();
+      }
+
+      // Only add non-empty values to data
+      if (value !== undefined && value !== null && value !== '') {
+        data[airtableField] = value;
+      }
+    }
+
+    return data;
+  }
+
+  async function searchreinstatementNoteID() {
+    const noteId = document.getElementById('reinstatement-note-id-search').value.trim();
+    const summary = document.getElementById('reinstatement-note-summary');
+    summary.textContent = '';
+
+    if (!noteId) {
+      alert('Please enter a Note ID to search.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiBase}/lookup/${tableKey}?noteId=${encodeURIComponent(noteId)}`);
+      const contentType = response.headers.get('Content-Type') || '';
+
+      if (!response.ok) {
+        const message = contentType.includes('application/json')
+          ? (await response.json()).error || 'Lookup failed'
+          : await response.text();
+        throw new Error(message);
+      }
+
+      const data = await response.json();
+      const submitBtn = document.getElementById('reinstatement-submit-btn');
+
+      if (!data.record) {
+        summary.textContent = 'No record found. A new entry will need to be created.';
+        existingRecordId = null;
+        unlockForm();
+        // Lock the specific completion fields for new records
+        lockCompletionFields();
+        submitBtn.textContent = 'Submit';
+      } else {
+        summary.textContent = 'Record found. Populated fields locked, unpopulated fields available for editing.';
+        existingRecordId = data.record.id;
+        populateAndLockForm(data.record.fields);
+        submitBtn.textContent = 'Update';
+      }
+    } catch (err) {
+      console.error(err);
+      summary.textContent = 'Error looking up Note ID.';
+    }
+  }
+
+function populateAndLockForm(fields) {
+  const completionFields = [
+    'reinstatement-perm-material',
+    'reinstatement-perm-material-other',
+    'reinstatement-perm-company-name',
+    'reinstatement-Non-Standard',
+    'reinstatement-comments',
+    'reinstatement-completed'
+  ];
+
+  // First unlock all fields
+  unlockForm();
+
+  for (const [key, value] of Object.entries(fields)) {
+    const mappedId = fieldMap[key] || key;
+    const el = document.getElementById(`reinstatement-${mappedId}`);
+    if (!el) continue;
+
+    if (el.type === 'checkbox') {
+      el.checked = value === true;
+    } else if (el.tagName === 'SELECT') {
+      // Add missing option if not present
+      let optionExists = [...el.options].some(opt => opt.value === value);
+      if (!optionExists && value !== undefined && value !== null) {
+        const newOption = document.createElement('option');
+        newOption.value = value;
+        newOption.textContent = value;
+        newOption.selected = true;
+        el.appendChild(newOption);
+      }
+      el.value = value;
+    } else {
+      el.value = value;
+    }
+
+    // If field has a value (is populated), lock it
+    if (value !== undefined && value !== null && value !== '') {
+      el.disabled = true;
+    }
+  }
+}
+
+  function unlockForm() {
+    document.querySelectorAll('#reinstatement-form input, #reinstatement-form select, #reinstatement-form textarea')
+      .forEach(el => el.disabled = false);
+  }
+
+  function lockCompletionFields() {
+    const completionFields = [
+      'reinstatement-perm-material',
+      'reinstatement-perm-material-other',
+      'reinstatement-perm-company-name',
+      'reinstatement-Non-Standard',
+      'reinstatement-comments',
+      'reinstatement-completed'
+    ];
+    
+    completionFields.forEach(fieldId => {
+      const element = document.getElementById(fieldId);
+      if (element) {
+        element.disabled = true;
+      }
+    });
+  }
+
+  // Initially lock the completion fields
+  lockCompletionFields();
+
+  document.getElementById('reinstatement-search-btn').addEventListener('click', searchreinstatementNoteID);
+
+  document.getElementById('reinstatement-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const noteIdEntered = document.getElementById('reinstatement-note-id-search').value.trim();
+    const completedCheckbox = document.getElementById('reinstatement-completed');
+    const isChecked = completedCheckbox.checked;
+
+    // Handle existing record updates
+    if (existingRecordId) {
+      if (!noteIdEntered) return;
+
+      if (!isChecked) {
+        alert("Please check 'Permanent Reinstatement Completed' before submitting.");
+        return;
+      }
+
+      // Collect all the unlocked completion fields for update
+      let data = {
+        "Permanent Reinstatement Completed": isChecked
+      };
+
+      // Add timestamp only if checkbox is checked
+      if (isChecked) {
+        const now = new Date();
+        const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+        const year = perthTime.getFullYear();
+        const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+        const day = String(perthTime.getDate()).padStart(2, '0');
+        data["Permanent Reinstatement Timestamp"] = `${year}-${month}-${day}`;
+      }
+
+      // Collect other completion field values
+      const permMaterial = document.getElementById('reinstatement-perm-material').value;
+      const permMaterialOther = document.getElementById('reinstatement-perm-material-other').value;
+      const permCompanyName = document.getElementById('reinstatement-perm-company-name').value;
+      const nonStandard = document.getElementById('reinstatement-Non-Standard').checked;
+      const comments = document.getElementById('reinstatement-comments').value;
+
+      if (permMaterial) data["Permanent Material"] = permMaterial;
+      if (permMaterialOther) data["Permanent Material - Other"] = permMaterialOther;
+      if (permCompanyName) data["Permanent Contractor Company Name"] = permCompanyName;
+      data["Non-Standard Reinstatement"] = nonStandard;
+      if (comments) data["Additional Comments"] = comments;
+
+      try {
+        const url = `${apiBase}/update/${tableKey}/${existingRecordId}`;
+        const response = await fetch(url, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: data })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert('Update failed.');
+          return;
+        }
+
+        alert('Record updated successfully!');
+        location.reload();
+
+      } catch (err) {
+        console.error(err);
+        alert('There was an error updating the record.');
+      }
+    } 
+    // Handle new record creation
+    else {
+      // Collect all form data for new record
+      const data = collectFormData();
+
+      try {
+        const url = `${apiBase}/create/${tableKey}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: data })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert('Failed to create new record.');
+          console.error('Create error:', result);
+          return;
+        }
+
+        alert('New record created successfully!');
+        location.reload();
+
+      } catch (err) {
+        console.error(err);
+        alert('There was an error creating the record.');
+      }
+    }
+  });
+});
+</script>
 </body>
 </html>
