@@ -365,36 +365,6 @@ textarea {
         margin-bottom: 10px;
     }
 
-.pitlinkin-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  width: 100%;
-}
-
-.left-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.right-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-}
-
- .right-group label {
-  white-space: nowrap; /* prevents label from wrapping */
- }
-
-#pitlinkin-PitA-Note-ID {
-  width: 100%;
-}
-
 .or-divider {
   display: flex;
   align-items: center;
@@ -442,7 +412,6 @@ textarea {
       <button id="btn-forecast" onclick="showForm('forecast')">Subcontractor Weekly Forecast</button>
       <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
       <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
-      <button id="btn-pitlinkin" onclick="showForm('pitlinkin')">Pit Link-in Register</button>
       <button id="btn-vactruck" onclick="showForm('vactruck')">Vac Truck Register</button>
 
     </section>
@@ -1211,190 +1180,6 @@ textarea {
       </form>
     </div>
 
-    <div id="form-pitlinkin" class="form-section hidden">
-      <h3>Pit Link-in Register: Genus N2P project</h3>
-      <p>Please complete for any pit link-in's required to be done by another contractor.</p>
-      <form id="pitlinkin-form" onsubmit="return validateGenericForm('pitlinkin-form')">
-
-<label for="pitlinkin-note-id-search">Search Duct Note ID</label>
-<div style="display: flex; gap: 0.5rem; align-items: center;">
-  <input type="text" id="pitlinkin-note-id-search" placeholder="Enter Note ID" />
-  <button type="button" id="pitlinkin-search-btn" class="search-btn">Search</button>
-</div>
-
-<!-- Optional read-only summary or error display -->
-<div id="pitlinkin-note-summary" style="margin-top: 1rem; font-weight: bold;"></div>
-
-<!-- OR Divider -->
-<div class="or-divider">
-  <hr class="line" />
-  <span class="or-text">OR</span>
-  <hr class="line" />
-</div>
-
-	<!-- Hidden input hardcoded to 'Pit Link-in' -->
-	<input type="hidden" id="pitlinkin-type" name="pitlinkin-type" value="Pit Link-in">
-
-        <label for="pitlinkin-site-contact">Your Name</label>
-        <input type="text" id="pitlinkin-site-contact" name="pitlinkin-site-contact" required />
-
-        <label for="pitlinkin-date">Date Reported</label>
-        <input type="date" id="pitlinkin-date" name="pitlinkin-date" required />
-
-        <label for="pitlinkin-SAM">SAM ID</label>
-        <select id="pitlinkin-SAM" name="pitlinkin-SAM" required>
-          <option value="">Select one</option>
-          <option value="K-6ALN-05">K-6ALN-05</option>
-          <option value="K-6ALN-20">K-6ALN-20</option>
-          <option value="K-6ALN-21">K-6ALN-21</option>
-          <option value="K-6ALN-22">K-6ALN-22</option>
-          <option value="K-6ALN-23">K-6ALN-23</option>
-          <option value="K-6AUU-20">K-6AUU-20</option>
-          <option value="K-6BGT-20">K-6BGT-20</option>
-          <option value="K-6CGD-20">K-6CGD-20</option>
-          <option value="K-6CND-20">K-6CND-20</option>
-          <option value="K-6CVN-20">K-6CVN-20</option>
-          <option value="K-6DNH-20">K-6DNH-20</option>
-          <option value="K-6DNK-20">K-6DNK-20</option>
-          <option value="K-6ESP-20">K-6ESP-20</option>
-          <option value="K-6ESP-21">K-6ESP-21</option>
-          <option value="K-6ESP-40">K-6ESP-40</option>
-          <option value="K-6EXM-01">K-6EXM-01</option>
-          <option value="K-6HOP-01">K-6HOP-01</option>
-          <option value="K-6KAM-20">K-6KAM-20</option>
-          <option value="K-6KAT-20">K-6KAT-20</option>
-          <option value="K-6KLB-01">K-6KLB-01</option>
-          <option value="K-6KOJ-20">K-6KOJ-20</option>
-          <option value="K-6LEA-20">K-6LEA-20</option>
-          <option value="K-6MBA-20">K-6MBA-20</option>
-          <option value="K-6MJM-01">K-6MJM-01</option>
-          <option value="K-6NRG-20">K-6NRG-20</option>
-          <option value="K-6NWM-01">K-6NWM-01</option>
-          <option value="K-6NWM-20">K-6NWM-20</option>
-          <option value="K-6PDO-20">K-6PDO-20</option>
-          <option value="K-6SCR-20">K-6SCR-20</option>
-          <option value="K-6TPC-20">K-6TPC-20</option>
-          <option value="L-6ALN-05">L-6ALN-05</option>
-          <option value="L-6ALN-20">L-6ALN-20</option>
-          <option value="L-6ALN-21">L-6ALN-21</option>
-          <option value="L-6ALN-23">L-6ALN-23</option>
-          <option value="M-6ALN-21">M-6ALN-21</option>
-          <option value="X-6ALN-20">X-6ALN-20</option>
-          <option value="X-6BGT-20">X-6BGT-20</option>
-          <option value="X-6COI-01">X-6COI-01</option>
-          <option value="X-6DNK-20">X-6DNK-20</option>
-          <option value="Z-6ALN-22">Z-6ALN-22</option>
-          <option value="Z-6KAT-20">Z-6KAT-20</option>
-          <option value="Z-6NRG-20">Z-6NRG-20</option>
-        </select>
-
-        <label for="pitlinkin-ADA">ADA ID</label>
-        <select id="pitlinkin-ADA" name="pitlinkin-ADA" required>
-          <option value="">Select one</option>
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-          <option value="13">13</option>
-          <option value="14">14</option>
-          <option value="15">15</option>
-          <option value="16">16</option>
-          <option value="17">17</option>
-          <option value="18">18</option>
-          <option value="19">19</option>
-          <option value="20">20</option>
-          <option value="21">21</option>
-          <option value="22">22</option>
-          <option value="23">23</option>
-          <option value="24">24</option>
-          <option value="25">25</option>
-          <option value="27">27</option>
-          <option value="28">28</option>
-          <option value="30">30</option>
-          <option value="31">31</option>
-        </select>
-
-        <label for="pitlinkin-Duct-Note-ID">Duct Note ID:</label>
-        <input type="text" id="pitlinkin-Duct-Note-ID" name="pitlinkin-Duct-Note-ID" required />
-                
-<div class="pitlinkin-row">
-  <div class="left-group">
-    <label for="pitlinkin-PitA-linkin-required">Pit A Link-in Required?</label>
-    <input type="checkbox" id="pitlinkin-PitA-linkin-required" name="pitlinkin-PitA-linkin-required">
-  </div>
-  <div class="right-group">
-    <label for="pitlinkin-PitA-Note-ID">Pit A Note ID:</label>
-    <input type="text" id="pitlinkin-PitA-Note-ID" name="pitlinkin-PitA-Note-ID" required>
-  </div>
-</div>
-
-        <label for="pitlinkin-PitA-ffp">Is Pit A Fit for Purpose</label>
-        <select id="pitlinkin-PitA-ffp" name="pitlinkin-PitA-ffp" required>
-          <option value="">Select one</option>
-          <option value="Yes">Yes</option>
-          <option value="No - Contact FCM">No - Contact FCM</option>
-        </select>
-
-<div class="pitlinkin-row">
-  <div class="left-group">
-    <label for="pitlinkin-PitB-linkin-required">Pit B Link-in Required?</label>
-    <input type="checkbox" id="pitlinkin-PitB-linkin-required" name="pitlinkin-PitB-linkin-required">
-  </div>
-  <div class="right-group">
-    <label for="pitlinkin-PitB-Note-ID">Pit B Note ID:</label>
-    <input type="text" id="pitlinkin-PitB-Note-ID" name="pitlinkin-PitB-Note-ID" required>
-  </div>
-</div>
-
-        <label for="pitlinkin-PitB-ffp">Is Pit B Fit for Purpose</label>
-        <select id="pitlinkin-PitB-ffp" name="pitlinkin-PitB-ffp" required>
-          <option value="">Select one</option>
-          <option value="Yes">Yes</option>
-          <option value="No - Contact FCM">No - Contact FCM</option>
-        </select>
-
-        <label for="pitlinkin-rrp">RRP Completed?</label>
-        <select id="pitlinkin-rrp" name="pitlinkin-rrp" onchange="toggleRRPCompleteField()" required>
-          <option value="">Select one</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-
-        <!-- Conditional Field -->
-<div id="pitlinkin-rrp-notification-field" style="display: none; margin-top: 10px;">
-  <label for="pitlinkin-rrp-no">What is the reason RRP has not been completed?</label>
-<select id="pitlinkin-rrp-no" name="pitlinkin-rrp-no">
-          <option value="">Select one</option>
-          <option value="Weather">Weather</option>
-          <option value="Material">Material Shortage</option>
-          <option value="Other">Other Reasons (add in "Additional Comments" section of this form)</option>
-        </select>
-        
-</div>
-
-        <label for="pitlinkin-comments">Any additional comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
-        <textarea id="pitlinkin-comments" name="pitlinkin-comments" placeholder="If there are no additional comments, there is no need to enter anything here"></textarea>
-
-<label>
-  <input type="checkbox" id="pitlinkin-completed" name="pitlinkin-completed" />
-  Link-in's completed
-</label>
-
-        <div class="form-footer">
-          <button type="button" class="btn-back" onclick="confirmReset('pitlinkin')">Back</button>
-          <button type="submit" id="pitlinkin-submit-btn">Submit Pit Link-in</button>
-        </div>
-      </form>
-    </div>
-
     <div id="form-vactruck" class="form-section hidden">
       <h3>Vac Truck Register: Genus N2P project</h3>
       <form id="vactruck-form" onsubmit="return validateGenericForm('vactruck-form')">
@@ -1647,20 +1432,6 @@ function confirmReset(formType) {
       }
     }
 
-    function toggleRRPCompleteField() {
-      const RRPCompleteSelect = document.getElementById("pitlinkin-rrp");
-      const RRPCompleteField = document.getElementById("pitlinkin-rrp-notification-field");
-      const RRPCompleteInput = document.getElementById("pitlinkin-rrp-no");
-
-      if (RRPCompleteSelect.value === "No") {
-        RRPCompleteField.style.display = "block";
-        RRPCompleteInput.setAttribute("required", "required");
-      } else {
-        RRPCompleteField.style.display = "none";
-        RRPCompleteInput.removeAttribute("required");
-      }
-    }
-
 // Airtable configuration - Replace with your actual values
         const AIRTABLE_CONFIG = {
             forecast: {
@@ -1676,11 +1447,6 @@ function confirmReset(formType) {
             reinstatement: {
                 baseId: 'appegmSLEvbJSkRvd',
                 tableId: 'Reinstatement',
-                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
-            },
-            pitlinkin: {
-                baseId: 'appegmSLEvbJSkRvd',
-                tableId: 'Pit Link-in',
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             vactruck: {
@@ -1722,12 +1488,10 @@ function confirmReset(formType) {
       
       // Set default date for all forms
       const bogDateField = document.getElementById('bog-date');
-      const pitlinkinDateField = document.getElementById('pitlinkin-date');
       const reinstatementDateField = document.getElementById('reinstatement-date');
       const vactruckDateField = document.getElementById('vactruck-date');
 
       if (bogDateField) bogDateField.value = todayString;
-      if (pitlinkinDateField) pitlinkinDateField.value = todayString;
       if (reinstatementDateField) reinstatementDateField.value = todayString;
       if (vactruckDateField) vactruckDateField.value = todayString;
     }
@@ -1874,7 +1638,7 @@ function showForm(formType) {
     document.getElementById('thank-you-message').style.display = 'none';
         
     // Hide all forms using both methods
-    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck'];
+    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-vactruck'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1897,7 +1661,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck'];
+            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-vactruck'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -2216,90 +1980,6 @@ showSuccessMessage();
             }
         });
 
-
-
-        document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-    // --- New 5-7-digit ID Validation (Updated) ---
-    let isValid = true;
-    const idFieldsToValidate = [
-        { id: 'pitlinkin-Duct-Note-ID', name: 'Duct Note ID' },
-        { id: 'pitlinkin-PitA-Note-ID', name: 'Pit A Note ID' }, // Now always required
-        { id: 'pitlinkin-PitB-Note-ID', name: 'Pit B Note ID' }  // Now always required
-    ];
-    let errorMessage = '';
-
-    idFieldsToValidate.forEach(fieldInfo => {
-        const inputElement = document.getElementById(fieldInfo.id);
-        const value = inputElement ? inputElement.value.trim() : '';
-
-        // Validate if the input element exists and is not disabled.
-        // PitA-Note-ID and PitB-Note-ID are now always validated regardless of checkboxes.
-        if (inputElement && !inputElement.disabled) {
-            // Check for between 5-7 digits
-            if (!/^\d{5,7}$/.test(value)) {
-                errorMessage += `- '${fieldInfo.name}' must contain between 5-7 digits.\n`;
-                inputElement.classList.add('field-error'); // Add error styling
-                isValid = false;
-            } else {
-                inputElement.classList.remove('field-error'); // Remove error styling if valid
-            }
-        } else if (inputElement) {
-            // Ensure no error styling if the field is disabled
-            inputElement.classList.remove('field-error');
-        }
-    });
-
-    // If a value is empty, it won't match /^\d{5,7}$/ and will be flagged.
-
-    if (!isValid) {
-        alert('Please correct the following errors before submitting:\n' + errorMessage);
-        return; // Prevent submission if validation fails
-    }
-
-       // Validate the form
-        if (!validateGenericForm('pitlinkin-form')) {
-            return;
-        }
-            
-            // Collect form data - modify this based on your actual form fields
-            const formData = {
-                'Your Name': document.getElementById('pitlinkin-site-contact').value,
-                'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
-                'SAM': document.getElementById('pitlinkin-SAM').value,
-                'ADA ID': document.getElementById('pitlinkin-ADA').value,
-                'Duct Note ID': document.getElementById('pitlinkin-Duct-Note-ID').value,
-                'Pit A Note ID': document.getElementById('pitlinkin-PitA-Note-ID').value,
-                'Pit B Note ID': document.getElementById('pitlinkin-PitB-Note-ID').value,
-                'Pit A Required': document.getElementById('pitlinkin-PitA-linkin-required').checked,
-                'Pit B Required': document.getElementById('pitlinkin-PitB-linkin-required').checked,
-                'Pit A Fit for Purpose': document.getElementById('pitlinkin-PitA-ffp').value,
-                'Pit B Fit for Purpose': document.getElementById('pitlinkin-PitB-ffp').value,
-                'RRP Completed?': document.getElementById('pitlinkin-rrp').value,
-                'RRP Completed - No': document.getElementById('pitlinkin-rrp-no').value,
-                'Additional Comments': document.getElementById('pitlinkin-comments').value,
-		'Pit Link-ins Completed': document.getElementById('pitlinkin-completed').checked
-            };
-            
-            try {
-                // showSuccessMessage();
-const response = await submitToAirtable('pitlinkin', formData);
-const result = await response.json();
-
-if (!response.ok) {
-  console.error('Airtable error:', result);
-  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
-  return;
-}
-
-showSuccessMessage();
-            } catch (error) {
-                console.error('Error submitting Pit Link-in form:', error);
-                alert('Error submitting form. Please try again.');
-            }
-        });
-
         document.getElementById('vactruck-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -2372,7 +2052,7 @@ showSuccessMessage();
         });
     
     // Hide all forms using both methods
-const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck'];
+const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-vactruck'];
 forms.forEach(id => {
     const element = document.getElementById(id);
     if (element) {
@@ -2390,7 +2070,7 @@ forms.forEach(id => {
 });
 
     // Show all buttons and remove active state
-    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck'];
+    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-vactruck'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
@@ -2419,288 +2099,6 @@ forms.forEach(id => {
     }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  let existingRecordId = null;
-
-  const apiBase = 'https://airtable-api.richard-ociepa.workers.dev';
-  const tableKey = 'pit-link-in'; // must match your worker tableMap key
-
-  const fieldMap = {
-    "Your Name": "site-contact",
-    "Pit Link-in Date": "date",
-    "SAM": "SAM",
-    "ADA ID": "ADA",
-    "Duct Note ID": "Duct-Note-ID",
-    "Pit A Note ID": "PitA-Note-ID",
-    "Pit B Note ID": "PitB-Note-ID",
-    "Pit A Required": "PitA-linkin-required",
-    "Pit B Required": "PitB-linkin-required",
-    "Pit A Fit for Purpose": "PitA-ffp",
-    "Pit B Fit for Purpose": "PitB-ffp",
-    "RRP Completed?": "rrp",
-    "RRP Completed - No": "rrp-no",
-    "Additional Comments": "comments",
-    "Pit Link-ins Completed": "completed"
-  };
-
-  // Function to collect all form data
-  function collectFormData() {
-    const data = {};
-    
-    // Iterate through all form fields
-    for (const [airtableField, elementId] of Object.entries(fieldMap)) {
-      const element = document.getElementById(`pitlinkin-${elementId}`);
-      if (!element) continue;
-
-      let value;
-      if (element.type === 'checkbox') {
-        value = element.checked;
-      } else if (element.value && element.value.trim() !== '') {
-        value = element.value.trim();
-      }
-
-      // Only add non-empty values to data
-      if (value !== undefined && value !== null && value !== '') {
-        data[airtableField] = value;
-      }
-    }
-
-    return data;
-  }
-
-  // Initialize form - lock completion checkbox by default
-  function initializeForm() {
-    document.getElementById('pitlinkin-completed').disabled = true;
-  }
-
-  async function searchDuctNoteID() {
-    const noteId = document.getElementById('pitlinkin-note-id-search').value.trim();
-    const summary = document.getElementById('pitlinkin-note-summary');
-    summary.textContent = '';
-
-    if (!noteId) {
-      alert('Please enter a Note ID to search.');
-      return;
-    }
-
-    try {
-      const response = await fetch(`${apiBase}/lookup/${tableKey}?noteId=${encodeURIComponent(noteId)}`);
-      const contentType = response.headers.get('Content-Type') || '';
-
-      if (!response.ok) {
-        const message = contentType.includes('application/json')
-          ? (await response.json()).error || 'Lookup failed'
-          : await response.text();
-        throw new Error(message);
-      }
-
-      const data = await response.json();
-      const submitBtn = document.getElementById('pitlinkin-submit-btn');
-
-      if (!data.record) {
-        summary.textContent = 'No record found. A new entry will need to be created.';
-        existingRecordId = null;
-        unlockForm();
-        // Keep completion checkbox locked when no record exists
-        document.getElementById('pitlinkin-completed').disabled = true;
-        submitBtn.textContent = 'Submit';
-      } else {
-        summary.textContent = 'Record found. All fields locked except completion checkbox.';
-        existingRecordId = data.record.id;
-        populateAndLockForm(data.record.fields);
-        submitBtn.textContent = 'Update';
-      }
-    } catch (err) {
-      console.error(err);
-      summary.textContent = 'Error looking up Note ID.';
-    }
-  }
-
-function populateAndLockForm(fields) {
-  // First, unlock all fields to reset state
-  unlockForm();
-  
-  for (const [key, value] of Object.entries(fields)) {
-    const mappedId = fieldMap[key] || key;
-    const el = document.getElementById(`pitlinkin-${mappedId}`);
-    if (!el) continue;
-
-    // Populate the field
-    if (el.type === 'checkbox') {
-      el.checked = value === true;
-    } else if (el.tagName === 'SELECT') {
-      // Add missing option if not present
-      let optionExists = [...el.options].some(opt => opt.value === value);
-      if (!optionExists && value !== undefined && value !== null) {
-        const newOption = document.createElement('option');
-        newOption.value = value;
-        newOption.textContent = value;
-        newOption.selected = true;
-        el.appendChild(newOption);
-      }
-      el.value = value;
-    } else {
-      el.value = value;
-    }
-
-    // Lock populated fields, leave non-populated fields unlocked
-    if (value !== undefined && value !== null && value !== '') {
-      el.disabled = true;
-      // For conditional fields, only remove required if they're not managed by conditional logic
-      if (el.hasAttribute('required') && el.id !== 'pitlinkin-rrp-no') {
-        el.removeAttribute('required');
-        el.setAttribute('data-was-required', 'true');
-      }
-    } else {
-      // Restore required attribute for non-populated fields if it was previously required
-      if (el.hasAttribute('data-was-required') && el.id !== 'pitlinkin-rrp-no') {
-        el.setAttribute('required', '');
-        el.removeAttribute('data-was-required');
-      }
-    }
-  }
-
-  // Special handling for completion checkbox - always unlock it for existing records
-  const completedCheckbox = document.getElementById('pitlinkin-completed');
-  if (completedCheckbox) {
-    completedCheckbox.disabled = false;
-  }
-
-  // Trigger the conditional logic for RRP field to ensure proper state
-  const rrpSelect = document.getElementById('pitlinkin-rrp');
-  if (rrpSelect && typeof toggleRRPCompleteField === 'function') {
-    toggleRRPCompleteField();
-  }
-}
-
-  function unlockForm() {
-    document.querySelectorAll('#pitlinkin-form input, #pitlinkin-form select, #pitlinkin-form textarea')
-      .forEach(el => {
-        el.disabled = false;
-        // Restore required attribute if it was previously required (but not for conditional fields)
-        if (el.hasAttribute('data-was-required') && el.id !== 'pitlinkin-rrp-no') {
-          el.setAttribute('required', '');
-          el.removeAttribute('data-was-required');
-        }
-      });
-  }
-
-  // Initialize form on page load
-  initializeForm();
-  
-  document.getElementById('pitlinkin-search-btn').addEventListener('click', searchDuctNoteID);
-
-  document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const noteIdEntered = document.getElementById('pitlinkin-note-id-search').value.trim();
-    const completedCheckbox = document.getElementById('pitlinkin-completed');
-    const isChecked = completedCheckbox.checked;
-
-    console.log('Form submission debug:', {
-      noteIdEntered,
-      existingRecordId,
-      isChecked
-    });
-
-    // Handle existing record updates
-    if (existingRecordId) {
-      if (!noteIdEntered) {
-        alert('Note ID is required.');
-        return;
-      }
-
-      if (!isChecked) {
-        alert("Please check 'Pit Link-ins Completed' before submitting.");
-        return;
-      }
-
-      // Collect all unlocked (editable) field data for update
-      let data = {
-        "Pit Link-ins Completed": true
-      };
-
-      // Add timestamp
-      const now = new Date();
-      const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
-      const year = perthTime.getFullYear();
-      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
-      const day = String(perthTime.getDate()).padStart(2, '0');
-      data["Pit Link-in Completed Timestamp"] = `${year}-${month}-${day}`;
-
-      // Collect data from unlocked fields
-      for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
-        const el = document.getElementById(`pitlinkin-${formFieldId}`);
-        if (el && !el.disabled && airtableField !== "Pit Link-ins Completed") {
-          if (el.type === 'checkbox') {
-            data[airtableField] = el.checked;
-          } else if (el.value && el.value.trim() !== '') {
-            data[airtableField] = el.value.trim();
-          }
-        }
-      }
-
-      console.log('Update data:', data);
-
-      try {
-        const url = `${apiBase}/update/${tableKey}/${existingRecordId}`;
-        console.log('Update URL:', url);
-        
-        const response = await fetch(url, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fields: data })
-        });
-
-        const result = await response.json();
-        console.log('Update response:', result);
-        
-        if (!response.ok) {
-          alert(`Update failed: ${result.error || 'Unknown error'}`);
-          return;
-        }
-
-        alert('Record updated successfully!');
-        location.reload();
-
-      } catch (err) {
-        console.error('Update error:', err);
-        alert('There was an error updating the record.');
-      }
-    }
-    // Handle new record creation
-    else {
-      // Collect all form data for new record
-      const data = collectFormData();
-
-      try {
-        const url = `${apiBase}/create/${tableKey}`;
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fields: data })
-        });
-
-        const result = await response.json();
-        if (!response.ok) {
-          alert('Failed to create new record.');
-          console.error('Create error:', result);
-          return;
-        }
-
-        alert('New record created successfully!');
-        location.reload();
-
-      } catch (err) {
-        console.error(err);
-        alert('There was an error creating the record.');
-      }
-    }
-  });
-});
-</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
