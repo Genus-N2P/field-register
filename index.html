@@ -1142,24 +1142,6 @@ textarea {
 <input type="text" id="reinstatement-perm-material-other" name="reinstatement-perm-material-other" />
 </div>
 
-        <label for="reinstatement-perm-company-name">Permanent Reinstatement Contractor Company Name</label>
-        <select id="reinstatement-perm-company-name" name="reinstatement-perm-company-name" required>
-          <option value="">Select one</option>
-          <option value="Boretech Contracting">Boretech Contracting</option>
-          <option value="Connectit Communications">Connectit Communications</option>
-          <option value="Dawn Techcomms">Dawn Techcomms</option>
-          <option value="DDS Underground">DDS Underground</option>
-          <option value="Dizza Communications">Dizza Communications</option>
-          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
-          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
-          <option value="Genus Services">Genus Services</option>
-          <option value="JNJTech Services">JNJTech Services</option>
-          <option value="Lightsource">Lightsource</option>
-          <option value="MNC Drilling">MNC Drilling</option>
-          <option value="Netline Services">Netline Services</option>
-          <option value="Versatile Services">Versatile Services</option>
-        </select>
-
 	<label>
 	<input type="checkbox" id="reinstatement-Non-Standard" name="reinstatement-Non-Standard" />
 	Was this a non-standard Permanent Reinstatement?
@@ -1956,7 +1938,7 @@ showSuccessMessage();
                 'Full Panel Required?': document.getElementById('reinstatement-panel').value,
                 'Permanent Material': document.getElementById('reinstatement-perm-material').value,
                 'Permanent Material - Other': document.getElementById('reinstatement-perm-material-other').value,
-                'Permanent Contractor Company Name': document.getElementById('reinstatement-perm-company-name').value,
+                'Permanent Contractor Company Name': document.getElementById('reinstatement-company-name').value,
                 'Non-Standard Reinstatement': document.getElementById('reinstatement-Non-Standard').checked,
                 'Additional Comments': document.getElementById('reinstatement-comments').value,
                 'Permanent Reinstatement Completed': document.getElementById('reinstatement-completed').checked,
