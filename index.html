@@ -2369,7 +2369,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "Full Panel Required?": "panel",
     "Permanent Material": "perm-material",
     "Permanent Material - Other": "perm-material-other",
-    "Permanent Contractor Company Name": "perm-company-name",
+    "Permanent Contractor Company Name": "company-name",
     "Non-Standard Reinstatement": "Non-Standard",
     "Additional Comments": "comments",
     "Permanent Reinstatement Completed": "completed"
@@ -2447,7 +2447,6 @@ function populateAndLockForm(fields) {
   const completionFields = [
     'reinstatement-perm-material',
     'reinstatement-perm-material-other',
-    'reinstatement-perm-company-name',
     'reinstatement-Non-Standard',
     'reinstatement-comments',
     'reinstatement-completed'
@@ -2494,7 +2493,6 @@ function populateAndLockForm(fields) {
     const completionFields = [
       'reinstatement-perm-material',
       'reinstatement-perm-material-other',
-      'reinstatement-perm-company-name',
       'reinstatement-Non-Standard',
       'reinstatement-comments',
       'reinstatement-completed'
@@ -2547,13 +2545,11 @@ function populateAndLockForm(fields) {
       // Collect other completion field values
       const permMaterial = document.getElementById('reinstatement-perm-material').value;
       const permMaterialOther = document.getElementById('reinstatement-perm-material-other').value;
-      const permCompanyName = document.getElementById('reinstatement-perm-company-name').value;
       const nonStandard = document.getElementById('reinstatement-Non-Standard').checked;
       const comments = document.getElementById('reinstatement-comments').value;
 
       if (permMaterial) data["Permanent Material"] = permMaterial;
       if (permMaterialOther) data["Permanent Material - Other"] = permMaterialOther;
-      if (permCompanyName) data["Permanent Contractor Company Name"] = permCompanyName;
       data["Non-Standard Reinstatement"] = nonStandard;
       if (comments) data["Additional Comments"] = comments;
 
