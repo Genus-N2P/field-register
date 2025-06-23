@@ -732,11 +732,27 @@ textarea {
         <label for="bog-site-location">First Site Location</label>
         <input type="text" id="bog-site-location" name="bog-site-location" class="address-autocomplete" required />
 
-        <label for="bog-site-contact">Onsite Crew Lead</label>
+<label for="bog-estimated-start-time">Estimated Start Time</label>
+<select id="bog-estimated-start-time" name="bog-estimated-start-time" required></select>
+
+<label for="bog-estimated-finish-time">Estimated Finish Time</label>
+<select id="bog-estimated-finish-time" name="bog-estimated-finish-time" required></select>
+
+<!-- Hidden fields to store timestamps in ISO format -->
+<input type="hidden" id="bog-estimated-start-timestamp" name="bog-estimated-start-timestamp" />
+<input type="hidden" id="bog-estimated-finish-timestamp" name="bog-estimated-finish-timestamp" />
+
+	<label for="bog-site-contact">Onsite Crew Lead</label>
         <input type="text" id="bog-site-contact" name="bog-site-contact" required />
 
         <label for="bog-onsite-crew-lead-mobile">Onsite Crew Lead Mobile</label>
-        <input type="tel" id="bog-onsite-crew-lead-mobile" name="bog-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" placeholder="Enter 10-digit number" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
+        <input type="tel" id="bog-onsite-crew-lead-mobile" name="bog-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" placeholder="Enter 	10-digit number" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
+
+        <label for="bog-onsite-crew-lead-email">Onsite Crew Lead Email</label>
+        <input type="text" id="bog-onsite-crew-lead-email" name="bog-onsite-crew-lead-email" />
+
+        <label for="bog-onsite-crew-lead-EnableID">Onsite Crew Lead Enable ID (if applicable)</label>
+        <input type="text" id="bog-onsite-crew-lead-EnableID" name="bog-onsite-crew-lead-EnableID" />
 
         <label for="bog-company-name">Your Company Name</label>
         <select id="bog-company-name" name="bog-company-name" required>
@@ -865,12 +881,14 @@ textarea {
           <option value="Sean Muldoon">Sean Muldoon</option>
         </select>
                 
-        <label for="bog-jha-uploaded">I confirm all workers have been inducted and have signed onto the JHA.</label>
+<p>        
+<label for="bog-jha-uploaded">I confirm all workers have been inducted and have signed onto the JHA.</label>
           <input type="checkbox" id="bog-jha-uploaded" name="bog-jha-uploaded" required> Please induct all visitors to JHA and complete prior to starting at each site.
+</p>
 
    <fieldset>
     <legend><strong>Discipline with task Specific SWMS</strong></legend>
-    <p>(SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)</p>
+    (SWMS-SHEQ-CMS-0011 Site Establishment, SWMS-SHEQ-CMS-0001 Access to Pits & Manholes - required on all sites, SWMS-SHEQ-CMS-0006 Asbestos (ACM) required for all ACM sites)
     <p>All workers to have signed into Task SWMS being utilised with copy available - latest version.</p>
 
   <input type="checkbox" name="bog-SWMS[]" value="Scoping" /> Scoping (0017 Surveying & Scoping)<br />
@@ -1847,12 +1865,16 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
             
             // Collect form data - modify this based on your actual form fields
             const formData = {
-                'Date': document.getElementById('bog-date').value,
+                'Date On-Site': document.getElementById('bog-date').value,
 		'Mobilisation': document.getElementById('bog-mob').checked,
 		'De-Mobilisation': document.getElementById('bog-demob').checked,
                 'First Site Location2': document.getElementById('bog-site-location').value,
+                'Estimated Start Time2': document.getElementById('bog-estimated-start-timestamp').value,
+                'Estimated Finish Time2': document.getElementById('bog-estimated-finish-timestamp').value,
                 'Onsite Crew Lead': document.getElementById('bog-site-contact').value,
                 'Onsite Crew Lead Mobile_original': document.getElementById('bog-onsite-crew-lead-mobile').value,
+                'Construction Partner Technician Email': document.getElementById('bog-onsite-crew-lead-email').value,
+                'Enable ID (if applicable)': document.getElementById('bog-onsite-crew-lead-EnableID').value,
                 'Your Company Name': document.getElementById('bog-company-name').value,
                 'Discipline': document.getElementById('bog-discipline').value,
                 'Number of People at Location?': document.getElementById('bog-Number-of-People-at-Location').value,
@@ -2618,5 +2640,55 @@ function populateAndLockForm(fields) {
   });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function generateTimeOptions(selectId) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    for (let hour = 0; hour < 24; hour++) {
+      for (let min = 0; min < 60; min += 30) {
+        const timeStr = hour.toString().padStart(2, '0') + ':' + min.toString().padStart(2, '0');
+        const displayStr = new Date('1970-01-01T' + timeStr + ':00').toLocaleTimeString([], {
+          hour: '2-digit', minute: '2-digit', hour12: true
+        });
+
+        const option = document.createElement('option');
+        option.value = timeStr;
+        option.textContent = displayStr;
+        select.appendChild(option);
+      }
+    }
+  }
+
+  generateTimeOptions('bog-estimated-start-time');
+  generateTimeOptions('bog-estimated-finish-time');
+
+  function updateBogTimestamps() {
+    const dateEl = document.getElementById('bog-date');
+    const startEl = document.getElementById('bog-estimated-start-time');
+    const finishEl = document.getElementById('bog-estimated-finish-time');
+    const outStart = document.getElementById('bog-estimated-start-timestamp');
+    const outFinish = document.getElementById('bog-estimated-finish-timestamp');
+
+    if (dateEl && startEl && finishEl && outStart && outFinish) {
+      const date = dateEl.value;
+      const start = startEl.value;
+      const finish = finishEl.value;
+      if (date && start && finish) {
+        outStart.value = date + 'T' + start + ':00';
+        outFinish.value = date + 'T' + finish + ':00';
+      }
+    }
+  }
+
+  document.getElementById('bog-estimated-start-time')?.addEventListener('change', updateBogTimestamps);
+  document.getElementById('bog-estimated-finish-time')?.addEventListener('change', updateBogTimestamps);
+  document.getElementById('bog-date')?.addEventListener('change', updateBogTimestamps);
+  document.getElementById('bog-form')?.addEventListener('submit', updateBogTimestamps);
+});
+</script>
+
 </body>
 </html>
