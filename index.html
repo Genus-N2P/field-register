@@ -365,6 +365,36 @@ textarea {
         margin-bottom: 10px;
     }
 
+.pitlinkin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+}
+
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.right-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.right-group label {
+  white-space: nowrap; /* prevents label from wrapping */
+ }
+
+#pitlinkin-PitA-Note-ID {
+  width: 100%;
+}
+
 .or-divider {
   display: flex;
   align-items: center;
@@ -387,6 +417,11 @@ textarea {
   font-size: 1rem;
   white-space: nowrap;
 }
+
+  .disabled-label {
+    color: gray;
+    font-style: italic;
+  }
 
   </style>
 
@@ -440,196 +475,442 @@ textarea {
           <option value="Versatile Services">Versatile Services</option>
         </select>
 
-
             <label for="forecast-sam-id">SAM ID - Please submit 1 form per SAM.</label>
             <select id="forecast-sam-id" name="forecast-sam-id" required>
           <option value="">Select one</option>
+     <optgroup label="Gascoyne">
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+     </optgroup>
+     <optgroup label="Goldfields-Esperance">
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+     </optgroup>
+     <optgroup label="Great Southern">
           <option value="K-6ALN-05">K-6ALN-05</option>
           <option value="K-6ALN-20">K-6ALN-20</option>
           <option value="K-6ALN-21">K-6ALN-21</option>
           <option value="K-6ALN-22">K-6ALN-22</option>
           <option value="K-6ALN-23">K-6ALN-23</option>
-          <option value="K-6AUU-20">K-6AUU-20</option>
-          <option value="K-6BGT-20">K-6BGT-20</option>
-          <option value="K-6CGD-20">K-6CGD-20</option>
-          <option value="K-6CND-20">K-6CND-20</option>
-          <option value="K-6CVN-20">K-6CVN-20</option>
-          <option value="K-6DNH-20">K-6DNH-20</option>
-          <option value="K-6DNK-20">K-6DNK-20</option>
-          <option value="K-6ESP-20">K-6ESP-20</option>
-          <option value="K-6ESP-21">K-6ESP-21</option>
-          <option value="K-6ESP-40">K-6ESP-40</option>
-          <option value="K-6EXM-01">K-6EXM-01</option>
-          <option value="K-6HOP-01">K-6HOP-01</option>
-          <option value="K-6KAM-20">K-6KAM-20</option>
-          <option value="K-6KAT-20">K-6KAT-20</option>
-          <option value="K-6KLB-01">K-6KLB-01</option>
-          <option value="K-6KOJ-20">K-6KOJ-20</option>
-          <option value="K-6LEA-20">K-6LEA-20</option>
-          <option value="K-6MBA-20">K-6MBA-20</option>
-          <option value="K-6MJM-01">K-6MJM-01</option>
-          <option value="K-6NRG-20">K-6NRG-20</option>
-          <option value="K-6NWM-01">K-6NWM-01</option>
-          <option value="K-6NWM-20">K-6NWM-20</option>
-          <option value="K-6PDO-20">K-6PDO-20</option>
-          <option value="K-6SCR-20">K-6SCR-20</option>
-          <option value="K-6TPC-20">K-6TPC-20</option>
           <option value="L-6ALN-05">L-6ALN-05</option>
           <option value="L-6ALN-20">L-6ALN-20</option>
           <option value="L-6ALN-21">L-6ALN-21</option>
           <option value="L-6ALN-23">L-6ALN-23</option>
           <option value="M-6ALN-21">M-6ALN-21</option>
           <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+     </optgroup>
+     <optgroup label="Mid West">
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+     </optgroup>
+     <optgroup label="Pilbara">
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+     </optgroup>
+     <optgroup label="South West">
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
           <option value="X-6BGT-20">X-6BGT-20</option>
           <option value="X-6COI-01">X-6COI-01</option>
-          <option value="X-6DNK-20">X-6DNK-20</option>
-          <option value="Z-6ALN-22">Z-6ALN-22</option>
-          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+     </optgroup>
+     <optgroup label="Wheatbelt">
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
           <option value="Z-6NRG-20">Z-6NRG-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+     </optgroup>
         </select>
 
+        <label for="forecast-Genus-FCM">Your Genus FCM</label>
+        <select id="forecast-Genus-FCM" name="forecast-Genus-FCM" required>
+          <option value="">Select one</option>
+          <option value="Alex McConville">Alex McConville</option>
+          <option value="Sean Muldoon">Sean Muldoon</option>
+        </select>
 
-<fieldset>
-                <legend>Select the discipline(s) your company will be working on:</legend>
+	<label for="forecast-site-contact">Crew Lead Contact Name</label>
+        <input type="text" id="forecast-site-contact" name="forecast-site-contact" required />
+
+        <label for="forecast-onsite-crew-lead-mobile">Crew Lead Contact Mobile</label>
+        <input type="tel" id="forecast-onsite-crew-lead-mobile" name="forecast-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" placeholder="Enter 10-digit mobile number (04xxxxxxxx)" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
+
+        <label for="forecast-onsite-crew-lead-email">Crew Lead Contact Email</label>
+        <input type="text" id="forecast-onsite-crew-lead-email" name="forecast-onsite-crew-lead-email" />
+
+        <label for="forecast-onsite-crew-lead-EnableID">Crew Lead Contact Enable ID (if applicable)</label>
+        <input type="text" id="forecast-onsite-crew-lead-EnableID" name="forecast-onsite-crew-lead-EnableID" />
+
+        <p>
+        <label for="forecast-build-phase">Select the build phase you are working on for this SAM / Project</label>
+        <select id="forecast-build-phase" name="forecast-build-phase" required onchange="showBuildPhaseContent()">
+            <option value="">Select one</option>
+            <option value="Design">Survey</option>
+            <option value="Construction">Construction</option>
+        </select></p>
+
+        <!-- Design Phase Content -->
+        <div id="design-content" class="phase-content" style="display: none;">
+            <fieldset>
+                <legend>Select the activity type(s) your company will be working on:</legend>
                 <div class="discipline-checkbox-group">
-                    <div>
-                        <input type="checkbox" id="discipline-scoping" name="discipline[]" value="Scoping" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-scoping">Scoping</label>
-                    </div>
-                    <div id="discipline-scoping-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="scoping-crews">Number of Scoping crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="scoping-crews" name="scoping-crews" min="0" step="1" />
-
-                        <fieldset>
-                            <legend>Select the day(s) that your Scoping crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
-                            <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="scoping-monday" name="scoping-days[]" value="Monday" /><label for="scoping-monday">Monday</label></div>
-                                <div><input type="checkbox" id="scoping-tuesday" name="scoping-days[]" value="Tuesday" /><label for="scoping-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="scoping-wednesday" name="scoping-days[]" value="Wednesday" /><label for="scoping-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="scoping-thursday" name="scoping-days[]" value="Thursday" /><label for="scoping-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="scoping-friday" name="scoping-days[]" value="Friday" /><label for="scoping-friday">Friday</label></div>
-                                <div><input type="checkbox" id="scoping-saturday" name="scoping-days[]" value="Saturday" /><label for="scoping-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="scoping-sunday" name="scoping-days[]" value="Sunday" /><label for="scoping-sunday">Sunday</label></div>
-                            </div>
-                        </fieldset>
-                        <p id="scoping-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
-                    </div>
+                    <!-- Survey -->
 
                     <div>
-                        <input type="checkbox" id="discipline-blockages" name="discipline[]" value="Blockages" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-blockages">Blockages</label>
+                        <input type="checkbox" id="discipline-rod-and-rope" name="discipline[]" value="Rod and Rope" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-rod-and-rope">Rod and Rope</label>
                     </div>
-                    <div id="discipline-blockages-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="blockages-crews">Number of Blockages crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="blockages-crews" name="blockages-crews" min="0" step="1" />
 
-                        <fieldset>
-                            <legend>Select the day(s) that your Blockages crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
-                            <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="blockages-monday" name="blockages-days[]" value="Monday" /><label for="blockages-monday">Monday</label></div>
-                                <div><input type="checkbox" id="blockages-tuesday" name="blockages-days[]" value="Tuesday" /><label for="blockages-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="blockages-wednesday" name="blockages-days[]" value="Wednesday" /><label for="blockages-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="blockages-thursday" name="blockages-days[]" value="Thursday" /><label for="blockages-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="blockages-friday" name="blockages-days[]" value="Friday" /><label for="blockages-friday">Friday</label></div>
-                                <div><input type="checkbox" id="blockages-saturday" name="blockages-days[]" value="Saturday" /><label for="blockages-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="blockages-sunday" name="blockages-days[]" value="Sunday" /><label for="blockages-sunday">Sunday</label></div>
+                    <div id="discipline-rod-and-rope-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="rod-and-rope-crews">Number of Rod and Rope crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="rod-and-rope-crews" name="rod-and-rope-crews" min="0" step="1" />
+
+                    <fieldset>
+                        <legend>Select the day(s) that your Rod and Rope crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                        <div class="days-checkbox-group">
+                        <div><input type="checkbox" id="rod-and-rope-monday" name="rod-and-rope-days[]" value="Monday" /><label for="rod-and-rope-monday">Monday</label></div>
+    <div><input type="checkbox" id="rod-and-rope-tuesday" name="rod-and-rope-days[]" value="Tuesday" /><label for="rod-and-rope-tuesday">Tuesday</label></div>
+    <div><input type="checkbox" id="rod-and-rope-wednesday" name="rod-and-rope-days[]" value="Wednesday" /><label for="rod-and-rope-wednesday">Wednesday</label></div>
+    <div><input type="checkbox" id="rod-and-rope-thursday" name="rod-and-rope-days[]" value="Thursday" /><label for="rod-and-rope-thursday">Thursday</label></div>
+    <div><input type="checkbox" id="rod-and-rope-friday" name="rod-and-rope-days[]" value="Friday" /><label for="rod-and-rope-friday">Friday</label></div>
+    <div><input type="checkbox" id="rod-and-rope-saturday" name="rod-and-rope-days[]" value="Saturday" /><label for="rod-and-rope-saturday">Saturday</label></div>
+    <div><input type="checkbox" id="rod-and-rope-sunday" name="rod-and-rope-days[]" value="Sunday" /><label for="rod-and-rope-sunday">Sunday</label></div>
                             </div>
                         </fieldset>
-                        <p id="blockages-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                        <p id="rod-and-rope-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+</div>
+
+                    <!-- Blockage Repair - Survey -->
+                    <div>
+                        <input type="checkbox" id="discipline-blockage-repair-survey" name="discipline[]" value="Blockage Repair-Survey" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-blockage-repair-survey">Blockage Repair - Survey</label>
                     </div>
+                    <div id="discipline-blockage-repair-survey-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="blockage-repair-survey-crews">Number of Blockage crews (Survey) forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="blockage-repair-survey-crews" name="blockage-repair-survey-crews" min="0" step="1" />
+                        <fieldset>
+                            <legend>Select the day(s) that your Blockage crews (Survey) are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="blockage-repair-survey-monday" name="blockage-repair-survey-days[]" value="Monday" /><label for="blockage-repair-survey-monday">Monday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-survey-tuesday" name="blockage-repair-survey-days[]" value="Tuesday" /><label for="blockage-repair-survey-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-survey-wednesday" name="blockage-repair-survey-days[]" value="Wednesday" /><label for="blockage-repair-survey-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-survey-thursday" name="blockage-repair-survey-days[]" value="Thursday" /><label for="blockage-repair-survey-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-survey-friday" name="blockage-repair-survey-days[]" value="Friday" /><label for="blockage-repair-survey-friday">Friday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-survey-saturday" name="blockage-repair-survey-days[]" value="Saturday" /><label for="blockage-repair-survey-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-survey-sunday" name="blockage-repair-survey-days[]" value="Sunday" /><label for="blockage-repair-survey-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="blockage-repair-survey-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <!-- Construction Phase Content -->
+        <div id="construction-content" class="phase-content" style="display: none;">
+            <fieldset>
+                <legend>Select the activity type(s) your company will be working on:</legend>
+                <div class="discipline-checkbox-group">
+                    <!-- Blockage Repair - Construction -->
 
                     <div>
-                        <input type="checkbox" id="discipline-pit-remediation" name="discipline[]" value="Pit Remediation" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-pit-remediation">Pit Remediation</label>
+                        <input type="checkbox" id="discipline-blockage-repair-construction" name="discipline[]" value="Blockage Repair-Construction" onchange="toggleDisciplineFields(this)" />
+<label for="discipline-blockage-repair-construction">Blockage Repair - Construction</label>
                     </div>
-                    <div id="discipline-pit-remediation-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="pit-remediation-crews">Number of Pit Remediation crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="pit-remediation-crews" name="pit-remediation-crews" min="0" step="1" />
+
+                    <div id="discipline-blockage-repair-construction-fields" class="discipline-conditional-fields" style="display: none;">
+    <label for="blockage-repair-construction-crews">Number of Blockage crews (Construction) forecast for next week (exclude Mob & Demob days):</label>
+    <input type="number" id="blockage-repair-construction-crews" name="blockage-repair-construction-crews" min="0" step="1" />
 
                         <fieldset>
-                            <legend>Select the day(s) that your Pit Remediation crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <legend>Select the day(s) that your Blockage crews (Construction) are forecast to be in the field next week (exclude Mob & Demob days):</legend>
                             <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="pit-remediation-monday" name="pit-remediation-days[]" value="Monday" /><label for="pit-remediation-monday">Monday</label></div>
-                                <div><input type="checkbox" id="pit-remediation-tuesday" name="pit-remediation-days[]" value="Tuesday" /><label for="pit-remediation-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="pit-remediation-wednesday" name="pit-remediation-days[]" value="Wednesday" /><label for="pit-remediation-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="pit-remediation-thursday" name="pit-remediation-days[]" value="Thursday" /><label for="pit-remediation-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="pit-remediation-friday" name="pit-remediation-days[]" value="Friday" /><label for="pit-remediation-friday">Friday</label></div>
-                                <div><input type="checkbox" id="pit-remediation-saturday" name="pit-remediation-days[]" value="Saturday" /><label for="pit-remediation-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="pit-remediation-sunday" name="pit-remediation-days[]" value="Sunday" /><label for="pit-remediation-sunday">Sunday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-monday" name="blockage-repair-construction-days[]" value="Monday" /><label for="blockage-repair-construction-monday">Monday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-tuesday" name="blockage-repair-construction-days[]" value="Tuesday" /><label for="blockage-repair-construction-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-wednesday" name="blockage-repair-construction-days[]" value="Wednesday" /><label for="blockage-repair-construction-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-thursday" name="blockage-repair-construction-days[]" value="Thursday" /><label for="blockage-repair-construction-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-friday" name="blockage-repair-construction-days[]" value="Friday" /><label for="blockage-repair-construction-friday">Friday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-saturday" name="blockage-repair-construction-days[]" value="Saturday" /><label for="blockage-repair-construction-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="blockage-repair-construction-sunday" name="blockage-repair-construction-days[]" value="Sunday" /><label for="blockage-repair-construction-sunday">Sunday</label></div>
                             </div>
                         </fieldset>
-                        <p id="pit-remediation-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                        <p id="blockage-repair-construction-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
                     </div>
-
+               
+                    <!-- ACM Removal -->
                     <div>
-                        <input type="checkbox" id="discipline-new-build" name="discipline[]" value="New Build" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-new-build">New Build</label>
+                        <input type="checkbox" id="discipline-acm-removal" name="discipline[]" value="ACM Removal" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-acm-removal">ACM Removal</label>
                     </div>
-                    <div id="discipline-new-build-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="new-build-crews">Number of New Build crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="new-build-crews" name="new-build-crews" min="0" step="1" />
-
+                    <div id="discipline-acm-removal-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="acm-removal-crews">Number of ACM Removal crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="acm-removal-crews" name="acm-removal-crews" min="0" step="1" />
                         <fieldset>
-                            <legend>Select the day(s) that your New Build crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <legend>Select the day(s) that your ACM Removal crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
                             <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="new-build-monday" name="new-build-days[]" value="Monday" /><label for="new-build-monday">Monday</label></div>
-                                <div><input type="checkbox" id="new-build-tuesday" name="new-build-days[]" value="Tuesday" /><label for="new-build-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="new-build-wednesday" name="new-build-days[]" value="Wednesday" /><label for="new-build-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="new-build-thursday" name="new-build-days[]" value="Thursday" /><label for="new-build-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="new-build-friday" name="new-build-days[]" value="Friday" /><label for="new-build-friday">Friday</label></div>
-                                <div><input type="checkbox" id="new-build-saturday" name="new-build-days[]" value="Saturday" /><label for="new-build-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="new-build-sunday" name="new-build-days[]" value="Sunday" /><label for="new-build-sunday">Sunday</label></div>
+                                <div><input type="checkbox" id="acm-removal-monday" name="acm-removal-days[]" value="Monday" /><label for="acm-removal-monday">Monday</label></div>
+                                <div><input type="checkbox" id="acm-removal-tuesday" name="acm-removal-days[]" value="Tuesday" /><label for="acm-removal-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="acm-removal-wednesday" name="acm-removal-days[]" value="Wednesday" /><label for="acm-removal-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="acm-removal-thursday" name="acm-removal-days[]" value="Thursday" /><label for="acm-removal-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="acm-removal-friday" name="acm-removal-days[]" value="Friday" /><label for="acm-removal-friday">Friday</label></div>
+                                <div><input type="checkbox" id="acm-removal-saturday" name="acm-removal-days[]" value="Saturday" /><label for="acm-removal-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="acm-removal-sunday" name="acm-removal-days[]" value="Sunday" /><label for="acm-removal-sunday">Sunday</label></div>
                             </div>
                         </fieldset>
-                        <p id="new-build-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                        <p id="acm-removal-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
                     </div>
 
+                    <!-- Drilling -->
                     <div>
-                        <input type="checkbox" id="discipline-hauling" name="discipline[]" value="Hauling" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-hauling">Hauling</label>
+                        <input type="checkbox" id="discipline-drilling" name="discipline[]" value="Drilling" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-drilling">Drilling</label>
                     </div>
-                    <div id="discipline-hauling-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="hauling-crews">Number of Hauling crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="hauling-crews" name="hauling-crews" min="0" step="1" />
-
+                    <div id="discipline-drilling-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="drilling-crews">Number of Drilling crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="drilling-crews" name="drilling-crews" min="0" step="1" />
                         <fieldset>
-                            <legend>Select the day(s) that your Hauling crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <legend>Select the day(s) that your Drilling crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
                             <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="hauling-monday" name="hauling-days[]" value="Monday" /><label for="hauling-monday">Monday</label></div>
-                                <div><input type="checkbox" id="hauling-tuesday" name="hauling-days[]" value="Tuesday" /><label for="hauling-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="hauling-wednesday" name="hauling-days[]" value="Wednesday" /><label for="hauling-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="hauling-thursday" name="hauling-days[]" value="Thursday" /><label for="hauling-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="hauling-friday" name="hauling-days[]" value="Friday" /><label for="hauling-friday">Friday</label></div>
-                                <div><input type="checkbox" id="hauling-saturday" name="hauling-days[]" value="Saturday" /><label for="hauling-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="hauling-sunday" name="hauling-days[]" value="Sunday" /><label for="hauling-sunday">Sunday</label></div>
+                                <div><input type="checkbox" id="drilling-monday" name="drilling-days[]" value="Monday" /><label for="drilling-monday">Monday</label></div>
+                                <div><input type="checkbox" id="drilling-tuesday" name="drilling-days[]" value="Tuesday" /><label for="drilling-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="drilling-wednesday" name="drilling-days[]" value="Wednesday" /><label for="drilling-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="drilling-thursday" name="drilling-days[]" value="Thursday" /><label for="drilling-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="drilling-friday" name="drilling-days[]" value="Friday" /><label for="drilling-friday">Friday</label></div>
+                                <div><input type="checkbox" id="drilling-saturday" name="drilling-days[]" value="Saturday" /><label for="drilling-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="drilling-sunday" name="drilling-days[]" value="Sunday" /><label for="drilling-sunday">Sunday</label></div>
                             </div>
                         </fieldset>
-                        <p id="hauling-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                        <p id="drilling-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
                     </div>
 
+                    <!-- Trenching -->
                     <div>
-                        <input type="checkbox" id="discipline-splicing" name="discipline[]" value="Splicing" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-splicing">Splicing</label>
+                        <input type="checkbox" id="discipline-trenching" name="discipline[]" value="Trenching" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-trenching">Trenching</label>
                     </div>
-                    <div id="discipline-splicing-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="splicing-crews">Number of Splicing crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="splicing-crews" name="splicing-crews" min="0" step="1" />
-
+                    <div id="discipline-trenching-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="trenching-crews">Number of Trenching crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="trenching-crews" name="trenching-crews" min="0" step="1" />
                         <fieldset>
-                            <legend>Select the day(s) that your Splicing crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <legend>Select the day(s) that your Trenching crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
                             <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="splicing-monday" name="splicing-days[]" value="Monday" /><label for="splicing-monday">Monday</label></div>
-                                <div><input type="checkbox" id="splicing-tuesday" name="splicing-days[]" value="Tuesday" /><label for="splicing-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="splicing-wednesday" name="splicing-days[]" value="Wednesday" /><label for="splicing-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="splicing-thursday" name="splicing-days[]" value="Thursday" /><label for="splicing-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="splicing-friday" name="splicing-days[]" value="Friday" /><label for="splicing-friday">Friday</label></div>
-                                <div><input type="checkbox" id="splicing-saturday" name="splicing-days[]" value="Saturday" /><label for="splicing-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="splicing-sunday" name="splicing-days[]" value="Sunday" /><label for="splicing-sunday">Sunday</label></div>
+                                <div><input type="checkbox" id="trenching-monday" name="trenching-days[]" value="Monday" /><label for="trenching-monday">Monday</label></div>
+                                <div><input type="checkbox" id="trenching-tuesday" name="trenching-days[]" value="Tuesday" /><label for="trenching-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="trenching-wednesday" name="trenching-days[]" value="Wednesday" /><label for="trenching-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="trenching-thursday" name="trenching-days[]" value="Thursday" /><label for="trenching-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="trenching-friday" name="trenching-days[]" value="Friday" /><label for="trenching-friday">Friday</label></div>
+                                <div><input type="checkbox" id="trenching-saturday" name="trenching-days[]" value="Saturday" /><label for="trenching-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="trenching-sunday" name="trenching-days[]" value="Sunday" /><label for="trenching-sunday">Sunday</label></div>
                             </div>
                         </fieldset>
-                        <p id="splicing-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                        <p id="trenching-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
                     </div>
 
+                    <!-- Pit Installation/Remediation -->
+                    <div>
+                        <input type="checkbox" id="discipline-pit-installation-remediation" name="discipline[]" value="Pit Installation-Remediation" onchange="toggleDisciplineFields(this)" />
+<label for="discipline-pit-installation-remediation">Pit Installation/Remediation</label>
+                    </div>
+                    <div id="discipline-pit-installation-remediation-fields" class="discipline-conditional-fields" style="display: none;">
+    <label for="pit-installation-remediation-crews">Number of Pit Installation/Remediation crews forecast for next week (exclude Mob & Demob days):</label>
+    <input type="number" id="pit-installation-remediation-crews" name="pit-installation-remediation-crews" min="0" step="1" />
+                        <fieldset>
+                            <legend>Select the day(s) that your Trenching crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="pit-installation-remediation-monday" name="pit-installation-remediation-days[]" value="Monday" /><label for="pit-installation-remediation-monday">Monday</label></div>
+                                <div><input type="checkbox" id="pit-installation-remediation-tuesday" name="pit-installation-remediation-days[]" value="Tuesday" /><label for="pit-installation-remediation-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="pit-installation-remediation-wednesday" name="pit-installation-remediation-days[]" value="Wednesday" /><label for="pit-installation-remediation-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="pit-installation-remediation-thursday" name="pit-installation-remediation-days[]" value="Thursday" /><label for="pit-installation-remediation-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="pit-installation-remediation-friday" name="pit-installation-remediation-days[]" value="Friday" /><label for="pit-installation-remediation-friday">Friday</label></div>
+                                <div><input type="checkbox" id="pit-installation-remediation-saturday" name="pit-installation-remediation-days[]" value="Saturday" /><label for="pit-installation-remediation-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="pit-installation-remediation-sunday" name="pit-installation-remediation-days[]" value="Sunday" /><label for="pit-installation-remediation-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="pit-installation-remediation-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Reinstatement -->
+                    <div>
+                        <input type="checkbox" id="discipline-reinstatement" name="discipline[]" value="Reinstatement" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-reinstatement">Reinstatement</label>
+                    </div>
+                    <div id="discipline-reinstatement-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="reinstatement-crews">Number of Reinstatement crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="reinstatement-crews" name="reinstatement-crews" min="0" step="1" />
+                        <fieldset>
+                            <legend>Select the day(s) that your Reinstatement crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="reinstatement-monday" name="reinstatement-days[]" value="Monday" /><label for="reinstatement-monday">Monday</label></div>
+                                <div><input type="checkbox" id="reinstatement-tuesday" name="reinstatement-days[]" value="Tuesday" /><label for="reinstatement-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="reinstatement-wednesday" name="reinstatement-days[]" value="Wednesday" /><label for="reinstatement-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="reinstatement-thursday" name="reinstatement-days[]" value="Thursday" /><label for="reinstatement-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="reinstatement-friday" name="reinstatement-days[]" value="Friday" /><label for="reinstatement-friday">Friday</label></div>
+                                <div><input type="checkbox" id="reinstatement-saturday" name="reinstatement-days[]" value="Saturday" /><label for="reinstatement-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="reinstatement-sunday" name="reinstatement-days[]" value="Sunday" /><label for="reinstatement-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="reinstatement-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Cable Hauling -->
+                    <div>
+                        <input type="checkbox" id="discipline-cable-hauling" name="discipline[]" value="Cable Hauling" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-cable-hauling">Cable Hauling</label>
+                    </div>
+                    <div id="discipline-cable-hauling-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="cable-hauling-crews">Number of Cable Hauling crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="cable-hauling-crews" name="cable-hauling-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your Cable Hauling crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="cable-hauling-monday" name="cable-hauling-days[]" value="Monday" /><label for="cable-hauling-monday">Monday</label></div>
+                                <div><input type="checkbox" id="cable-hauling-tuesday" name="cable-hauling-days[]" value="Tuesday" /><label for="cable-hauling-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="cable-hauling-wednesday" name="cable-hauling-days[]" value="Wednesday" /><label for="cable-hauling-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="cable-hauling-thursday" name="cable-hauling-days[]" value="Thursday" /><label for="cable-hauling-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="cable-hauling-friday" name="cable-hauling-days[]" value="Friday" /><label for="cable-hauling-friday">Friday</label></div>
+                                <div><input type="checkbox" id="cable-hauling-saturday" name="cable-hauling-days[]" value="Saturday" /><label for="cable-hauling-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="cable-hauling-sunday" name="cable-hauling-days[]" value="Sunday" /><label for="cable-hauling-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="cable-hauling-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Fibre Splicing -->
+                    <div>
+                        <input type="checkbox" id="discipline-fibre-splicing" name="discipline[]" value="Fibre Splicing" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-fibre-splicing">Fibre Splicing</label>
+                    </div>
+                    <div id="discipline-fibre-splicing-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="fibre-splicing-crews">Number of Fibre Splicing crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="fibre-splicing-crews" name="fibre-splicing-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your Fibre Splicing crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="fibre-splicing-monday" name="fibre-splicing-days[]" value="Monday" /><label for="fibre-splicing-monday">Monday</label></div>
+                                <div><input type="checkbox" id="fibre-splicing-tuesday" name="fibre-splicing-days[]" value="Tuesday" /><label for="fibre-splicing-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="fibre-splicing-wednesday" name="fibre-splicing-days[]" value="Wednesday" /><label for="fibre-splicing-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="fibre-splicing-thursday" name="fibre-splicing-days[]" value="Thursday" /><label for="fibre-splicing-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="fibre-splicing-friday" name="fibre-splicing-days[]" value="Friday" /><label for="fibre-splicing-friday">Friday</label></div>
+                                <div><input type="checkbox" id="fibre-splicing-saturday" name="fibre-splicing-days[]" value="Saturday" /><label for="fibre-splicing-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="fibre-splicing-sunday" name="fibre-splicing-days[]" value="Sunday" /><label for="fibre-splicing-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="fibre-splicing-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Fibre Testing -->
+                    <div>
+                        <input type="checkbox" id="discipline-fibre-testing" name="discipline[]" value="Fibre Testing" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-fibre-testing">Fibre Testing</label>
+                    </div>
+                    <div id="discipline-fibre-testing-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="fibre-testing-crews">Number of Fibre Testing crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="fibre-testing-crews" name="fibre-testing-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your Fibre Testing crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="fibre-testing-monday" name="fibre-testing-days[]" value="Monday" /><label for="fibre-testing-monday">Monday</label></div>
+                                <div><input type="checkbox" id="fibre-testing-tuesday" name="fibre-testing-days[]" value="Tuesday" /><label for="fibre-testing-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="fibre-testing-wednesday" name="fibre-testing-days[]" value="Wednesday" /><label for="fibre-testing-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="fibre-testing-thursday" name="fibre-testing-days[]" value="Thursday" /><label for="fibre-testing-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="fibre-testing-friday" name="fibre-testing-days[]" value="Friday" /><label for="fibre-testing-friday">Friday</label></div>
+                                <div><input type="checkbox" id="fibre-testing-saturday" name="fibre-testing-days[]" value="Saturday" /><label for="fibre-testing-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="fibre-testing-sunday" name="fibre-testing-days[]" value="Sunday" /><label for="fibre-testing-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="fibre-testing-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- PON Patching -->
+                    <div>
+                        <input type="checkbox" id="discipline-pon-patching" name="discipline[]" value="PON Patching" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-pon-patching">PON Patching</label>
+                    </div>
+                    <div id="discipline-pon-patching-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="pon-patching-crews">Number of PON Patching crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="pon-patching-crews" name="pon-patching-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your PON Patching crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="pon-patching-monday" name="pon-patching-days[]" value="Monday" /><label for="pon-patching-monday">Monday</label></div>
+                                <div><input type="checkbox" id="pon-patching-tuesday" name="pon-patching-days[]" value="Tuesday" /><label for="pon-patching-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="pon-patching-wednesday" name="pon-patching-days[]" value="Wednesday" /><label for="pon-patching-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="pon-patching-thursday" name="pon-patching-days[]" value="Thursday" /><label for="pon-patching-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="pon-patching-friday" name="pon-patching-days[]" value="Friday" /><label for="pon-patching-friday">Friday</label></div>
+                                <div><input type="checkbox" id="pon-patching-saturday" name="pon-patching-days[]" value="Saturday" /><label for="pon-patching-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="pon-patching-sunday" name="pon-patching-days[]" value="Sunday" /><label for="pon-patching-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="pon-patching-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Traffic Management -->
+                    <div>
+                        <input type="checkbox" id="discipline-traffic-management" name="discipline[]" value="Traffic Management" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-traffic-management">Traffic Management</label>
+                    </div>
+                    <div id="discipline-traffic-management-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="traffic-management-crews">Number of Traffic Management crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="traffic-management-crews" name="traffic-management-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your Traffic Management crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="traffic-management-monday" name="traffic-management-days[]" value="Monday" /><label for="traffic-management-monday">Monday</label></div>
+                                <div><input type="checkbox" id="traffic-management-tuesday" name="traffic-management-days[]" value="Tuesday" /><label for="traffic-management-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="traffic-management-wednesday" name="traffic-management-days[]" value="Wednesday" /><label for="traffic-management-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="traffic-management-thursday" name="traffic-management-days[]" value="Thursday" /><label for="traffic-management-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="traffic-management-friday" name="traffic-management-days[]" value="Friday" /><label for="traffic-management-friday">Friday</label></div>
+                                <div><input type="checkbox" id="traffic-management-saturday" name="traffic-management-days[]" value="Saturday" /><label for="traffic-management-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="traffic-management-sunday" name="traffic-management-days[]" value="Sunday" /><label for="traffic-management-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="traffic-management-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Supervision -->
+                    <div>
+                        <input type="checkbox" id="discipline-supervision" name="discipline[]" value="Supervision" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-supervision">Supervision</label>
+                    </div>
+                    <div id="discipline-supervision-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="supervision-crews">Number of Supervision crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="supervision-crews" name="supervision-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your Supervision crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="supervision-monday" name="supervision-days[]" value="Monday" /><label for="supervision-monday">Monday</label></div>
+                                <div><input type="checkbox" id="supervision-tuesday" name="supervision-days[]" value="Tuesday" /><label for="supervision-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="supervision-wednesday" name="supervision-days[]" value="Wednesday" /><label for="supervision-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="supervision-thursday" name="supervision-days[]" value="Thursday" /><label for="supervision-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="supervision-friday" name="supervision-days[]" value="Friday" /><label for="supervision-friday">Friday</label></div>
+                                <div><input type="checkbox" id="supervision-saturday" name="supervision-days[]" value="Saturday" /><label for="supervision-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="supervision-sunday" name="supervision-days[]" value="Sunday" /><label for="supervision-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="supervision-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
+
+                    <!-- Service Locating -->
                     <div>
                         <input type="checkbox" id="discipline-service-locating" name="discipline[]" value="Service Locating" onchange="toggleDisciplineFields(this)" />
                         <label for="discipline-service-locating">Service Locating</label>
@@ -652,56 +933,10 @@ textarea {
                         </fieldset>
                         <p id="service-locating-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
                     </div>
-
-                    <div>
-                        <input type="checkbox" id="discipline-reinstatement" name="discipline[]" value="Reinstatement" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-reinstatement">Reinstatement</label>
-                    </div>
-                    <div id="discipline-reinstatement-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="reinstatement-crews">Number of Reinstatement crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="reinstatement-crews" name="reinstatement-crews" min="0" step="1" />
-
-                        <fieldset>
-                            <legend>Select the day(s) that your Reinstatement crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
-                            <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="reinstatement-monday" name="reinstatement-days[]" value="Monday" /><label for="reinstatement-monday">Monday</label></div>
-                                <div><input type="checkbox" id="reinstatement-tuesday" name="reinstatement-days[]" value="Tuesday" /><label for="reinstatement-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="reinstatement-wednesday" name="reinstatement-days[]" value="Wednesday" /><label for="reinstatement-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="reinstatement-thursday" name="reinstatement-days[]" value="Thursday" /><label for="reinstatement-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="reinstatement-friday" name="reinstatement-days[]" value="Friday" /><label for="reinstatement-friday">Friday</label></div>
-                                <div><input type="checkbox" id="reinstatement-saturday" name="reinstatement-days[]" value="Saturday" /><label for="reinstatement-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="reinstatement-sunday" name="reinstatement-days[]" value="Sunday" /><label for="reinstatement-sunday">Sunday</label></div>
-                            </div>
-                        </fieldset>
-                        <p id="reinstatement-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" id="discipline-other-civils" name="discipline[]" value="Other Civils" onchange="toggleDisciplineFields(this)" />
-                        <label for="discipline-other-civils">Other Civils (eg. Pit Link-in)</label>
-                    </div>
-                    <div id="discipline-other-civils-fields" class="discipline-conditional-fields" style="display: none;">
-                        <label for="other-civils-crews">Number of Other Civils crews forecast for next week (exclude Mob & Demob days):</label>
-                        <input type="number" id="other-civils-crews" name="other-civils-crews" min="0" step="1" />
-
-                        <fieldset>
-                            <legend>Select the day(s) that your Other Civils crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
-                            <div class="days-checkbox-group">
-                                <div><input type="checkbox" id="other-civils-monday" name="other-civils-days[]" value="Monday" /><label for="other-civils-monday">Monday</label></div>
-                                <div><input type="checkbox" id="other-civils-tuesday" name="other-civils-days[]" value="Tuesday" /><label for="other-civils-tuesday">Tuesday</label></div>
-                                <div><input type="checkbox" id="other-civils-wednesday" name="other-civils-days[]" value="Wednesday" /><label for="other-civils-wednesday">Wednesday</label></div>
-                                <div><input type="checkbox" id="other-civils-thursday" name="other-civils-days[]" value="Thursday" /><label for="other-civils-thursday">Thursday</label></div>
-                                <div><input type="checkbox" id="other-civils-friday" name="other-civils-days[]" value="Friday" /><label for="other-civils-friday">Friday</label></div>
-                                <div><input type="checkbox" id="other-civils-saturday" name="other-civils-days[]" value="Saturday" /><label for="other-civils-saturday">Saturday</label></div>
-                                <div><input type="checkbox" id="other-civils-sunday" name="other-civils-days[]" value="Sunday" /><label for="other-civils-sunday">Sunday</label></div>
-                            </div>
-                        </fieldset>
-                        <p id="other-civils-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
-                    </div>
                 </div>
             </fieldset>
-            <p id="discipline-error" style="color: red; display: none;">Please select at least one discipline.</p>
-
+<p id="discipline-error" style="color: red; display: none;">Please select at least one activity type.</p>
+        </div>
 
             <div class="form-footer">
                 <button type="button" class="btn-back" onclick="confirmReset('forecast')">Back</button>
@@ -713,7 +948,7 @@ textarea {
 
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
-      <p>Please complete prior to starting work.<br>This does not replace the JHA (JHA to be uploaded to IBISS - one required per site).</p>
+      <p>Please complete prior to starting work. <strong><u>Submission must be no later than 8am.</u></strong><br>This does not replace the JHA (JHA to be uploaded to IBISS - one required per site).</p>
       <form id="bog-form" onsubmit="validateBogForm()">
 
         <label for="bog-date">Date</label>
@@ -742,11 +977,11 @@ textarea {
 <input type="hidden" id="bog-estimated-start-timestamp" name="bog-estimated-start-timestamp" />
 <input type="hidden" id="bog-estimated-finish-timestamp" name="bog-estimated-finish-timestamp" />
 
-	<label for="bog-site-contact">Onsite Crew Lead</label>
+	<label for="bog-site-contact">Onsite Crew Lead Name</label>
         <input type="text" id="bog-site-contact" name="bog-site-contact" required />
 
         <label for="bog-onsite-crew-lead-mobile">Onsite Crew Lead Mobile</label>
-        <input type="tel" id="bog-onsite-crew-lead-mobile" name="bog-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" placeholder="Enter 	10-digit number" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
+        <input type="tel" id="bog-onsite-crew-lead-mobile" name="bog-onsite-crew-lead-mobile" pattern="04\d{8}" maxlength="10" placeholder="Enter 10-digit number" oninvalid="this.setCustomValidity('Enter number as 04xxxxxxxx')" oninput="this.setCustomValidity('')" required />
 
         <label for="bog-onsite-crew-lead-email">Onsite Crew Lead Email</label>
         <input type="text" id="bog-onsite-crew-lead-email" name="bog-onsite-crew-lead-email" />
@@ -775,16 +1010,24 @@ textarea {
         <label for="bog-discipline">Discipline</label>
         <select id="bog-discipline" name="bog-discipline" required>
           <option value="">Select one</option>
-          <option value="Scoping">Scoping</option>
-          <option value="Blockages">Blockages</option>
-          <option value="Pit Remediation">Pit Remediation</option>
-          <option value="New Build (Drilling)">New Build (Drilling)</option>
-          <option value="New Build (Trenching)">New Build (Trenching)</option>
-          <option value="Civils (Reinstatement)">Civils (Reinstatement)</option>
-          <option value="Civils (Pit Link-in)">Civils (Pit Link-in)</option>
-          <option value="Service Locating">Service Locating</option>
-          <option value="Hauling">Hauling</option>
-          <option value="Splicing">Splicing</option>
+     <optgroup label="Survey">
+          <option value="Rod and Rope">Rod and Rope</option>
+          <option value="Blockage Repair - Survey">Blockage Repair - Survey</option>
+     </optgroup>
+     <optgroup label="Construction">
+          <option value="Blockage Repair - Construction">Blockage Repair - Construction</option>
+          <option value="ACM Removal">ACM Removal</option>
+          <option value="Drilling">Drilling</option>
+          <option value="Trenching">Trenching</option>
+          <option value="Pit Installation/Remediation">Pit Installation/Remediation</option>
+          <option value="Reinstatement">Reinstatement</option>
+          <option value="Cable Hauling">Cable Hauling</option>
+          <option value="Fibre Splicing">Fibre Splicing</option>
+          <option value="Fibre Testing">Fibre Testing</option>
+          <option value="PON Patching">PON Patching</option>
+          <option value="Traffice Management">Traffic Management</option>
+          <option value="Supervison">Supervision</option>
+     </optgroup>
         </select>
         
         <label for="bog-Number-of-People-at-Location">Number of People in Crew at Location</label>
@@ -796,48 +1039,62 @@ textarea {
         <label for="bog-SAM">SAM ID</label>
         <select id="bog-SAM" name="bog-SAM" required>
           <option value="">Select one</option>
+     <optgroup label="Gascoyne">
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+     </optgroup>
+     <optgroup label="Goldfields-Esperance">
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+     </optgroup>
+     <optgroup label="Great Southern">
           <option value="K-6ALN-05">K-6ALN-05</option>
           <option value="K-6ALN-20">K-6ALN-20</option>
           <option value="K-6ALN-21">K-6ALN-21</option>
           <option value="K-6ALN-22">K-6ALN-22</option>
           <option value="K-6ALN-23">K-6ALN-23</option>
-          <option value="K-6AUU-20">K-6AUU-20</option>
-          <option value="K-6BGT-20">K-6BGT-20</option>
-          <option value="K-6CGD-20">K-6CGD-20</option>
-          <option value="K-6CND-20">K-6CND-20</option>
-          <option value="K-6CVN-20">K-6CVN-20</option>
-          <option value="K-6DNH-20">K-6DNH-20</option>
-          <option value="K-6DNK-20">K-6DNK-20</option>
-          <option value="K-6ESP-20">K-6ESP-20</option>
-          <option value="K-6ESP-21">K-6ESP-21</option>
-          <option value="K-6ESP-40">K-6ESP-40</option>
-          <option value="K-6EXM-01">K-6EXM-01</option>
-          <option value="K-6HOP-01">K-6HOP-01</option>
-          <option value="K-6KAM-20">K-6KAM-20</option>
-          <option value="K-6KAT-20">K-6KAT-20</option>
-          <option value="K-6KLB-01">K-6KLB-01</option>
-          <option value="K-6KOJ-20">K-6KOJ-20</option>
-          <option value="K-6LEA-20">K-6LEA-20</option>
-          <option value="K-6MBA-20">K-6MBA-20</option>
-          <option value="K-6MJM-01">K-6MJM-01</option>
-          <option value="K-6NRG-20">K-6NRG-20</option>
-          <option value="K-6NWM-01">K-6NWM-01</option>
-          <option value="K-6NWM-20">K-6NWM-20</option>
-          <option value="K-6PDO-20">K-6PDO-20</option>
-          <option value="K-6SCR-20">K-6SCR-20</option>
-          <option value="K-6TPC-20">K-6TPC-20</option>
           <option value="L-6ALN-05">L-6ALN-05</option>
           <option value="L-6ALN-20">L-6ALN-20</option>
           <option value="L-6ALN-21">L-6ALN-21</option>
           <option value="L-6ALN-23">L-6ALN-23</option>
           <option value="M-6ALN-21">M-6ALN-21</option>
           <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+     </optgroup>
+     <optgroup label="Mid West">
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+     </optgroup>
+     <optgroup label="Pilbara">
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+     </optgroup>
+     <optgroup label="South West">
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
           <option value="X-6BGT-20">X-6BGT-20</option>
           <option value="X-6COI-01">X-6COI-01</option>
-          <option value="X-6DNK-20">X-6DNK-20</option>
-          <option value="Z-6ALN-22">Z-6ALN-22</option>
-          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+     </optgroup>
+     <optgroup label="Wheatbelt">
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
           <option value="Z-6NRG-20">Z-6NRG-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+     </optgroup>
         </select>
 
         <label for="bog-ADA">ADA ID</label>
@@ -923,10 +1180,10 @@ textarea {
 </div>
                 
         <label for="bog-guards">Ensure Telstra guards are fully locked around all open manholes. Calibrated gas detector required for spot sampling manhole access and ongoing monitoring.</label>
-          <input type="checkbox" id="bog-guards" name="bog-guards" required> Refer to HSE Guidance Note - Spot Sampling (Manhole) Gas Action Chart.
+          <input type="checkbox" id="bog-guards" name="bog-guards"> Refer to HSE Guidance Note - Spot Sampling (Manhole) Gas Action Chart.
                 
         <label for="bog-excavation">Excavation work- have you follow the 5Ps  with a competent locator onsite?</label>
-          <input type="checkbox" id="bog-excavation" name="bog-excavation" required> Refer to HSE Guidance Note – Construction JHA and Excavation permit process
+          <input type="checkbox" id="bog-excavation" name="bog-excavation"> Refer to HSE Guidance Note – Construction JHA and Excavation permit process
         
         <label for="bog-comments">Additional Comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
         <textarea id="bog-comments" name="bog-comments" placeholder="Track required actions in MyOsh with SHEQ support"></textarea>
@@ -975,48 +1232,62 @@ textarea {
         <label for="reinstatement-SAM">SAM ID</label>
         <select id="reinstatement-SAM" name="reinstatement-SAM" required>
           <option value="">Select one</option>
+     <optgroup label="Gascoyne">
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+     </optgroup>
+     <optgroup label="Goldfields-Esperance">
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+     </optgroup>
+     <optgroup label="Great Southern">
           <option value="K-6ALN-05">K-6ALN-05</option>
           <option value="K-6ALN-20">K-6ALN-20</option>
           <option value="K-6ALN-21">K-6ALN-21</option>
           <option value="K-6ALN-22">K-6ALN-22</option>
           <option value="K-6ALN-23">K-6ALN-23</option>
-          <option value="K-6AUU-20">K-6AUU-20</option>
-          <option value="K-6BGT-20">K-6BGT-20</option>
-          <option value="K-6CGD-20">K-6CGD-20</option>
-          <option value="K-6CND-20">K-6CND-20</option>
-          <option value="K-6CVN-20">K-6CVN-20</option>
-          <option value="K-6DNH-20">K-6DNH-20</option>
-          <option value="K-6DNK-20">K-6DNK-20</option>
-          <option value="K-6ESP-20">K-6ESP-20</option>
-          <option value="K-6ESP-21">K-6ESP-21</option>
-          <option value="K-6ESP-40">K-6ESP-40</option>
-          <option value="K-6EXM-01">K-6EXM-01</option>
-          <option value="K-6HOP-01">K-6HOP-01</option>
-          <option value="K-6KAM-20">K-6KAM-20</option>
-          <option value="K-6KAT-20">K-6KAT-20</option>
-          <option value="K-6KLB-01">K-6KLB-01</option>
-          <option value="K-6KOJ-20">K-6KOJ-20</option>
-          <option value="K-6LEA-20">K-6LEA-20</option>
-          <option value="K-6MBA-20">K-6MBA-20</option>
-          <option value="K-6MJM-01">K-6MJM-01</option>
-          <option value="K-6NRG-20">K-6NRG-20</option>
-          <option value="K-6NWM-01">K-6NWM-01</option>
-          <option value="K-6NWM-20">K-6NWM-20</option>
-          <option value="K-6PDO-20">K-6PDO-20</option>
-          <option value="K-6SCR-20">K-6SCR-20</option>
-          <option value="K-6TPC-20">K-6TPC-20</option>
           <option value="L-6ALN-05">L-6ALN-05</option>
           <option value="L-6ALN-20">L-6ALN-20</option>
           <option value="L-6ALN-21">L-6ALN-21</option>
           <option value="L-6ALN-23">L-6ALN-23</option>
           <option value="M-6ALN-21">M-6ALN-21</option>
           <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+     </optgroup>
+     <optgroup label="Mid West">
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+     </optgroup>
+     <optgroup label="Pilbara">
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+     </optgroup>
+     <optgroup label="South West">
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
           <option value="X-6BGT-20">X-6BGT-20</option>
           <option value="X-6COI-01">X-6COI-01</option>
-          <option value="X-6DNK-20">X-6DNK-20</option>
-          <option value="Z-6ALN-22">Z-6ALN-22</option>
-          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+     </optgroup>
+     <optgroup label="Wheatbelt">
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
           <option value="Z-6NRG-20">Z-6NRG-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+     </optgroup>
         </select>
 
         <label for="reinstatement-ADA">ADA ID</label>
@@ -1170,6 +1441,24 @@ textarea {
 <input type="text" id="reinstatement-perm-material-other" name="reinstatement-perm-material-other" />
 </div>
 
+        <label for="reinstatement-perm-company-name">Permanent Reinstatement Contractor Company Name</label>
+        <select id="reinstatement-perm-company-name" name="reinstatement-perm-company-name" required>
+          <option value="">Select one</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communications">Dizza Communications</option>
+          <option value="Engytech Engineering Services">Engytech Engineering Services</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
+
 	<label>
 	<input type="checkbox" id="reinstatement-Non-Standard" name="reinstatement-Non-Standard" />
 	Was this a non-standard Permanent Reinstatement?
@@ -1237,48 +1526,62 @@ textarea {
         <label for="vactruck-SAM">SAM ID</label>
         <select id="vactruck-SAM" name="vactruck-SAM" required>
           <option value="">Select one</option>
+     <optgroup label="Gascoyne">
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+     </optgroup>
+     <optgroup label="Goldfields-Esperance">
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+     </optgroup>
+     <optgroup label="Great Southern">
           <option value="K-6ALN-05">K-6ALN-05</option>
           <option value="K-6ALN-20">K-6ALN-20</option>
           <option value="K-6ALN-21">K-6ALN-21</option>
           <option value="K-6ALN-22">K-6ALN-22</option>
           <option value="K-6ALN-23">K-6ALN-23</option>
-          <option value="K-6AUU-20">K-6AUU-20</option>
-          <option value="K-6BGT-20">K-6BGT-20</option>
-          <option value="K-6CGD-20">K-6CGD-20</option>
-          <option value="K-6CND-20">K-6CND-20</option>
-          <option value="K-6CVN-20">K-6CVN-20</option>
-          <option value="K-6DNH-20">K-6DNH-20</option>
-          <option value="K-6DNK-20">K-6DNK-20</option>
-          <option value="K-6ESP-20">K-6ESP-20</option>
-          <option value="K-6ESP-21">K-6ESP-21</option>
-          <option value="K-6ESP-40">K-6ESP-40</option>
-          <option value="K-6EXM-01">K-6EXM-01</option>
-          <option value="K-6HOP-01">K-6HOP-01</option>
-          <option value="K-6KAM-20">K-6KAM-20</option>
-          <option value="K-6KAT-20">K-6KAT-20</option>
-          <option value="K-6KLB-01">K-6KLB-01</option>
-          <option value="K-6KOJ-20">K-6KOJ-20</option>
-          <option value="K-6LEA-20">K-6LEA-20</option>
-          <option value="K-6MBA-20">K-6MBA-20</option>
-          <option value="K-6MJM-01">K-6MJM-01</option>
-          <option value="K-6NRG-20">K-6NRG-20</option>
-          <option value="K-6NWM-01">K-6NWM-01</option>
-          <option value="K-6NWM-20">K-6NWM-20</option>
-          <option value="K-6PDO-20">K-6PDO-20</option>
-          <option value="K-6SCR-20">K-6SCR-20</option>
-          <option value="K-6TPC-20">K-6TPC-20</option>
           <option value="L-6ALN-05">L-6ALN-05</option>
           <option value="L-6ALN-20">L-6ALN-20</option>
           <option value="L-6ALN-21">L-6ALN-21</option>
           <option value="L-6ALN-23">L-6ALN-23</option>
           <option value="M-6ALN-21">M-6ALN-21</option>
           <option value="X-6ALN-20">X-6ALN-20</option>
+          <option value="Z-6ALN-22">Z-6ALN-22</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="X-6DNK-20">X-6DNK-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6KOJ-20">K-6KOJ-20</option>
+          <option value="K-6MBA-20">K-6MBA-20</option>
+     </optgroup>
+     <optgroup label="Mid West">
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+     </optgroup>
+     <optgroup label="Pilbara">
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+     </optgroup>
+     <optgroup label="South West">
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
           <option value="X-6BGT-20">X-6BGT-20</option>
           <option value="X-6COI-01">X-6COI-01</option>
-          <option value="X-6DNK-20">X-6DNK-20</option>
-          <option value="Z-6ALN-22">Z-6ALN-22</option>
-          <option value="Z-6KAT-20">Z-6KAT-20</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+     </optgroup>
+     <optgroup label="Wheatbelt">
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
           <option value="Z-6NRG-20">Z-6NRG-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+     </optgroup>
         </select>
 
         <label for="vactruck-ADA">ADA ID</label>
@@ -1344,9 +1647,11 @@ function confirmReset(formType) {
             }
         }
 
-    function toggleDisciplineFields(checkbox) {
-        const discipline = checkbox.value.toLowerCase().replace(/\s/g, '-');
-        const fieldsDiv = document.getElementById(`discipline-${discipline}-fields`);
+function toggleDisciplineFields(checkbox) {
+    const discipline = checkbox.value.toLowerCase().replace(/\s/g, '-').replace(/--+/g, '-'); // Handle multiple dashes
+    const fieldsDiv = document.getElementById(`discipline-${discipline}-fields`);
+    
+    if (fieldsDiv) { // Add null check
         if (checkbox.checked) {
             fieldsDiv.style.display = 'block';
             // Set crews to 1 by default, if empty
@@ -1363,10 +1668,14 @@ function confirmReset(formType) {
             }
             const daysCheckboxes = fieldsDiv.querySelectorAll(`input[name="${discipline}-days[]"]`);
             daysCheckboxes.forEach(dayCheckbox => (dayCheckbox.checked = false));
-            document.getElementById(`${discipline}-days-error`).style.display = 'none'; // Hide error
+            
+            const daysError = document.getElementById(`${discipline}-days-error`);
+            if (daysError) { // Add null check
+                daysError.style.display = 'none';
+            }
         }
     }
-
+}
 
     function toggleACMField() {
   const select = document.getElementById("bog-ACM");
@@ -1442,6 +1751,20 @@ function confirmReset(formType) {
       }
     }
 
+    function toggleRRPCompleteField() {
+      const RRPCompleteSelect = document.getElementById("pitlinkin-rrp");
+      const RRPCompleteField = document.getElementById("pitlinkin-rrp-notification-field");
+      const RRPCompleteInput = document.getElementById("pitlinkin-rrp-no");
+
+      if (RRPCompleteSelect.value === "No") {
+        RRPCompleteField.style.display = "block";
+        RRPCompleteInput.setAttribute("required", "required");
+      } else {
+        RRPCompleteField.style.display = "none";
+        RRPCompleteInput.removeAttribute("required");
+      }
+    }
+
 // Airtable configuration - Replace with your actual values
         const AIRTABLE_CONFIG = {
             forecast: {
@@ -1457,6 +1780,11 @@ function confirmReset(formType) {
             reinstatement: {
                 baseId: 'appegmSLEvbJSkRvd',
                 tableId: 'Reinstatement',
+                apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
+            },
+            pitlinkin: {
+                baseId: 'appegmSLEvbJSkRvd',
+                tableId: 'Pit Link-in',
                 apiKey: 'patHwUeS1KtSAEshe.6c903369a5dfb1bd994c2c3efb3d9cf037198cec7b4daec52f388fa57429ab6c'
             },
             vactruck: {
@@ -1498,13 +1826,17 @@ function confirmReset(formType) {
       
       // Set default date for all forms
       const bogDateField = document.getElementById('bog-date');
+      const pitlinkinDateField = document.getElementById('pitlinkin-date');
       const reinstatementDateField = document.getElementById('reinstatement-date');
       const vactruckDateField = document.getElementById('vactruck-date');
 
       if (bogDateField) bogDateField.value = todayString;
+      if (pitlinkinDateField) pitlinkinDateField.value = todayString;
       if (reinstatementDateField) reinstatementDateField.value = todayString;
       if (vactruckDateField) vactruckDateField.value = todayString;
     }
+
+
 
     // Function to calculate and update week commencing/ending dates
   function updateForecastWeekDates() {
@@ -1595,7 +1927,7 @@ function validateForecastForm() {
     
     // Validate each selected discipline's conditional fields
     disciplineCheckboxes.forEach(checkbox => {
-        const discipline = checkbox.value.toLowerCase().replace(/\s/g, '-');
+        const discipline = checkbox.value.toLowerCase().replace(/[^a-z]/g, '-');
         
         // Check crews field
         const crewsInput = document.getElementById(`${discipline}-crews`);
@@ -1648,7 +1980,7 @@ function showForm(formType) {
     document.getElementById('thank-you-message').style.display = 'none';
         
     // Hide all forms using both methods
-    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-vactruck'];
+    const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck'];
     forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -1671,7 +2003,7 @@ function showForm(formType) {
       setDefaultDate();
 
        // Hide all buttons except the selected one
-            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-vactruck'];
+            const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
@@ -1812,9 +2144,15 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
     const formData = {
         'Week Commencing': document.getElementById('weekCommencingDate').textContent,
         'Week Ending': document.getElementById('weekEndingDate').textContent,
-        'Your Company Name': document.getElementById('forecast-company-name').value,
+        'Construction Partner Company Name': document.getElementById('forecast-company-name').value,
         'SAM': document.getElementById('forecast-sam-id').value,
-        'Discipline': selectedDisciplines,
+        'DP Field Supervisor': document.getElementById('forecast-Genus-FCM').value,
+        'Construction Partner Technician Name': document.getElementById('forecast-site-contact').value,
+        'Construction Partner Technician Number missing 0': document.getElementById('forecast-onsite-crew-lead-mobile').value,
+        'Construction Partner Technician Email': document.getElementById('forecast-onsite-crew-lead-email').value,
+        'Enable ID (if applicable)': document.getElementById('forecast-onsite-crew-lead-EnableID').value,
+        'Build Phase': document.getElementById('forecast-build-phase').value,
+        'Activity raw': selectedDisciplines
         // These fields are computed in Airtable and should not be sent directly.
     };
 
@@ -1858,6 +2196,12 @@ document.getElementById('forecast-form').addEventListener('submit', async functi
        // Add event listeners for each form
         document.getElementById('bog-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+  // Initial check in case checkbox is pre-checked
+  toggleBogSiteLocation();
+
+  // Listen for changes
+  bogMobCheckbox.addEventListener("change", toggleBogSiteLocation);
 
             // Collect checkbox values for SWMS
             const checkedSWMS = Array.from(document.querySelectorAll('input[name="bog-SWMS[]"]:checked'))
@@ -1972,7 +2316,7 @@ showSuccessMessage();
                 'Full Panel Required?': document.getElementById('reinstatement-panel').value,
                 'Permanent Material': document.getElementById('reinstatement-perm-material').value,
                 'Permanent Material - Other': document.getElementById('reinstatement-perm-material-other').value,
-                'Permanent Contractor Company Name': document.getElementById('reinstatement-company-name').value,
+                'Permanent Contractor Company Name': document.getElementById('reinstatement-perm-company-name').value,
                 'Non-Standard Reinstatement': document.getElementById('reinstatement-Non-Standard').checked,
                 'Additional Comments': document.getElementById('reinstatement-comments').value,
                 'Permanent Reinstatement Completed': document.getElementById('reinstatement-completed').checked,
@@ -1992,6 +2336,90 @@ if (!response.ok) {
 showSuccessMessage();
             } catch (error) {
                 console.error('Error submitting Reinstatement form:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+
+
+        document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+    // --- New 5-7-digit ID Validation (Updated) ---
+    let isValid = true;
+    const idFieldsToValidate = [
+        { id: 'pitlinkin-Duct-Note-ID', name: 'Duct Note ID' },
+        { id: 'pitlinkin-PitA-Note-ID', name: 'Pit A Note ID' }, // Now always required
+        { id: 'pitlinkin-PitB-Note-ID', name: 'Pit B Note ID' }  // Now always required
+    ];
+    let errorMessage = '';
+
+    idFieldsToValidate.forEach(fieldInfo => {
+        const inputElement = document.getElementById(fieldInfo.id);
+        const value = inputElement ? inputElement.value.trim() : '';
+
+        // Validate if the input element exists and is not disabled.
+        // PitA-Note-ID and PitB-Note-ID are now always validated regardless of checkboxes.
+        if (inputElement && !inputElement.disabled) {
+            // Check for between 5-7 digits
+            if (!/^\d{5,7}$/.test(value)) {
+                errorMessage += `- '${fieldInfo.name}' must contain between 5-7 digits.\n`;
+                inputElement.classList.add('field-error'); // Add error styling
+                isValid = false;
+            } else {
+                inputElement.classList.remove('field-error'); // Remove error styling if valid
+            }
+        } else if (inputElement) {
+            // Ensure no error styling if the field is disabled
+            inputElement.classList.remove('field-error');
+        }
+    });
+
+    // If a value is empty, it won't match /^\d{5,7}$/ and will be flagged.
+
+    if (!isValid) {
+        alert('Please correct the following errors before submitting:\n' + errorMessage);
+        return; // Prevent submission if validation fails
+    }
+
+       // Validate the form
+        if (!validateGenericForm('pitlinkin-form')) {
+            return;
+        }
+            
+            // Collect form data - modify this based on your actual form fields
+            const formData = {
+                'Your Name': document.getElementById('pitlinkin-site-contact').value,
+                'Pit Link-in Date': document.getElementById('pitlinkin-date').value,
+                'SAM': document.getElementById('pitlinkin-SAM').value,
+                'ADA ID': document.getElementById('pitlinkin-ADA').value,
+                'Duct Note ID': document.getElementById('pitlinkin-Duct-Note-ID').value,
+                'Pit A Note ID': document.getElementById('pitlinkin-PitA-Note-ID').value,
+                'Pit B Note ID': document.getElementById('pitlinkin-PitB-Note-ID').value,
+                'Pit A Required': document.getElementById('pitlinkin-PitA-linkin-required').checked,
+                'Pit B Required': document.getElementById('pitlinkin-PitB-linkin-required').checked,
+                'Pit A Fit for Purpose': document.getElementById('pitlinkin-PitA-ffp').value,
+                'Pit B Fit for Purpose': document.getElementById('pitlinkin-PitB-ffp').value,
+                'RRP Completed?': document.getElementById('pitlinkin-rrp').value,
+                'RRP Completed - No': document.getElementById('pitlinkin-rrp-no').value,
+                'Additional Comments': document.getElementById('pitlinkin-comments').value,
+		'Pit Link-ins Completed': document.getElementById('pitlinkin-completed').checked
+            };
+            
+            try {
+                // showSuccessMessage();
+const response = await submitToAirtable('pitlinkin', formData);
+const result = await response.json();
+
+if (!response.ok) {
+  console.error('Airtable error:', result);
+  alert(`Submission failed: ${result.error?.message || 'Unknown error'}`);
+  return;
+}
+
+showSuccessMessage();
+            } catch (error) {
+                console.error('Error submitting Pit Link-in form:', error);
                 alert('Error submitting form. Please try again.');
             }
         });
@@ -2068,7 +2496,7 @@ showSuccessMessage();
         });
     
     // Hide all forms using both methods
-const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-vactruck'];
+const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck'];
 forms.forEach(id => {
     const element = document.getElementById(id);
     if (element) {
@@ -2086,7 +2514,7 @@ forms.forEach(id => {
 });
 
     // Show all buttons and remove active state
-    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-vactruck'];
+    const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck'];
     buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
@@ -2115,6 +2543,288 @@ forms.forEach(id => {
     }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-EKPtC5W7fRHgiONVPIyGsVU7Ti_xjBc&libraries=places&callback=initAutocomplete" async defer></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let existingRecordId = null;
+
+  const apiBase = 'https://airtable-api.richard-ociepa.workers.dev';
+  const tableKey = 'pit-link-in'; // must match your worker tableMap key
+
+  const fieldMap = {
+    "Your Name": "site-contact",
+    "Pit Link-in Date": "date",
+    "SAM": "SAM",
+    "ADA ID": "ADA",
+    "Duct Note ID": "Duct-Note-ID",
+    "Pit A Note ID": "PitA-Note-ID",
+    "Pit B Note ID": "PitB-Note-ID",
+    "Pit A Required": "PitA-linkin-required",
+    "Pit B Required": "PitB-linkin-required",
+    "Pit A Fit for Purpose": "PitA-ffp",
+    "Pit B Fit for Purpose": "PitB-ffp",
+    "RRP Completed?": "rrp",
+    "RRP Completed - No": "rrp-no",
+    "Additional Comments": "comments",
+    "Pit Link-ins Completed": "completed"
+  };
+
+  // Function to collect all form data
+  function collectFormData() {
+    const data = {};
+    
+    // Iterate through all form fields
+    for (const [airtableField, elementId] of Object.entries(fieldMap)) {
+      const element = document.getElementById(`pitlinkin-${elementId}`);
+      if (!element) continue;
+
+      let value;
+      if (element.type === 'checkbox') {
+        value = element.checked;
+      } else if (element.value && element.value.trim() !== '') {
+        value = element.value.trim();
+      }
+
+      // Only add non-empty values to data
+      if (value !== undefined && value !== null && value !== '') {
+        data[airtableField] = value;
+      }
+    }
+
+    return data;
+  }
+
+  // Initialize form - lock completion checkbox by default
+  function initializeForm() {
+    document.getElementById('pitlinkin-completed').disabled = true;
+  }
+
+  async function searchDuctNoteID() {
+    const noteId = document.getElementById('pitlinkin-note-id-search').value.trim();
+    const summary = document.getElementById('pitlinkin-note-summary');
+    summary.textContent = '';
+
+    if (!noteId) {
+      alert('Please enter a Note ID to search.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiBase}/lookup/${tableKey}?noteId=${encodeURIComponent(noteId)}`);
+      const contentType = response.headers.get('Content-Type') || '';
+
+      if (!response.ok) {
+        const message = contentType.includes('application/json')
+          ? (await response.json()).error || 'Lookup failed'
+          : await response.text();
+        throw new Error(message);
+      }
+
+      const data = await response.json();
+      const submitBtn = document.getElementById('pitlinkin-submit-btn');
+
+      if (!data.record) {
+        summary.textContent = 'No record found. A new entry will need to be created.';
+        existingRecordId = null;
+        unlockForm();
+        // Keep completion checkbox locked when no record exists
+        document.getElementById('pitlinkin-completed').disabled = true;
+        submitBtn.textContent = 'Submit';
+      } else {
+        summary.textContent = 'Record found. All fields locked except completion checkbox.';
+        existingRecordId = data.record.id;
+        populateAndLockForm(data.record.fields);
+        submitBtn.textContent = 'Update';
+      }
+    } catch (err) {
+      console.error(err);
+      summary.textContent = 'Error looking up Note ID.';
+    }
+  }
+
+function populateAndLockForm(fields) {
+  // First, unlock all fields to reset state
+  unlockForm();
+  
+  for (const [key, value] of Object.entries(fields)) {
+    const mappedId = fieldMap[key] || key;
+    const el = document.getElementById(`pitlinkin-${mappedId}`);
+    if (!el) continue;
+
+    // Populate the field
+    if (el.type === 'checkbox') {
+      el.checked = value === true;
+    } else if (el.tagName === 'SELECT') {
+      // Add missing option if not present
+      let optionExists = [...el.options].some(opt => opt.value === value);
+      if (!optionExists && value !== undefined && value !== null) {
+        const newOption = document.createElement('option');
+        newOption.value = value;
+        newOption.textContent = value;
+        newOption.selected = true;
+        el.appendChild(newOption);
+      }
+      el.value = value;
+    } else {
+      el.value = value;
+    }
+
+    // Lock populated fields, leave non-populated fields unlocked
+    if (value !== undefined && value !== null && value !== '') {
+      el.disabled = true;
+      // For conditional fields, only remove required if they're not managed by conditional logic
+      if (el.hasAttribute('required') && el.id !== 'pitlinkin-rrp-no') {
+        el.removeAttribute('required');
+        el.setAttribute('data-was-required', 'true');
+      }
+    } else {
+      // Restore required attribute for non-populated fields if it was previously required
+      if (el.hasAttribute('data-was-required') && el.id !== 'pitlinkin-rrp-no') {
+        el.setAttribute('required', '');
+        el.removeAttribute('data-was-required');
+      }
+    }
+  }
+
+  // Special handling for completion checkbox - always unlock it for existing records
+  const completedCheckbox = document.getElementById('pitlinkin-completed');
+  if (completedCheckbox) {
+    completedCheckbox.disabled = false;
+  }
+
+  // Trigger the conditional logic for RRP field to ensure proper state
+  const rrpSelect = document.getElementById('pitlinkin-rrp');
+  if (rrpSelect && typeof toggleRRPCompleteField === 'function') {
+    toggleRRPCompleteField();
+  }
+}
+
+  function unlockForm() {
+    document.querySelectorAll('#pitlinkin-form input, #pitlinkin-form select, #pitlinkin-form textarea')
+      .forEach(el => {
+        el.disabled = false;
+        // Restore required attribute if it was previously required (but not for conditional fields)
+        if (el.hasAttribute('data-was-required') && el.id !== 'pitlinkin-rrp-no') {
+          el.setAttribute('required', '');
+          el.removeAttribute('data-was-required');
+        }
+      });
+  }
+
+  // Initialize form on page load
+  initializeForm();
+  
+  document.getElementById('pitlinkin-search-btn').addEventListener('click', searchDuctNoteID);
+
+  document.getElementById('pitlinkin-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const noteIdEntered = document.getElementById('pitlinkin-note-id-search').value.trim();
+    const completedCheckbox = document.getElementById('pitlinkin-completed');
+    const isChecked = completedCheckbox.checked;
+
+    console.log('Form submission debug:', {
+      noteIdEntered,
+      existingRecordId,
+      isChecked
+    });
+
+    // Handle existing record updates
+    if (existingRecordId) {
+      if (!noteIdEntered) {
+        alert('Note ID is required.');
+        return;
+      }
+
+      if (!isChecked) {
+        alert("Please check 'Pit Link-ins Completed' before submitting.");
+        return;
+      }
+
+      // Collect all unlocked (editable) field data for update
+      let data = {
+        "Pit Link-ins Completed": true
+      };
+
+      // Add timestamp
+      const now = new Date();
+      const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+      const year = perthTime.getFullYear();
+      const month = String(perthTime.getMonth() + 1).padStart(2, '0');
+      const day = String(perthTime.getDate()).padStart(2, '0');
+      data["Pit Link-in Completed Timestamp"] = `${year}-${month}-${day}`;
+
+      // Collect data from unlocked fields
+      for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
+        const el = document.getElementById(`pitlinkin-${formFieldId}`);
+        if (el && !el.disabled && airtableField !== "Pit Link-ins Completed") {
+          if (el.type === 'checkbox') {
+            data[airtableField] = el.checked;
+          } else if (el.value && el.value.trim() !== '') {
+            data[airtableField] = el.value.trim();
+          }
+        }
+      }
+
+      console.log('Update data:', data);
+
+      try {
+        const url = `${apiBase}/update/${tableKey}/${existingRecordId}`;
+        console.log('Update URL:', url);
+        
+        const response = await fetch(url, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: data })
+        });
+
+        const result = await response.json();
+        console.log('Update response:', result);
+        
+        if (!response.ok) {
+          alert(`Update failed: ${result.error || 'Unknown error'}`);
+          return;
+        }
+
+        alert('Record updated successfully!');
+        location.reload();
+
+      } catch (err) {
+        console.error('Update error:', err);
+        alert('There was an error updating the record.');
+      }
+    }
+    // Handle new record creation
+    else {
+      // Collect all form data for new record
+      const data = collectFormData();
+
+      try {
+        const url = `${apiBase}/create/${tableKey}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: data })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert('Failed to create new record.');
+          console.error('Create error:', result);
+          return;
+        }
+
+        alert('New record created successfully!');
+        location.reload();
+
+      } catch (err) {
+        console.error(err);
+        alert('There was an error creating the record.');
+      }
+    }
+  });
+});
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -2403,7 +3113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "Full Panel Required?": "panel",
     "Permanent Material": "perm-material",
     "Permanent Material - Other": "perm-material-other",
-    "Permanent Contractor Company Name": "company-name",
+    "Permanent Contractor Company Name": "perm-company-name",
     "Non-Standard Reinstatement": "Non-Standard",
     "Additional Comments": "comments",
     "Permanent Reinstatement Completed": "completed"
@@ -2481,6 +3191,7 @@ function populateAndLockForm(fields) {
   const completionFields = [
     'reinstatement-perm-material',
     'reinstatement-perm-material-other',
+    'reinstatement-perm-company-name',
     'reinstatement-Non-Standard',
     'reinstatement-comments',
     'reinstatement-completed'
@@ -2527,6 +3238,7 @@ function populateAndLockForm(fields) {
     const completionFields = [
       'reinstatement-perm-material',
       'reinstatement-perm-material-other',
+      'reinstatement-perm-company-name',
       'reinstatement-Non-Standard',
       'reinstatement-comments',
       'reinstatement-completed'
@@ -2579,11 +3291,13 @@ function populateAndLockForm(fields) {
       // Collect other completion field values
       const permMaterial = document.getElementById('reinstatement-perm-material').value;
       const permMaterialOther = document.getElementById('reinstatement-perm-material-other').value;
+      const permCompanyName = document.getElementById('reinstatement-perm-company-name').value;
       const nonStandard = document.getElementById('reinstatement-Non-Standard').checked;
       const comments = document.getElementById('reinstatement-comments').value;
 
       if (permMaterial) data["Permanent Material"] = permMaterial;
       if (permMaterialOther) data["Permanent Material - Other"] = permMaterialOther;
+      if (permCompanyName) data["Permanent Contractor Company Name"] = permCompanyName;
       data["Non-Standard Reinstatement"] = nonStandard;
       if (comments) data["Additional Comments"] = comments;
 
@@ -2640,7 +3354,6 @@ function populateAndLockForm(fields) {
   });
 });
 </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   function generateTimeOptions(selectId) {
@@ -2688,6 +3401,100 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('bog-date')?.addEventListener('change', updateBogTimestamps);
   document.getElementById('bog-form')?.addEventListener('submit', updateBogTimestamps);
 });
+</script>
+
+<script>
+function showBuildPhaseContent() {
+  const buildPhase = document.getElementById('forecast-build-phase').value;
+  const designContent = document.getElementById('design-content');
+  const constructionContent = document.getElementById('construction-content');
+
+  // Hide all content first
+  if (designContent) designContent.style.display = 'none';
+  if (constructionContent) constructionContent.style.display = 'none';
+
+  // Show relevant content based on selection
+  if (buildPhase === 'Design') {
+    if (designContent) designContent.style.display = 'block';
+  } else if (buildPhase === 'Construction') {
+    if (constructionContent) constructionContent.style.display = 'block';
+  }
+
+  // Reset all discipline checkboxes and fields
+  resetAllDisciplineFields();
+}
+
+function toggleDisciplineFields(checkbox) {
+  const disciplineValue = checkbox.value.toLowerCase().replace(/[^a-z]/g, '-');
+  const fieldsId = 'discipline-' + disciplineValue + '-fields';
+  const fields = document.getElementById(fieldsId);
+
+  if (fields) {
+    if (checkbox.checked) {
+      fields.style.display = 'block';
+    } else {
+      fields.style.display = 'none';
+      clearDisciplineFields(fieldsId);
+    }
+  }
+}
+
+function clearDisciplineFields(fieldsId) {
+  const fields = document.getElementById(fieldsId);
+  if (fields) {
+    const numberInputs = fields.querySelectorAll('input[type="number"]');
+    numberInputs.forEach(input => input.value = '');
+
+    const checkboxes = fields.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+
+    const errorMessages = fields.querySelectorAll('.discipline-days-error');
+    errorMessages.forEach(error => error.style.display = 'none');
+  }
+}
+
+function resetAllDisciplineFields() {
+  const disciplineCheckboxes = document.querySelectorAll('input[name="discipline[]"]');
+  disciplineCheckboxes.forEach(checkbox => {
+    checkbox.checked = false;
+    const disciplineValue = checkbox.value.toLowerCase().replace(/[^a-z]/g, '-');
+    const fieldsId = 'discipline-' + disciplineValue + '-fields';
+    const fields = document.getElementById(fieldsId);
+    if (fields) {
+      fields.style.display = 'none';
+      clearDisciplineFields(fieldsId);
+    }
+  });
+}
+</script>
+
+<script>
+  const bogMobCheckbox = document.getElementById("bog-mob");
+  const bogSiteLocation = document.getElementById("bog-site-location");
+  const bogSiteLabel = document.querySelector('label[for="bog-site-location"]');
+
+  function toggleBogSiteLocation() {
+    if (bogMobCheckbox.checked) {
+      bogSiteLocation.disabled = true;
+      bogSiteLocation.required = false;
+      bogSiteLocation.value = ''; // optional
+
+      bogSiteLabel.classList.add("disabled-label");
+      bogSiteLabel.innerText = "First Site Location (not required if you are Mobilising today)";
+    } else {
+      bogSiteLocation.disabled = false;
+      bogSiteLocation.required = true;
+
+      bogSiteLabel.classList.remove("disabled-label");
+      bogSiteLabel.innerText = "First Site Location";
+    }
+  }
+
+  // Initial state
+  toggleBogSiteLocation();
+
+  // On change
+  bogMobCheckbox.addEventListener("change", toggleBogSiteLocation);
 </script>
 
 </body>
