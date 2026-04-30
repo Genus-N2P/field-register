@@ -445,6 +445,7 @@ fieldset.time-group legend {
       <button id="btn-bog" onclick="showForm('bog')">Boots on Ground</button>
       <button id="btn-reinstatement" onclick="showForm('reinstatement')">Reinstatement Register</button>
       <button id="btn-vactruck" onclick="showForm('vactruck')">Vac Truck Register</button>
+      <button id="btn-pitlid" onclick="showForm('pitlid')">Pit Lid Replacement Register</button>
     </section>
 
     <div id="form-forecast" class="form-section hidden">
@@ -941,6 +942,11 @@ fieldset.time-group legend {
 
     <div id="form-bog" class="form-section hidden">
       <h3>Daily Pre-Start: Boots on Ground: Genus N2P project</h3>
+      <!-- NEW IMPORTANT NOTICE BOX -->
+      <div style="background-color: #f8f9fa; border: 3px solid var(--primary-accent); border-radius: 0.75rem; padding: 1.25rem; margin: 1.25rem 0; font-weight: 600; color: var(--primary-dark);">
+        <strong>IMPORTANT:</strong> BOG entries need to be accurate. The information entered here calculates Mobilisation and LAFHA claims. 
+        When Mobilising to and De-mobilising from site, ensure "Mobilisation Day" or "De-mobilisation Day" is checked below.
+      </div>
       <p>Please complete prior to starting work. <strong><u>Submission must be no later than 8am.</u></strong><br>This does not replace the JHA (JHA to be uploaded to IBISS - one required per site).</p>
       <form id="bog-form" onsubmit="validateBogForm()">
 
@@ -2042,6 +2048,168 @@ fieldset.time-group legend {
         </div>
       </form>
     </div>
+
+    <div id="form-pitlid" class="form-section hidden">
+      <h3>Pit Lid Replacement Register: Genus N2P project</h3>
+      <form id="pitlid-form" onsubmit="return validateGenericForm('pitlid-form')">
+
+<label for="pitlid-note-id-search">Search Pit Note ID</label>
+<div style="display: flex; gap: 0.5rem; align-items: center;">
+  <input type="text" id="pitlid-note-id-search" placeholder="Enter Note ID" />
+  <button type="button" id="pitlid-search-btn" class="search-btn">Search</button>
+</div>
+
+<!-- Optional read-only summary or error display -->
+<div id="pitlid-note-summary" style="margin-top: 1rem; font-weight: bold;"></div>
+
+<!-- OR Divider -->
+<div class="or-divider">
+  <hr class="line" />
+  <span class="or-text">OR</span>
+  <hr class="line" />
+</div>
+
+	<!-- Hidden input hardcoded to 'Pit Lid Replacement' -->
+	<input type="hidden" id="pitlid-type" name="pitlid-type" value="Pit Lid Replacement">
+
+        <label for="pitlid-company-name">Your Company Name</label>
+          <select id="pitlid-company-name" name="pitlid-company-name" required>
+          <option value="">Select one</option>
+          <option value="Across Aus Boring">Across Aus Boring</option>
+          <option value="Boretech Contracting">Boretech Contracting</option>
+          <option value="Connectit Communications">Connectit Communications</option>
+          <option value="Dawn Techcomms">Dawn Techcomms</option>
+          <option value="DDS Underground">DDS Underground</option>
+          <option value="Dizza Communications">Dizza Communications</option>
+          <option value="Djara Network Service">Djara Network Service</option>
+          <option value="Feverpitch Enterprises">Feverpitch Enterprises</option>
+          <option value="Genus Services">Genus Services</option>
+          <option value="JK Civils & Drilling">JK Civils & Drilling</option>
+          <option value="JNJTech Services">JNJTech Services</option>
+          <option value="Lightsource">Lightsource</option>
+          <option value="MNC Drilling">MNC Drilling</option>
+          <option value="Netline Services">Netline Services</option>
+          <option value="Syndicate Communications">Syndicate Communications</option>
+          <option value="TAT Communications">TAT Communications</option>
+          <option value="Versatile Services">Versatile Services</option>
+        </select>
+        
+
+        <label for="pitlid-date">Date Idendified</label>
+        <input type="date" id="pitlid-date" name="pitlid-date" required />
+
+        <label for="pitlid-SAM">SAM ID</label>
+        <select id="pitlid-SAM" name="pitlid-SAM" required>
+          <option value="">Select one</option>
+     <optgroup label="Gascoyne">
+          <option value="K-6CVN-20">K-6CVN-20</option>
+          <option value="K-6DNH-20">K-6DNH-20</option>
+          <option value="K-6EXM-01">K-6EXM-01</option>
+     </optgroup>
+     <optgroup label="Goldfields-Esperance">
+          <option value="K-6CGD-20">K-6CGD-20</option>
+          <option value="K-6ESP-20">K-6ESP-20</option>
+          <option value="K-6ESP-21">K-6ESP-21</option>
+          <option value="K-6ESP-40">K-6ESP-40</option>
+          <option value="K-6HOP-01">K-6HOP-01</option>
+          <option value="K-6KAM-20">K-6KAM-20</option>
+     </optgroup>
+     <optgroup label="Great Southern">
+          <option value="K-6ALN-22">K-6ALN-22</option>
+          <option value="L-6ALN-05">L-6ALN-05</option>
+          <option value="L-6ALN-20">L-6ALN-20</option>
+          <option value="L-6ALN-21">L-6ALN-21</option>
+          <option value="L-6ALN-23">L-6ALN-23</option>
+          <option value="X-6ALN-05">X-6ALN-05</option>
+          <option value="K-6DNK-20">K-6DNK-20</option>
+          <option value="K-6KAT-20">K-6KAT-20</option>
+     </optgroup>
+     <optgroup label="Mid West">
+          <option value="K-6KLB-01">K-6KLB-01</option>
+          <option value="K-6LEA-20">K-6LEA-20</option>
+     </optgroup>
+     <optgroup label="Pilbara">
+          <option value="K-6NWM-01">K-6NWM-01</option>
+          <option value="K-6NWM-20">K-6NWM-20</option>
+          <option value="K-6PDO-20">K-6PDO-20</option>
+          <option value="K-6TPC-20">K-6TPC-20</option>
+          <option value="X-6TPC-20">K-6TPC-20</option>
+     </optgroup>
+     <optgroup label="South West">
+          <option value="K-6AUU-20">K-6AUU-20</option>
+          <option value="K-6BGT-20">K-6BGT-20</option>
+          <option value="X-6BGT-20">X-6BGT-20</option>
+          <option value="X-6COI-01">X-6COI-01</option>
+          <option value="K-6MJM-01">K-6MJM-01</option>
+     </optgroup>
+     <optgroup label="Wheatbelt">
+          <option value="K-6CND-20">K-6CND-20</option>
+          <option value="K-6NRG-20">K-6NRG-20</option>
+          <option value="K-6SCR-20">K-6SCR-20</option>
+     </optgroup>
+        </select>
+
+        <label for="pitlid-ADA">ADA ID</label>
+        <select id="pitlid-ADA" name="pitlid-ADA" required>
+          <option value="">Select one</option>
+          <option value="01" data-sams="K-6AUU-20,K-6BGT-20,K-6CGD-20,K-6CND-20,K-6CVN-20,K-6DNH-20,K-6ESP-20,K-6ESP-21,K-6KAT-20,K-6KLB-01,K-6LEA-20,K-6MJM-01,K-6NRG-20,K-6NWM-01,K-6NWM-20,K-6PDO-20,K-6SCR-20,L-6ALN-20,X-6BGT-20,X-6TPC-20">01</option>
+  <option value="02" data-sams="K-6AUU-20,K-6CGD-20,K-6CND-20,K-6CVN-20,K-6DNH-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAT-20,K-6KLB-01,K-6LEA-20,K-6NRG-20,K-6NWM-20,K-6PDO-20,K-6SCR-20,K-6TPC-20,L-6ALN-20,L-6ALN-23,X-6BGT-20">02</option>
+  <option value="03" data-sams="K-6AUU-20,K-6BGT-20,K-6CND-20,K-6CVN-20,K-6DNH-20,K-6ESP-20,K-6ESP-21,K-6ESP-40,K-6EXM-01,K-6KAM-20,K-6KAT-20,K-6KLB-01,K-6LEA-20,K-6NRG-20,K-6NWM-01,K-6NWM-20,K-6PDO-20,K-6SCR-20,K-6TPC-20,L-6ALN-21">03</option>
+  <option value="04" data-sams="K-6ALN-22,K-6AUU-20,K-6BGT-20,K-6CND-20,K-6DNH-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAM-20,K-6KLB-01,K-6LEA-20,K-6NWM-20,K-6PDO-20,K-6TPC-20,L-6ALN-21">04</option>
+  <option value="05" data-sams="K-6AUU-20,K-6BGT-20,K-6CND-20,K-6CVN-20,K-6DNH-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAM-20,K-6KLB-01,K-6LEA-20,K-6NWM-01,K-6TPC-20">05</option>
+  <option value="06" data-sams="K-6ALN-22,K-6AUU-20,K-6BGT-20,K-6CVN-20,K-6DNH-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAT-20,K-6KLB-01,K-6LEA-20,K-6MJM-01,K-6TPC-20,L-6ALN-21,X-6COI-01">06</option>
+  <option value="07" data-sams="K-6BGT-20,K-6CVN-20,K-6DNH-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAM-20,K-6KLB-01,K-6LEA-20,K-6NRG-20,K-6TPC-20">07</option>
+  <option value="08" data-sams="K-6BGT-20,K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAM-20,K-6KAT-20,K-6KLB-01,K-6NRG-20,L-6ALN-05,X-6TPC-20">08</option>
+  <option value="09" data-sams="K-6CVN-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6HOP-01,K-6KAT-20,K-6KLB-01,L-6ALN-20,X-6TPC-20">09</option>
+  <option value="10" data-sams="K-6ALN-22,K-6CVN-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6HOP-01,K-6KAM-20,K-6KAT-20,K-6KLB-01,K-6NWM-01,L-6ALN-20">10</option>
+  <option value="11" data-sams="K-6CVN-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6KAM-20,K-6KAT-20,K-6KLB-01,K-6MJM-01,K-6NRG-20,K-6NWM-01,L-6ALN-21">11</option>
+  <option value="12" data-sams="K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6NRG-20,K-6NWM-01,L-6ALN-20">12</option>
+  <option value="13" data-sams="K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6NRG-20,K-6NWM-01,L-6ALN-05">13</option>
+  <option value="14" data-sams="K-6CVN-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6EXM-01,K-6NWM-01,L-6ALN-20,L-6ALN-21,X-6ALN-05">14</option>
+  <option value="15" data-sams="K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6HOP-01,L-6ALN-23">15</option>
+  <option value="16" data-sams="K-6CVN-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6HOP-01,K-6MJM-01,K-6NWM-01,L-6ALN-21,X-6COI-01">16</option>
+  <option value="17" data-sams="K-6ALN-22,K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6HOP-01,K-6MJM-01,K-6NWM-01,L-6ALN-23,X-6COI-01">17</option>
+  <option value="18" data-sams="K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6HOP-01,K-6MJM-01,K-6NWM-01">18</option>
+  <option value="19" data-sams="K-6CVN-20,K-6ESP-20,K-6ESP-21,K-6NWM-01,X-6COI-01">19</option>
+  <option value="20" data-sams="K-6CVN-20,K-6DNK-20,K-6ESP-20,K-6ESP-21,K-6NWM-01">20</option>
+  <option value="21" data-sams="K-6CVN-20,K-6DNK-20,K-6ESP-21,K-6NWM-01">21</option>
+  <option value="22" data-sams="K-6CVN-20,K-6DNK-20,K-6MJM-01,K-6NWM-01">22</option>
+  <option value="23" data-sams="K-6DNK-20,X-6COI-01">23</option>
+  <option value="24" data-sams="K-6CVN-20,K-6DNK-20">24</option>
+  <option value="25" data-sams="L-6ALN-20,L-6ALN-23">25</option>
+  <option value="27" data-sams="L-6ALN-20">27</option>
+  <option value="28" data-sams="L-6ALN-20">28</option>
+  <option value="30" data-sams="L-6ALN-20">30</option>
+  <option value="31" data-sams="L-6ALN-20">31</option>
+        </select>
+
+        <label for="pitlid-Pit-Note-ID">Pit Note ID:</label>
+        <input type="text" id="pitlid-Pit-Note-ID" name="pitlid-Pit-Note-ID" required />
+
+        <label for="pitlid-asset-type">Asset Type</label>
+        <select id="pitlid-asset-type" name="pitlid-asset-type" required>
+          <option value="">Select one</option>
+          <option value="P2">P2</option>
+          <option value="P5">P5</option>
+          <option value="P6">P6</option>
+          <option value="P8">P8</option>
+          <option value="P9">P9</option>
+        </select>
+
+        <label for="pitlid-comments">Any additional comments? Escalate SHEQ concerns to your Genus FCM/Supervisor or SHEQ Advisor</label>
+        <textarea id="pitlid-comments" name="pitlid-comments" placeholder="If there are no additional comments, there is no need to enter anything here"></textarea>
+                
+	<label>
+	<input type="checkbox" id="pitlid-completed" name="pitlid-completed" />
+	Pit Lid Replacement Completed
+	</label>
+
+        <div class="form-footer">
+          <button type="button" class="btn-back" onclick="confirmReset('pitlid')">Back</button>
+          <button type="submit" id="pitlid-submit-btn">Submit Pit Lid Replacement</button>
+        </div>
+      </form>
+    </div>
   </div>
   </main>
 
@@ -2099,6 +2267,11 @@ fieldset.time-group legend {
       gearbox: {
         baseId: 'appegmSLEvbJSkRvd',
         tableId: 'Gearbox',
+        apiKey: 'patHwUeS1KtSAEshe.fbfaf206fded22941c87960a4a9b5c2992b69a3a86c8e23592d550905a42d936'
+      },
+      pitlid: {
+        baseId: 'appegmSLEvbJSkRvd',
+        tableId: 'Pit Lid Replacement',
         apiKey: 'patHwUeS1KtSAEshe.fbfaf206fded22941c87960a4a9b5c2992b69a3a86c8e23592d550905a42d936'
       }
     };
@@ -2168,7 +2341,7 @@ fieldset.time-group legend {
 
       document.getElementById('thank-you-message').style.display = 'none';
 
-      const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck', 'form-gearbox'];
+      const forms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck', 'form-gearbox', 'form-pitlid'];
       forms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -2188,7 +2361,7 @@ fieldset.time-group legend {
 
       setDefaultDate();
 
-      const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck', 'btn-gearbox'];
+      const buttons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck', 'btn-gearbox', 'btn-pitlid'];
       buttons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) {
@@ -2222,7 +2395,8 @@ fieldset.time-group legend {
         'pitlinkin-date',
         'reinstatement-date',
         'vactruck-date',
-        'gearbox-entry-date'
+        'gearbox-entry-date',
+        'pitlid-date'
       ];
       dateFields.forEach(id => {
         const field = document.getElementById(id);
@@ -2979,7 +3153,7 @@ function toggleFuelSupplySection() {
     // Filters the ADA dropdown to show only options valid for the selected SAM
     // Applies across: pitlinkin, bog, reinstatement, vactruck
     document.addEventListener("DOMContentLoaded", function () {
-      const formTypes = ["pitlinkin", "bog", "reinstatement", "vactruck"];
+      const formTypes = ["pitlinkin", "bog", "reinstatement", "vactruck", "pitlid"];
 
       formTypes.forEach(formType => {
         const samSelect = document.getElementById(`${formType}-SAM`);
@@ -3187,7 +3361,8 @@ function toggleFuelSupplySection() {
         { lead: "reinstatement-site-contact", companyField: "reinstatement-company-name" },
         { lead: "vactruck-site-contact",      companyField: null                         },
         { lead: "pitlinkin-site-contact",     companyField: null                         },
-        { lead: "gearbox-entry-person",       companyField: null                         }
+        { lead: "gearbox-entry-person",       companyField: null                         },
+        { lead: "pitlid-site-contact",      companyField: null                         }
       ];
 
       async function initCrewSections() {
@@ -3217,7 +3392,7 @@ function toggleFuelSupplySection() {
       initCrewSections();
 
       // --- Hide all forms on initial load, show all nav buttons ---
-      const allForms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck', 'form-gearbox'];
+      const allForms = ['form-forecast', 'form-bog', 'form-reinstatement', 'form-pitlinkin', 'form-vactruck', 'form-gearbox', 'form-pitlid'];
       allForms.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -3228,7 +3403,7 @@ function toggleFuelSupplySection() {
         }
       });
 
-      const allButtons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck', 'btn-gearbox'];
+      const allButtons = ['btn-forecast', 'btn-bog', 'btn-reinstatement', 'btn-pitlinkin', 'btn-vactruck', 'btn-gearbox', 'btn-pitlid'];
       allButtons.forEach(btnId => {
         const btn = document.getElementById(btnId);
         if (btn) { btn.style.display = 'inline-block'; btn.classList.remove('active'); }
@@ -3585,6 +3760,43 @@ function toggleFuelSupplySection() {
           showSuccessMessage();
         } catch (error) {
           console.error('Error submitting Fleet Maintenance form:', error);
+          alert('Error submitting form. Please try again.');
+        }
+      });
+
+
+      /* ── PIT LID REPLACEMENT FORM SUBMIT ────────────────────────────────── */
+      document.getElementById('pitlid-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const submitButton = this.querySelector('button[type="submit"]');
+        if (submitButton) {
+          submitButton.disabled    = true;
+          submitButton.textContent = "Submitting...";
+          setTimeout(() => { submitButton.disabled = false; submitButton.textContent = "Submit Pit Lid Replacement"; }, 7000);
+        }
+
+        if (!validateNoteIdFields([{ id: 'pitlid-Pit-Note-ID', name: 'Pit Note ID' }])) return;
+        if (!validateGenericForm('pitlid-form')) return;
+
+        const formData = {
+          'Contractor':           document.getElementById('pitlid-company-name').value,
+          'Submission Date':      document.getElementById('pitlid-date').value,
+          'SAM':                  document.getElementById('pitlid-SAM').value,
+          'ADA ID':               document.getElementById('pitlid-ADA').value,
+          'Pit Note ID':          document.getElementById('pitlid-Pit-Note-ID').value,
+          'Pit Lid Type':          document.getElementById('pitlid-asset-type').value,
+          'Additional Comments':  document.getElementById('pitlid-comments').value,
+          'Pit Lid Replacement Completed': document.getElementById('pitlid-completed').checked
+        };
+
+        try {
+          const response = await submitToAirtable('pitlid', formData);
+          const result   = await response.json();
+          if (!response.ok) { console.error('Airtable error:', result); alert(`Submission failed: ${result.error?.message || 'Unknown error'}`); return; }
+          showSuccessMessage();
+        } catch (error) {
+          console.error('Error submitting Pit Lid Replacement form:', error);
           alert('Error submitting form. Please try again.');
         }
       });
@@ -4178,6 +4390,154 @@ function toggleFuelSupplySection() {
             location.reload();
           } catch (err) { console.error(err); alert('There was an error creating the record.'); }
         }
+      });
+    });
+
+
+    /* ============================================================
+       18. PIT LID REPLACEMENT — AIRTABLE LOOKUP / UPDATE (REST WORKER)
+       ============================================================ */
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let existingRecordId = null;
+      const tableKey = 'pitlid';
+
+      const fieldMap = {
+        "Contractor":             "company-name",
+        "Submission Date":        "date",
+        "SAM":                    "SAM",
+        "ADA ID":                 "ADA",
+        "Pit Note ID":            "Pit-Note-ID",
+        "Pit Lid Type":           "asset-type",
+        "Additional Comments":    "comments",
+        "Pit Lid Replacement Completed": "completed"
+      };
+
+      function initializeForm() {
+        document.getElementById('pitlid-completed').disabled = true;
+      }
+
+      async function searchpitlidNoteID() {
+        const noteId  = document.getElementById('pitlid-note-id-search').value.trim();
+        const summary = document.getElementById('pitlid-note-summary');
+        summary.textContent = '';
+        if (!noteId) { alert('Please enter a Note ID to search.'); return; }
+
+        try {
+          const response    = await fetch(`${AIRTABLE_API_BASE}/lookup/${tableKey}?noteId=${encodeURIComponent(noteId)}`);
+          const contentType = response.headers.get('Content-Type') || '';
+          if (!response.ok) {
+            const message = contentType.includes('application/json')
+              ? (await response.json()).error || 'Lookup failed'
+              : await response.text();
+            throw new Error(message);
+          }
+          const data      = await response.json();
+          const submitBtn = document.getElementById('pitlid-submit-btn');
+
+          if (!data.record) {
+            summary.textContent = 'No record found. A new entry will need to be created.';
+            existingRecordId    = null;
+            unlockForm();
+            document.getElementById('pitlid-completed').disabled = true;
+            submitBtn.textContent = 'Submit';
+          } else {
+            summary.textContent = 'Record found. All fields locked except completion checkbox.';
+            existingRecordId    = data.record.id;
+            populateAndLockForm(data.record.fields);
+            submitBtn.textContent = 'Update';
+          }
+        } catch (err) { console.error(err); summary.textContent = 'Error looking up Note ID.'; }
+      }
+
+      function populateAndLockForm(fields) {
+        unlockForm();
+        for (const [key, value] of Object.entries(fields)) {
+          const mappedId = fieldMap[key] || key;
+          const el       = document.getElementById(`pitlid-${mappedId}`);
+          if (!el) continue;
+          if (el.type === 'checkbox') { el.checked = value === true; }
+          else if (el.tagName === 'SELECT') {
+            if (![...el.options].some(opt => opt.value === value) && value != null) {
+              const newOption = document.createElement('option');
+              newOption.value = value; newOption.textContent = value; newOption.selected = true;
+              el.appendChild(newOption);
+            }
+            el.value = value;
+          } else { el.value = value; }
+          if (value !== undefined && value !== null && value !== '') {
+            el.disabled = true;
+            if (el.hasAttribute('required')) { el.removeAttribute('required'); el.setAttribute('data-was-required', 'true'); }
+          } else {
+            if (el.hasAttribute('data-was-required')) { el.setAttribute('required', ''); el.removeAttribute('data-was-required'); }
+          }
+        }
+        const completedCheckbox = document.getElementById('pitlid-completed');
+        if (completedCheckbox) completedCheckbox.disabled = false;
+      }
+
+      function unlockForm() {
+        document.querySelectorAll('#pitlid-form input, #pitlid-form select, #pitlid-form textarea').forEach(el => {
+          el.disabled = false;
+          if (el.hasAttribute('data-was-required')) { el.setAttribute('required', ''); el.removeAttribute('data-was-required'); }
+        });
+      }
+
+      initializeForm();
+      document.getElementById('pitlid-search-btn').addEventListener('click', searchpitlidNoteID);
+
+      document.getElementById('pitlid-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const noteIdEntered     = document.getElementById('pitlid-note-id-search').value.trim();
+        const completedCheckbox = document.getElementById('pitlid-completed');
+        const isChecked         = completedCheckbox.checked;
+
+        let noteIdForSubmission = noteIdEntered;
+        if (!existingRecordId) {
+          const noteIdFormField = document.getElementById('pitlid-Pit-Note-ID');
+          if (noteIdFormField && noteIdFormField.value.trim()) noteIdForSubmission = noteIdFormField.value.trim();
+        }
+        if (!noteIdForSubmission) { alert('Note ID is required.'); return; }
+        if (existingRecordId && !isChecked) { alert("Please check 'Pit Lid Replacement Completed' before submitting."); return; }
+
+        let data = {};
+
+        if (existingRecordId) {
+          data["Pit Lid Replacement Completed"] = true;
+          const now       = new Date();
+          const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+          data["Pit Lid Replacement Datestamp"] = `${perthTime.getFullYear()}-${String(perthTime.getMonth() + 1).padStart(2,'0')}-${String(perthTime.getDate()).padStart(2,'0')}`;
+          for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
+            const el = document.getElementById(`vactruck-${formFieldId}`);
+            if (el && !el.disabled && airtableField !== "Pit Lid Replacement Completed") {
+              if (el.type === 'checkbox') data[airtableField] = el.checked;
+              else if (el.value && el.value.trim() !== '') data[airtableField] = el.value.trim();
+            }
+          }
+        } else {
+          for (const [airtableField, formFieldId] of Object.entries(fieldMap)) {
+            const el = document.getElementById(`pitlid-${formFieldId}`);
+            if (el) {
+              if (el.type === 'checkbox') data[airtableField] = el.checked;
+              else if (el.value && el.value.trim() !== '') data[airtableField] = el.value.trim();
+            }
+          }
+          data["Pit Note ID"] = noteIdForSubmission;
+          const now       = new Date();
+          const perthTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Perth" }));
+          data["Submission Date"] = `${perthTime.getFullYear()}-${String(perthTime.getMonth() + 1).padStart(2,'0')}-${String(perthTime.getDate()).padStart(2,'0')}`;
+        }
+
+        try {
+          const url      = existingRecordId ? `${AIRTABLE_API_BASE}/update/${tableKey}/${existingRecordId}` : `${AIRTABLE_API_BASE}/create/${tableKey}`;
+          const method   = existingRecordId ? 'PATCH' : 'POST';
+          const response = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: data }) });
+          const result   = await response.json();
+          if (!response.ok) { alert(`${existingRecordId ? 'Update' : 'Submission'} failed: ${result.error || 'Unknown error'}`); return; }
+          alert(`Record ${existingRecordId ? 'updated' : 'created'} successfully!`);
+          location.reload();
+        } catch (err) { console.error('Submission error:', err); alert(`There was an error ${existingRecordId ? 'updating' : 'creating'} the record.`); }
       });
     });
 
