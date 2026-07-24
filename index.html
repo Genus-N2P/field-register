@@ -470,6 +470,7 @@ fieldset.time-group legend {
           <option value="Lightsource">Lightsource</option>
           <option value="MNC Drilling">MNC Drilling</option>
           <option value="Netline Services">Netline Services</option>
+          <option value="Pristine Tech">Pristine Tech</option>
           <option value="Syndicate Communications">Syndicate Communications</option>
           <option value="TAT Communications">TAT Communications</option>
           <option value="Versatile Services">Versatile Services</option>
@@ -926,6 +927,30 @@ fieldset.time-group legend {
                         </fieldset>
                         <p id="service-locating-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
                     </div>
+
+                    <!-- HMDU -->
+                    <div>
+                        <input type="checkbox" id="discipline-hmdu" name="discipline[]" value="HMDU" onchange="toggleDisciplineFields(this)" />
+                        <label for="discipline-hmdu">HMDU</label>
+                    </div>
+                    <div id="discipline-hmdu-fields" class="discipline-conditional-fields" style="display: none;">
+                        <label for="hmdu-crews">Number of HMDU crews forecast for next week (exclude Mob & Demob days):</label>
+                        <input type="number" id="hmdu-crews" name="hmdu-crews" min="0" step="1" />
+
+                        <fieldset>
+                            <legend>Select the day(s) that your HMDU crews are forecast to be in the field next week (exclude Mob & Demob days):</legend>
+                            <div class="days-checkbox-group">
+                                <div><input type="checkbox" id="hmdu-monday" name="hmdu-days[]" value="Monday" /><label for="hmdu-monday">Monday</label></div>
+                                <div><input type="checkbox" id="hmdu-tuesday" name="hmdu-days[]" value="Tuesday" /><label for="hmdu-tuesday">Tuesday</label></div>
+                                <div><input type="checkbox" id="hmdu-wednesday" name="hmdu-days[]" value="Wednesday" /><label for="hmdu-wednesday">Wednesday</label></div>
+                                <div><input type="checkbox" id="hmdu-thursday" name="hmdu-days[]" value="Thursday" /><label for="hmdu-thursday">Thursday</label></div>
+                                <div><input type="checkbox" id="hmdu-friday" name="hmdu-days[]" value="Friday" /><label for="hmdu-friday">Friday</label></div>
+                                <div><input type="checkbox" id="hmdu-saturday" name="hmdu-days[]" value="Saturday" /><label for="hmdu-saturday">Saturday</label></div>
+                                <div><input type="checkbox" id="hmdu-sunday" name="hmdu-days[]" value="Sunday" /><label for="hmdu-sunday">Sunday</label></div>
+                            </div>
+                        </fieldset>
+                        <p id="hmdu-days-error" class="discipline-days-error" style="color: red; display: none;">Please select at least one day.</p>
+                    </div>
                 </div>
             </fieldset>
 <p id="discipline-error" style="color: red; display: none;">Please select at least one activity type.</p>
@@ -1044,6 +1069,7 @@ fieldset.time-group legend {
           <option value="Lightsource">Lightsource</option>
           <option value="MNC Drilling">MNC Drilling</option>
           <option value="Netline Services">Netline Services</option>
+          <option value="Pristine Tech">Pristine Tech</option>
           <option value="Syndicate Communications">Syndicate Communications</option>
           <option value="TAT Communications">TAT Communications</option>
           <option value="Versatile Services">Versatile Services</option>
@@ -1131,6 +1157,7 @@ fieldset.time-group legend {
           <option value="PON Patching">PON Patching</option>
           <option value="Traffic Management">Traffic Management</option>
           <option value="Supervision">Supervision</option>
+          <option value="HMDU">HMDU</option>
      </optgroup>
         </select>
 
@@ -1364,6 +1391,7 @@ fieldset.time-group legend {
           <option value="Lightsource">Lightsource</option>
           <option value="MNC Drilling">MNC Drilling</option>
           <option value="Netline Services">Netline Services</option>
+          <option value="Pristine Tech">Pristine Tech</option>
           <option value="Syndicate Communications">Syndicate Communications</option>
           <option value="TAT Communications">TAT Communications</option>
           <option value="Versatile Services">Versatile Services</option>
@@ -1560,6 +1588,7 @@ fieldset.time-group legend {
           <option value="Lightsource">Lightsource</option>
           <option value="MNC Drilling">MNC Drilling</option>
           <option value="Netline Services">Netline Services</option>
+          <option value="Pristine Tech">Pristine Tech</option>
           <option value="Syndicate Communications">Syndicate Communications</option>
           <option value="TAT Communications">TAT Communications</option>
           <option value="Versatile Services">Versatile Services</option>
@@ -1824,6 +1853,7 @@ fieldset.time-group legend {
           <option value="Lightsource">Lightsource</option>
           <option value="MNC Drilling">MNC Drilling</option>
           <option value="Netline Services">Netline Services</option>
+          <option value="Pristine Tech">Pristine Tech</option>
           <option value="Syndicate Communications">Syndicate Communications</option>
           <option value="TAT Communications">TAT Communications</option>
           <option value="Versatile Services">Versatile Services</option>
@@ -2088,6 +2118,7 @@ fieldset.time-group legend {
           <option value="Lightsource">Lightsource</option>
           <option value="MNC Drilling">MNC Drilling</option>
           <option value="Netline Services">Netline Services</option>
+          <option value="Pristine Tech">Pristine Tech</option>
           <option value="Syndicate Communications">Syndicate Communications</option>
           <option value="TAT Communications">TAT Communications</option>
           <option value="Versatile Services">Versatile Services</option>
